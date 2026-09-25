@@ -3,7 +3,7 @@ Act as an expert Next.js full-stack web developer, designer, and architect on th
 `GEMINI.md`, `CLAUDE.md`, and `AGENTS.md` all follow this file.
 Read it in full before any task in this workspace.
 
-**Scope of this file:** project structure, dependency usage, existing component (shadcn/ui) usage, state/data/form conventions, SEO output, and code quality — i.e. *how* code in this repo is written and organized. Product scope, feature requirements, and what the application should do come from the task/prompt at hand and take precedence — this file never overrides the actual requirement, it just governs how that requirement is implemented.
+**Scope of this file:** project structure, dependency usage, existing component (shadcn/ui) usage, state/data/form conventions, SEO output, and code quality — i.e. *how* code in this repo is written and organized. Product scope, feature requirements, and what the application should do come from the task/prompt at hand and always take precedence — this file never overrides, narrows, or substitutes for the actual user requirement, scope, feature, or support need being asked for. Every rule below is applied in service of building exactly what was asked for, fully and correctly, by default — never as a reason to under-deliver, skip a requested feature, or reinterpret the requirement into something smaller or different.
 
 This file defines **rules and constraints**, not a fixed folder tree or a fixed dependency list. The actual structure and stack are whatever this specific repo's `package.json`, lockfile, and existing source already establish — discover them, don't assume them, and never impose a structure from a template that conflicts with what's already there. Where a rule below names a specific library (TanStack Query, Zustand, shadcn/ui, t3-env, Zod, TanStack Form, lucide-react), it applies **when that library is present in `package.json`** — use what's actually installed; don't add a competing library for something already covered.
 
@@ -11,13 +11,14 @@ This file defines **rules and constraints**, not a fixed folder tree or a fixed 
 
 ## 0. Prime Directives (never violate)
 
-1. **Read `package.json` first, every time.** Before writing or changing any code, read `package.json` (dependencies, devDependencies, scripts, `packageManager`) to know exactly what this project has, what versions, and how it's meant to be run. Never assume a stack, a version, or a script name — confirm it.
-2. **Source-of-truth over memory.** For every dependency the task touches, read that dependency's real installed code/docs (`node_modules/<package>/README.md`, `docs/`, shipped `AGENTS.md`/`SKILL.md`, and its type definitions) before writing code against it. Training-data knowledge of a package's API is a starting guess, not a fact. Verify, then use.
-3. **Use the package manager this project already uses.** Detect it from the `packageManager` field in `package.json` and/or which lockfile is present. Use that manager exclusively. Never introduce a second package manager or lockfile.
-4. **`src/` is the application root** whenever the project has one — internal organization is derived from this project's actual code, not copy-pasted from elsewhere. See §2.
-5. **No duplicate functionality, ever** — not in hand-written code, not in UI components, not in dependencies. Search the existing codebase, the existing component library, and `package.json` for something that already does it before creating anything new.
-6. **Build only what the task actually requires.** Match the solution's complexity to the real requirement — no speculative abstraction layers, no unused config, no "just in case" state/caching/validation machinery for something that doesn't need it. Simple problems get simple, direct solutions; complexity is earned by an actual, present need, not added by default.
-7. **Zero-error, zero-warning bar.** Whatever linter/formatter this project has configured must run clean before a task is considered complete. Don't introduce a different linter/formatter than the one already configured.
+1. **The user's actual requirement, scope, and requested features always come first and are always fully honored.** Nothing in this file is a reason to skip, shrink, water down, or reinterpret what was asked for — every requested feature, piece of functionality, and support need is delivered completely, by default. This file governs *how* that requirement gets built; it never decides *whether* or *how much* of it gets built.
+2. **Read `package.json` first, every time.** Before writing or changing any code, read `package.json` (dependencies, devDependencies, scripts, `packageManager`) to know exactly what this project has, what versions, and how it's meant to be run. Never assume a stack, a version, or a script name — confirm it.
+3. **Source-of-truth over memory.** For every dependency the task touches, read that dependency's real installed code/docs (`node_modules/<package>/README.md`, `docs/`, shipped `AGENTS.md`/`SKILL.md`, and its type definitions) before writing code against it. Training-data knowledge of a package's API is a starting guess, not a fact. Verify, then use.
+4. **Use the package manager this project already uses.** Detect it from the `packageManager` field in `package.json` and/or which lockfile is present. Use that manager exclusively. Never introduce a second package manager or lockfile.
+5. **`src/` is the application root** whenever the project has one — internal organization is derived from this project's actual code, not copy-pasted from elsewhere. See §2.
+6. **No duplicate functionality, ever** — not in hand-written code, not in UI components, not in dependencies. Search the existing codebase, the existing component library, and `package.json` for something that already does it before creating anything new.
+7. **Build only what the task actually requires — but never less than what was actually requested.** Match implementation complexity to the real requirement (no speculative abstraction, no unused config, no "just in case" machinery); this is about *how much engineering* a requested feature needs, never a reason to leave part of that feature undone. Simple problems get simple, direct solutions; complexity is earned by an actual, present need, not added by default — and every actual need still gets fully met.
+8. **Zero-error, zero-warning bar.** Whatever linter/formatter this project has configured must run clean before a task is considered complete. Don't introduce a different linter/formatter than the one already configured.
 
 ---
 
@@ -116,12 +117,12 @@ Applied per the actual page/route being built, driven by that page's real data �
 
 ## 10. Code Quality
 
-- **Reuse before creation, always** — hand-written code, UI components, and dependencies alike (§0.5, §1.3, §3).
+- **Reuse before creation, always** — hand-written code, UI components, and dependencies alike (§0.6, §1.3, §3).
 - **Every component is modular and separate: one file, one clear responsibility, one reason to change.** Before writing a new component, check `components/ui/` (shadcn), the project's shared components/sections folders, and `src/types/` for something that already exists and fits — reuse or extend it rather than creating a parallel version. A component that grows multiple unrelated responsibilities gets split back apart.
 - **Server Components by default; `"use client"` only at the smallest leaf that genuinely needs it.**
 - **Consistent conventions across the board** — styling (`cn`, `cva`, Tailwind tokens), state (§4), forms/validation (§5), icons (§9) — no second, competing pattern introduced alongside an existing one.
 - **No dead code, no commented-out blocks, no leftover debug logging** left after a task is finished.
-- **Proportional engineering (§0.6).** Dynamic imports, Zustand stores, extra Query keys, and new Zod schemas are added because the task genuinely needs them — not as default scaffolding for something simple.
+- **Proportional engineering (§0.7).** Dynamic imports, Zustand stores, extra Query keys, and new Zod schemas are added because the task genuinely needs them — not as default scaffolding for something simple.
 - **Format, lint, and type-check/build all pass clean** — zero errors, zero warnings — using this project's actual configured commands, before a task is considered complete.
 - **Zero tolerance for framework/console warnings or errors** (hydration mismatches, key warnings, etc.) — fix the root cause, don't suppress it.
 

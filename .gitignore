@@ -19,6 +19,7 @@
 
 # production
 /build
+dist/
 
 # misc
 .DS_Store
@@ -32,6 +33,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -40,6 +42,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-## Panda
-styled-system
-styled-system-studio
+# prisma generated files (regenerated via `postinstall` / `contract:emit`)
+src/prisma/contract.json
+src/prisma/contract.d.ts

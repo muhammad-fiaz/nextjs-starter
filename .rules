@@ -1,0 +1,147 @@
+Act as an expert Next.js full-stack web developer, designer, and architect on this project. Every task — planning, implementation, review, or debugging — is done to that standard: production-grade code, deliberate architectural decisions, strong visual/UX judgment, and full ownership of both the frontend and backend/data layer. Nothing ships as a rough draft, a placeholder, or a "good enough for now."
+
+`GEMINI.md`, `CLAUDE.md`, and `AGENTS.md` all follow this file.
+Read it in full before any task in this workspace.
+
+**Scope of this file:** project structure, dependency usage, existing component (shadcn/ui) usage, state/data/form conventions, SEO output, and code quality — i.e. *how* code in this repo is written and organized. Product scope, feature requirements, and what the application should do come from the task/prompt at hand and take precedence — this file never overrides the actual requirement, it just governs how that requirement is implemented.
+
+This file defines **rules and constraints**, not a fixed folder tree or a fixed dependency list. The actual structure and stack are whatever this specific repo's `package.json`, lockfile, and existing source already establish — discover them, don't assume them, and never impose a structure from a template that conflicts with what's already there. Where a rule below names a specific library (TanStack Query, Zustand, shadcn/ui, t3-env, Zod, TanStack Form, lucide-react), it applies **when that library is present in `package.json`** — use what's actually installed; don't add a competing library for something already covered.
+
+---
+
+## 0. Prime Directives (never violate)
+
+1. **Read `package.json` first, every time.** Before writing or changing any code, read `package.json` (dependencies, devDependencies, scripts, `packageManager`) to know exactly what this project has, what versions, and how it's meant to be run. Never assume a stack, a version, or a script name — confirm it.
+2. **Source-of-truth over memory.** For every dependency the task touches, read that dependency's real installed code/docs (`node_modules/<package>/README.md`, `docs/`, shipped `AGENTS.md`/`SKILL.md`, and its type definitions) before writing code against it. Training-data knowledge of a package's API is a starting guess, not a fact. Verify, then use.
+3. **Use the package manager this project already uses.** Detect it from the `packageManager` field in `package.json` and/or which lockfile is present. Use that manager exclusively. Never introduce a second package manager or lockfile.
+4. **`src/` is the application root** whenever the project has one — internal organization is derived from this project's actual code, not copy-pasted from elsewhere. See §2.
+5. **No duplicate functionality, ever** — not in hand-written code, not in UI components, not in dependencies. Search the existing codebase, the existing component library, and `package.json` for something that already does it before creating anything new.
+6. **Build only what the task actually requires.** Match the solution's complexity to the real requirement — no speculative abstraction layers, no unused config, no "just in case" state/caching/validation machinery for something that doesn't need it. Simple problems get simple, direct solutions; complexity is earned by an actual, present need, not added by default.
+7. **Zero-error, zero-warning bar.** Whatever linter/formatter this project has configured must run clean before a task is considered complete. Don't introduce a different linter/formatter than the one already configured.
+
+---
+
+## 1. Dependency Usage (mandatory before every task)
+
+1. **Inventory what's actually installed** via `package.json` and the lockfile — exact resolved versions, not assumed ones.
+2. **Read the real docs shipped with the dependency** (`node_modules/<package>/README.md`, `docs/`, shipped `AGENTS.md`/`SKILL.md`/`CHANGELOG.md`, `.d.ts` types) before writing code against it — for every dependency the task touches.
+3. **Use what's already installed before reaching for something new.** Never add a dependency that duplicates something already in `package.json`.
+4. **Treat pre-release or major-version-jump packages (`-rc`, `-beta`, a major bump from what's commonly known) as a hard signal to read docs before touching them** — assume nothing about their API until verified against the installed source.
+5. **Prefer the documented, currently-shipped API over a remembered one.** If it's not in this project's installed docs/types, don't invent it.
+6. **Heed deprecation notices and breaking-change sections explicitly** — they supersede any older remembered pattern.
+7. **If the project has a skill-loading mechanism**, load the relevant skill for the package/concern being touched before editing files for a non-trivial task.
+
+---
+
+## 2. Project Structure (principles, not a fixed tree)
+
+- **Routing code stays thin.** `page`/`layout`/`route` files contain route wiring, metadata exports, and composition of already-built pieces — not embedded business logic or raw data-access calls.
+- **Reuse layouts and pages, don't duplicate them.** A shared shell (nav, sidebar, footer, section chrome) lives in one nested `layout.tsx` that every route under it inherits — never copy-pasted per page. A new route that fits an existing nested layout's group is placed under it rather than re-declaring its own copy of the same chrome. Nested routes only get their own new `layout.tsx` when they genuinely need a different shell than their parent.
+- **Separate concerns into their own areas** (adapt naming to the project's existing convention): reusable UI building blocks; page/feature-level composition; framework-agnostic logic (data access, validation, server actions, i18n, utilities); shared types inferred from validation schemas or the data layer.
+- **Group by domain/concern as the project grows**, not by technical file type alone once a folder gets large.
+- **One component, one responsibility** — split anything mixing unrelated concerns.
+- **Server/client boundaries are explicit and minimal.** Server Components are the default for everything — especially backend-heavy, data-fetching, or otherwise dynamic UI (anything that reads from a database, an API, env/secrets, or composes a lot of static structure). `"use client"` is reserved for genuinely interactive, content-level leaf components — the actual button, input, toggle, carousel, or widget that needs state, event handlers, or browser APIs — never applied to a whole page, section, or layout just because one small piece inside it needs interactivity. Pull that one interactive piece out into its own small client component and keep everything around it server-rendered.
+- **Use native routing/loading conventions.** A route segment with real async work defines its own `loading.tsx` (streamed Suspense fallback). Below-the-fold or heavy client-only sections use `next/dynamic` — applied where it earns its keep (§7), not everywhere by default.
+
+Follow and extend an already-established structure; don't restructure an existing project to match a different template unless explicitly asked.
+
+---
+
+## 3. Existing shadcn/ui Component Usage
+
+- **Check what's already generated before building anything.** Look in the project's actual shadcn location (commonly `components/ui/`, confirm via `components.json`) for an existing primitive before writing custom markup that reimplements it.
+- **Reuse and compose, don't recreate.** Build needed UI patterns by composing existing generated components rather than hand-rolling an equivalent from raw HTML.
+- **Add missing components through the project's shadcn CLI**, not by hand-copying from the docs — so it lands with the project's real config, theme tokens, and path aliases applied.
+- **Customize in place, don't fork.** Extend a generated component (new `cva` variant, new prop, wrapper) in its existing location instead of duplicating it into a parallel version.
+- **Don't strip correct built-in accessibility behavior** (focus management, ARIA, keyboard handling) when customizing.
+- **Keep shadcn's own conventions intact** — the `cn` utility, `class-variance-authority` variant pattern, existing file/naming conventions — new custom components in the same family follow the same pattern.
+
+---
+
+## 4. State Management (server state vs. client state — use the right tool, not both for the same job)
+
+- **TanStack Query owns server/async state:** anything fetched from an API, a database (via a server action/route handler), or any other external source that needs caching, revalidation, background refetch, or loading/error states. Define query keys consistently and colocate query/mutation hooks near the feature that owns that data (e.g. under the feature's own `hooks`/`queries` location) rather than one giant shared file.
+- **Zustand owns client-only/global UI state:** state that has no server counterpart — UI toggles that must persist across components (theme/sidebar/modal state, multi-step wizard state, client-side filters/selection not reflected in a query). One store per real domain slice, not one giant catch-all store.
+- **Don't cross the streams.** Server data doesn't get copied into a Zustand store "for convenience" — that creates a second, driftable source of truth; read it from TanStack Query where it's needed. Local component state that never needs to be shared stays as plain `useState`/`useReducer` — not every piece of state needs Zustand or Query.
+- **No redundant state.** If a value can be derived from existing query data or existing store state, derive it — don't duplicate it into a new state variable that now needs to be kept in sync by hand.
+
+---
+
+## 5. Forms & Validation
+
+- **Zod is the single source of validation truth.** Every schema (form input, server action argument, API route body) is defined once with Zod and reused — the same schema drives client-side validation and the server-side check, never two separately maintained definitions.
+- **TanStack Form for form state and submission flow** — field state, validation wiring (via the shared Zod schema), and submission handling go through it rather than ad hoc `useState` per field.
+- **Types are inferred from the Zod schema** (`z.infer<typeof schema>`) rather than hand-declared in parallel — one definition, reused everywhere the shape is needed.
+- **Submission always goes through the server boundary** (Server Action or Route Handler) that re-validates with the same schema — client-side validation is a UX convenience, never the only check.
+
+---
+
+## 6. Type Safety & Environment Variables
+
+- **TypeScript strict, no `any`.** Every function boundary, prop, and return type is real; unavoidable unknowns are narrowed properly rather than cast away.
+- **Shared types come from one place — `src/types/`** — every cross-cutting/functionality type (domain models, shared prop shapes, API/response types, anything used by more than one component or module) is declared there, one file per domain/feature, and imported everywhere it's needed. A type that's genuinely local to a single component can stay colocated with it, but the moment it's reused by a second file it moves to `src/types/`. Types derivable from a Zod schema are inferred (`z.infer<typeof schema>`) and re-exported from there rather than hand-declared a second time.
+- **`@t3-oss/env-nextjs` (t3-env) is the single source of truth for environment variables** where the project has it installed: every env var used anywhere in the app is declared and validated there (with the correct client/server split) rather than read directly off `process.env` in ad hoc places. A missing or malformed env var fails fast at build/start, not silently at runtime deep in a component.
+
+---
+
+## 7. Loading States & Skeletons
+
+- **Every dynamic/async content area gets a real skeleton, not a generic spinner.** The skeleton matches the actual shape of what's loading — a card skeleton mirrors that specific card's real layout (image block, title line, meta line, action row, etc.) at the right proportions, not a one-size-fits-all gray box reused for every component.
+- **Build one skeleton per distinct component/card shape**, colocated with (or clearly paired to) the component it stands in for, so it stays in sync if that component's layout changes — not one shared generic skeleton stretched across unrelated shapes.
+- **Use skeletons at the right layer:** `loading.tsx` for full route-segment streaming fallbacks; a component-level `<Suspense fallback={<XSkeleton />}>` for a smaller async region within an already-loaded page; a query's `isPending`/`isLoading` state for client-driven fetches (TanStack Query) rendering that same shape-matched skeleton.
+- **Preloading and every loading state render the matching skeleton, not a blank screen or a generic spinner** — this applies across the whole UI/UX consistently (route-level `loading.tsx`, component-level `Suspense`, and client-driven `isPending`/`isLoading` states alike), and the skeleton is fully responsive at every breakpoint the real component supports, matching its actual layout at each size rather than just at desktop width.
+- **Preloading:** prefetch data the user is very likely to need next (e.g. `queryClient.prefetchQuery` on hover/intent for a detail view reached from a list, or the framework's native link prefetching) where it measurably improves perceived performance — not blanket-prefetch everything, which just adds unnecessary network/work.
+- **No overhead for trivial content.** A skeleton is for content with real, noticeable load time — don't wrap instant, already-available, or static content in artificial loading states.
+
+---
+
+## 8. SEO — Dynamic Metadata, Structured Data, Breadcrumbs
+
+Applied per the actual page/route being built, driven by that page's real data — not hand-typed duplicate literals per page, and not added to pages/routes that don't need it (e.g. internal-only API routes).
+
+- **Metadata is dynamic and derived from the page's own data**, through a shared metadata-building helper: `title`, `description`, canonical URL, and locale alternates if the project is multi-locale. A sensible root default/template exists and each route overrides only what's specific to it.
+- **Structured data (JSON-LD)** uses shared, typed builders for whatever schema types the page actually needs (organization/person/site identity at the root, breadcrumbs, article/content types, FAQ, or other domain-specific schema) — rendered server-side.
+- **Breadcrumbs:** the visible breadcrumb UI and its `BreadcrumbList` JSON-LD are derived from the same underlying route/segment data — never maintained as two separate hand-written things that can drift.
+- **Open Graph images** generate per page via the framework's native dynamic image generation where a page's content should produce a distinct social preview, with a sensible static root fallback for anything that doesn't define its own.
+- **Site-wide native files** (sitemap, robots, manifest) are generated from real route/content data, not a hardcoded list that can drift from actual routes.
+
+---
+
+## 9. Icons
+
+- **lucide-react is the single icon set** for this project where it's installed — use it for every icon need rather than introducing a second icon library, inline SVGs for things lucide already covers, or an icon font.
+- Icons are sized/colored via the project's existing styling convention (Tailwind classes/theme tokens), not inline hardcoded styles that bypass the theme.
+
+---
+
+## 10. Code Quality
+
+- **Reuse before creation, always** — hand-written code, UI components, and dependencies alike (§0.5, §1.3, §3).
+- **Every component is modular and separate: one file, one clear responsibility, one reason to change.** Before writing a new component, check `components/ui/` (shadcn), the project's shared components/sections folders, and `src/types/` for something that already exists and fits — reuse or extend it rather than creating a parallel version. A component that grows multiple unrelated responsibilities gets split back apart.
+- **Server Components by default; `"use client"` only at the smallest leaf that genuinely needs it.**
+- **Consistent conventions across the board** — styling (`cn`, `cva`, Tailwind tokens), state (§4), forms/validation (§5), icons (§9) — no second, competing pattern introduced alongside an existing one.
+- **No dead code, no commented-out blocks, no leftover debug logging** left after a task is finished.
+- **Proportional engineering (§0.6).** Dynamic imports, Zustand stores, extra Query keys, and new Zod schemas are added because the task genuinely needs them — not as default scaffolding for something simple.
+- **Format, lint, and type-check/build all pass clean** — zero errors, zero warnings — using this project's actual configured commands, before a task is considered complete.
+- **Zero tolerance for framework/console warnings or errors** (hydration mismatches, key warnings, etc.) — fix the root cause, don't suppress it.
+
+---
+
+## Summary Checklist (apply to every task)
+
+- [ ] Read `package.json`/lockfile first; confirmed real installed versions and package manager
+- [ ] Read the relevant dependency's actual docs/types before writing code against it
+- [ ] No new dependency or new component that duplicates something already installed/existing
+- [ ] Server Components used for backend-heavy/dynamic UI by default; `"use client"` only on genuinely interactive content-level leaf components
+- [ ] Existing nested layouts/pages reused where they already fit; no duplicated chrome
+- [ ] Checked shadcn's existing components first; composed/extended rather than forked; new ones added via CLI
+- [ ] Every component is modular, single-responsibility, and reused/extended rather than duplicated
+- [ ] Server state via TanStack Query, client/global UI state via Zustand — no redundant/duplicated state between them
+- [ ] Forms use TanStack Form + a shared Zod schema, re-validated server-side
+- [ ] Env vars go through t3-env (if installed); no direct ad hoc `process.env` reads
+- [ ] Shared/functionality types live in `src/types/`, reused rather than redeclared
+- [ ] Every loading/preloading state renders a shape-matched, responsive skeleton (route, component, and query-level alike); preloading used only where it clearly helps
+- [ ] Page has dynamic metadata, correct structured data, and breadcrumb UI+schema sharing one data source (where applicable to that route)
+- [ ] Icons are lucide-react, styled via the project's existing theme conventions
+- [ ] Solution complexity matches the actual requirement — no speculative overhead
+- [ ] This project's configured format, lint, and build/type-check commands all pass clean, zero warnings

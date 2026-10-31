@@ -1,0 +1,20 @@
+{
+  "@context": "https://agenticresourcediscovery.org/context/v1",
+  "entries": [
+    {
+      "identifier": "urn:air:muhammadfiaz.com:nextjs-starter:navigation",
+      "displayName": "Next.js Starter Site Navigator",
+      "type": "application/mcp-server-card+json",
+      "url": "https://github.com/muhammad-fiaz/nextjs-starter",
+      "description": "Navigation and site context tools for Next.js Starter web application.",
+      "capabilities": ["navigate_to_page", "get_current_context"],
+      "representativeQueries": [
+        "navigate to the privacy policy page",
+        "show terms of service",
+        "get current page and locale context",
+        "explore available API routes"
+      ]
+    }
+  ]
+}
+

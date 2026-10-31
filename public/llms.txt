@@ -1,0 +1,26 @@
+# Next.js Starter
+
+> Production-ready, infrastructure-first open source Next.js starter template featuring React 19, TypeScript, Tailwind CSS v4, WebMCP agentic browsing, and full internationalization.
+
+## Overview
+
+Next.js Starter is an open-source web application and template designed for high performance, accessibility, SEO excellence, and AI agent discoverability (WebMCP and Agentic Resource Discovery).
+
+- [Homepage](/) - Main landing page, hero showcase, and feature highlights.
+- [API Overview](/api) - REST endpoints, system routes, and telemetry schemas.
+- [Privacy Policy](/privacy) - Privacy notice, user consent, and data governance principles.
+- [Terms of Service](/terms) - Usage guidelines, MIT open source rights, and platform terms.
+- [Cookie Policy](/cookies) - Detailed cookie consent, tracking classification, and policy settings.
+- [Agentic Resource Discovery (ARD)](/.well-known/ard.json) - Formal ARD v0.91 catalog for autonomous AI agents.
+- [Search Index - English](/search/en/index.json) - Pre-built serialized Orama search index for English content.
+- [Search Index - Spanish](/search/es/index.json) - Pre-built serialized Orama search index for Spanish content.
+
+## Technical Capabilities
+
+- **Framework**: Next.js 16.4.3 (App Router with Turbopack) & React 19.
+- **WebMCP Ready**: Declarative WebMCP forms (`<WebMCPForm />`) and programmatic tool registration conforming to Google Chrome WebMCP and ARD standards.
+- **Universal Orama Search**: Native full-text search engine executing in browser memory via static prebuilt index files, requiring zero external search APIs or databases.
+- **Strict JSON-Driven i18n**: All localized content (titles, descriptions, sections, legal policies, navigation, and UI strings) sourced exclusively from `src/i18n/locales/*.json`.
+- **Privacy & GDPR Compliance**: Integrated cookie consent banner, automatic script gating, and structured legal wrappers.
+- **Centralized Site Configuration**: Type-safe control via `src/site.config.ts`.
+- **Design System**: Accessible Shadcn UI and Base UI components styled with Tailwind CSS v4 and modern CSS variables.

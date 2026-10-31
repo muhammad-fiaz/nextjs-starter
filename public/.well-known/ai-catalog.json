@@ -1,0 +1,41 @@
+{
+  "name": "Next.js Starter AI Agent Catalog",
+  "description": "Standardized AI agent and WebMCP tool discovery catalog for Next.js Starter",
+  "version": "1.0.0",
+  "provider": {
+    "name": "Muhammad Fiaz",
+    "url": "https://github.com/muhammad-fiaz"
+  },
+  "services": [
+    {
+      "id": "webmcp-site-navigation",
+      "name": "Next.js Starter WebMCP Agent Tools",
+      "type": "webmcp",
+      "description": "Client-side interactive WebMCP tools for site exploration and navigation",
+      "tools": [
+        {
+          "name": "navigate_to_page",
+          "description": "Navigate to a specific path within Next.js Starter web application.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              }
+            },
+            "required": ["path"]
+          }
+        },
+        {
+          "name": "get_current_context",
+          "description": "Returns the current active page path, title, and site configuration.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      ]
+    }
+  ]
+}
+

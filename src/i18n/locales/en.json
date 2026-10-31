@@ -1,0 +1,354 @@
+{
+  "metadata": {
+    "language": "en",
+    "locale": "en",
+    "direction": "ltr"
+  },
+  "common": {
+    "appName": "Next.js Starter",
+    "description": "Production-Ready Open Source Next.js Starter Template",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "toggleLabel": "Toggle theme"
+    },
+    "actions": {
+      "retry": "Try again",
+      "goHome": "Go back home",
+      "close": "Close",
+      "accept": "Accept",
+      "deny": "Deny"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "features": "Features",
+    "architecture": "Architecture",
+    "api": "API",
+    "search": "Search",
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "github": "GitHub",
+    "selectLanguage": "Select language"
+  },
+  "search": {
+    "placeholder": "Search documentation, features, pages...",
+    "triggerText": "Search documentation...",
+    "emptyTitle": "No results found",
+    "emptyDescription": "Try another search term or verify your spelling.",
+    "initialPrompt": "Enter a search term to find content.",
+    "resultsHeading": "Results",
+    "suggestionsHeading": "Suggestions",
+    "noSuggestions": "No suggestions available",
+    "quickLinksHeading": "Quick Links",
+    "pagesCategory": "Pages",
+    "sectionsCategory": "Sections",
+    "legalCategory": "Legal",
+    "developerCategory": "Developer",
+    "title": "Search",
+    "pageDescription": "Explore documentation, guides, APIs, and legal policies across Next.js Starter.",
+    "allFilter": "All Content",
+    "filtersHeading": "Filters",
+    "contentTypeHeading": "Content Type",
+    "sortByHeading": "Sort by",
+    "relevanceSort": "Relevance",
+    "titleAscSort": "Title (A-Z)",
+    "titleDescSort": "Title (Z-A)",
+    "resultsFoundText": "results found",
+    "clearFiltersText": "Clear all filters",
+    "previousPageText": "Previous",
+    "nextPageText": "Next",
+    "pageIndicatorText": "Page",
+    "loadingText": "Searching..."
+  },
+  "home": {
+    "hero": {
+      "badge": "Next.js 16 + React 19 + TypeScript + Tailwind CSS v4",
+      "titlePrimary": "Infrastructure-First",
+      "titleHighlight": "Next.js Starter Template",
+      "description": "A complete, production-grade foundation with enterprise SEO, toggleable i18n, cookie consent compliance, and modern App Router patterns.",
+      "exploreFeatures": "Explore Features",
+      "viewGithub": "View on GitHub"
+    },
+    "features": {
+      "heading": "Built for scalable production apps",
+      "subheading": "Everything you need to launch immediately without spending days wiring boilerplate.",
+      "items": {
+        "nextjs": {
+          "title": "Next.js 16 & Turbopack",
+          "description": "Modern App Router, Partial Prerendering (PPR), and Cache Components built for scale and sub-second load times."
+        },
+        "i18n": {
+          "title": "Zero-Overhead i18n",
+          "description": "Toggleable native internationalization configured directly from site.config.ts with no heavy third-party runtime bloat."
+        },
+        "privacy": {
+          "title": "Privacy & GDPR Built-in",
+          "description": "Modular cookie consent management, automatic script gating, and legal page wrappers (Privacy, Terms, Cookies)."
+        },
+        "seo": {
+          "title": "Centralized SEO & Metadata",
+          "description": "Type-safe metadata inheritance, dynamic OpenGraph / Twitter ImageResponse, and automated sitemap & robots.txt."
+        },
+        "modularTypes": {
+          "title": "Modular Type Architecture",
+          "description": "Strict separation of concerns across domain types (api, config, cookies, legal, seo, schema, stores) with zero duplication."
+        },
+        "shadcn": {
+          "title": "Shadcn UI & Tailwind CSS v4",
+          "description": "Extensive library of accessible UI components styled with modern CSS variables, dark mode, and smooth transitions."
+        },
+        "webmcp": {
+          "title": "WebMCP & AI Agent Ready",
+          "description": "Google Chrome WebMCP and ARD standards integrated out-of-the-box for autonomous browser AI agent discoverability and execution."
+        }
+      }
+    },
+    "architecture": {
+      "heading": "Core Architecture & Conventions",
+      "items": [
+        "App Router with dynamic [lang] segment support and legacy root compatibility",
+        "Modern proxy routing handler (proxy.ts) adhering to Next.js 16 conventions",
+        "Fully typed site configuration (site.config.ts) controlling features at runtime",
+        "Offline-ready Progressive Web App (PWA) scaffolding with service worker registration",
+        "Integrated Orama full-text search engine with client and server index capabilities",
+        "Zustand state management and TanStack React Query v5 preconfigured"
+      ]
+    }
+  },
+  "cookies": {
+    "title": "Privacy and Cookie Choices",
+    "description": "We use strictly necessary cookies to keep our site secure and functional. With your consent, we also use optional analytics and advertising cookies to improve our services.",
+    "policyLinkText": "Cookie Policy"
+  },
+  "offline": {
+    "title": "You are offline",
+    "description": "Please check your network connection and reload.",
+    "retryAction": "Reload page"
+  },
+  "footer": {
+    "navigationHeading": "Navigation",
+    "legalHeading": "Legal & Compliance",
+    "copyright": "Open source under MIT License."
+  },
+  "pages": {
+    "api": {
+      "metadata": {
+        "title": "API & System Route Overview",
+        "description": "Information about REST endpoints, system routes, and telemetry exposed by Next.js Starter."
+      },
+      "badge": "System Endpoints",
+      "title": "API & System Route Overview",
+      "description": "Public endpoints, metadata resources, and server infrastructure exposed by the application.",
+      "returnHome": "Return to home",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/robots.txt",
+          "desc": "Dynamic crawler policies and search engine indexing directives.",
+          "category": "System"
+        },
+        {
+          "method": "GET",
+          "path": "/sitemap.xml",
+          "desc": "XML sitemap index with localized route alternate declarations.",
+          "category": "System"
+        },
+        {
+          "method": "GET",
+          "path": "/manifest.webmanifest",
+          "desc": "Progressive Web Application (PWA) manifest specification.",
+          "category": "System"
+        },
+        {
+          "method": "GET",
+          "path": "/opengraph-image",
+          "desc": "Dynamic runtime OpenGraph image generation via Next.js ImageResponse.",
+          "category": "System"
+        }
+      ]
+    },
+    "legal": {
+      "privacy": {
+        "metadata": {
+          "title": "Privacy Policy",
+          "description": "Learn how personal information is collected, processed, and protected."
+        },
+        "title": "Privacy Policy",
+        "description": "How we collect, use, and protect your information across our application and platform.",
+        "effectiveDate": "2026-01-01",
+        "lastUpdated": "2026-10-31",
+        "sections": [
+          {
+            "id": "introduction",
+            "heading": "1. Introduction and Scope",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "We are committed to safeguarding personal data and adhering to international privacy standards."
+              },
+              {
+                "type": "paragraph",
+                "text": "This policy outlines the protocols followed when browsing or interacting with services provided by this application."
+              }
+            ]
+          },
+          {
+            "id": "information-collected",
+            "heading": "2. Information We Collect",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "We strictly collect the minimum information necessary to operate and secure the platform:"
+              },
+              {
+                "type": "list",
+                "ordered": false,
+                "items": [
+                  "Direct User Information: Voluntary communications, account identifiers, or emails provided during contact.",
+                  "Technical Data: Anonymized browser headers, device characteristics, and session telemetry used for system diagnostics."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "data-usage",
+            "heading": "3. Purpose and Legal Basis for Processing",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Information collected is processed exclusively for the following operational needs:"
+              },
+              {
+                "type": "list",
+                "ordered": false,
+                "items": [
+                  "Maintaining platform availability and network resilience.",
+                  "Enforcing security policies and fraud prevention.",
+                  "Responding to legitimate user support queries."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "contact",
+            "heading": "4. Privacy Inquiries",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "For questions concerning personal data rights or privacy practices, contact our team through the designated contact channels."
+              }
+            ]
+          }
+        ]
+      },
+      "terms": {
+        "metadata": {
+          "title": "Terms of Service",
+          "description": "Review terms, conditions, and acceptable use guidelines."
+        },
+        "title": "Terms of Service",
+        "description": "Please read these terms and conditions carefully before using our application and services.",
+        "effectiveDate": "2026-01-01",
+        "lastUpdated": "2026-10-31",
+        "sections": [
+          {
+            "id": "acceptance",
+            "heading": "1. Acceptance of Terms",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "By accessing, browsing, or utilizing this application, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+              }
+            ]
+          },
+          {
+            "id": "acceptable-use",
+            "heading": "2. Acceptable Use and Platform Security",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "You agree not to engage in malicious activities, unauthorized penetration testing, scraping, or intentional denial of service against this infrastructure."
+              }
+            ]
+          },
+          {
+            "id": "intellectual-property",
+            "heading": "3. Intellectual Property and Open Source",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Unless otherwise specified, codebase components are distributed under the applicable open source project license (MIT License)."
+              }
+            ]
+          },
+          {
+            "id": "governing-law",
+            "heading": "4. Governing Law",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "These terms shall be governed by and interpreted in accordance with applicable open source and jurisdiction standards."
+              }
+            ]
+          }
+        ]
+      },
+      "cookies": {
+        "metadata": {
+          "title": "Cookie Policy",
+          "description": "Learn how we use cookies and tracking technologies to secure and operate our services."
+        },
+        "title": "Cookie Policy",
+        "description": "Learn how we use cookies and related tracking technologies to provide, secure, and improve our services.",
+        "effectiveDate": "2026-01-01",
+        "lastUpdated": "2026-10-31",
+        "sections": [
+          {
+            "id": "what-are-cookies",
+            "heading": "1. What Are Cookies?",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Cookies and local storage records are small files saved on your device by your browser. They facilitate essential functions, preserve session preferences, and safeguard user choices."
+              }
+            ]
+          },
+          {
+            "id": "categories",
+            "heading": "2. Categories of Cookies We Use",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "We classify storage and cookie technologies by operational necessity:"
+              },
+              {
+                "type": "list",
+                "ordered": false,
+                "items": [
+                  "Strictly Necessary: Essential for routing, security, and consent memory. These cannot be disabled.",
+                  "Functional & Preferences: Remember chosen UI themes (light/dark) and preferred language selections.",
+                  "Analytics (Optional): Anonymously evaluate traffic patterns. Only activated upon user consent."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "managing-cookies",
+            "heading": "3. Managing Consent",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "You can modify or withdraw your cookie preferences at any time using the interactive consent banner available across the application."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

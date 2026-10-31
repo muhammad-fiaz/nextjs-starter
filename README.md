@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Starter
 
-## Getting Started
+Production-ready, infrastructure-first open-source Next.js 16 starter template featuring React 19, TypeScript, Tailwind CSS v4, Base UI / Shadcn UI components, centralized modular types, privacy & cookie consent infrastructure, and toggleable zero-overhead internationalization (i18n).
 
-First, run the development server:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-16.4.3-black)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.3.1-blue)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8)](https://tailwindcss.com/)
+
+---
+
+## 1. Features & Highlights
+
+- **Next.js 16 & Turbopack**: App Router, Partial Prerendering (PPR), and Cache Components for instant performance.
+- **Toggleable Native Internationalization (i18n)**: Centrally configured in `src/site.config.ts` (`enabled: true/false`, `locales`, `localePrefix`), with zero heavy runtime bloat and English (`en`) + Spanish (`es`) dictionary support.
+- **Privacy & GDPR Compliance**: Modular cookie consent management, script-gating provider (`IntegrationManager`), and structured legal page wrappers.
+- **Enterprise SEO & OpenGraph**: Centralized metadata inheritance (`createPageMetadata`), native dynamic App Router `ImageResponse` (`opengraph-image.tsx`, `twitter-image.tsx`), automated localized sitemap, and production robots.txt.
+- **Modular Type Architecture**: Clean separation of domain interfaces in `src/types/` (`api`, `config`, `cookies`, `errors`, `layouts`, `legal`, `pages`, `pwa`, `query`, `schema`, `search`, `seo`, `services`, `stores`, `theme`, `utils`).
+- **Accessible UI Primitives**: Extensive Shadcn and Base UI component library with dark/light theme switching and custom SVG social icons (`GithubIcon`, `LinkedInIcon`, `FacebookIcon`, `InstagramIcon`, `YouTubeIcon`).
+- **State & Data Fetching**: TanStack React Query v5 preconfigured with query factories and Zustand stores.
+
+---
+
+## 2. Getting Started
+
+### Prerequisites
+
+- [Bun](https://bun.sh/) (version 1.2+ recommended) or Node.js 20+
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone the repository
+git clone https://github.com/muhammad-fiaz/nextjs-starter.git
+cd nextjs-starter
+
+# Install dependencies
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development Server
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+bun run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 3. Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```text
+src/
+├── app/                       # Next.js App Router route adapters
+│   ├── [lang]/                # Localized dynamic segment
+│   │   ├── (marketing)/       # Localized marketing routes (/en, /es)
+│   │   ├── (legal)/           # Localized legal pages (/en/privacy, /en/terms, etc.)
+│   │   └── (api)/             # Localized API status overview
+│   ├── manifest.ts            # PWA Web App Manifest
+│   ├── opengraph-image.tsx    # Native dynamic OpenGraph ImageResponse
+│   ├── twitter-image.tsx      # Native dynamic Twitter Card ImageResponse
+│   ├── robots.ts              # Crawler policies with production disallow paths
+│   └── sitemap.ts             # Dynamic multi-locale XML sitemap
+├── components/
+│   ├── cookies/               # Cookie consent provider and banner
+│   ├── errors/                # Unified atomic system error pages
+│   ├── icons/                 # Custom SVG icons (GitHub, Facebook, LinkedIn, etc.)
+│   ├── integrations/          # Third-party integrations (Clarity, GA, GTM, Vercel)
+│   ├── layout/                # SiteHeader, SiteFooter, LanguageToggle, ThemeToggle
+│   ├── pages/                 # Composed page implementations
+│   ├── providers/             # TanStack Query, ThemeProvider, PWAProvider
+│   ├── seo/                   # JSON-LD structured data and breadcrumbs
+│   └── ui/                    # Shadcn UI / Base UI accessible components
+├── i18n/                      # Server-side dictionary loader and locale configuration
+├── lib/                       # API clients, SEO helpers, search, schema builders
+├── services/                  # Universal API client and TanStack query keys
+├── stores/                    # Zustand stores (UI, search, layout)
+├── types/                     # Centralized, strongly-typed domain interfaces
+├── env.ts                     # Type-safe environment validation
+├── proxy.ts                   # Next.js 16 proxy routing handler
+└── site.config.ts             # Central configuration single source of truth
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 4. Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Command                | Description                                   |
+| :--------------------- | :-------------------------------------------- |
+| `bun run dev`          | Start development server with Turbopack       |
+| `bun run build`        | Build optimized production bundle             |
+| `bun run start`        | Start production server                       |
+| `bun run lint`         | Run TypeScript type checker (`bun check`)     |
+| `bun run format`       | Format code with Bun formatter (`bun fmt`)    |
+| `bun run format:check` | Check code formatting without modifying files |
+| `bun test`             | Execute unit test suite                       |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 5. Contributing
+
+Contributions are warmly welcomed! Please read our [Contributing Guidelines](CONTRIBUTING.md) and adhere to the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+---
+
+## 6. License
+
+This project is licensed under the [MIT License](LICENSE) &copy; 2026 [Muhammad Fiaz](https://github.com/muhammad-fiaz).

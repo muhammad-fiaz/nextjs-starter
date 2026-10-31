@@ -1,0 +1,88 @@
+import Link from "next/link";
+import { type ReactNode } from "react";
+
+import { GithubIcon } from "@/components/icons/social-icons";
+import { LanguageToggle } from "@/components/layout/language-toggle";
+import { MobileNav } from "@/components/layout/mobile-nav";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { GlobalSearchDialog } from "@/components/search/global-search-dialog";
+import { Button } from "@/components/ui/button";
+import { getLocalizedPath } from "@/i18n/navigation";
+import type { DictionaryNavigation, SearchI18n } from "@/i18n/types";
+import { siteConfig } from "@/site.config";
+
+interface SiteHeaderProps {
+  readonly currentLocale?: string;
+  readonly navigation?: DictionaryNavigation;
+  readonly search?: SearchI18n;
+}
+
+export function SiteHeader({ currentLocale, navigation, search }: SiteHeaderProps): ReactNode {
+  const getHref = (path: string) => getLocalizedPath(path, currentLocale);
+
+  return (
+    <header className="border-border/40 bg-background/80 sticky top-0 z-40 w-full border-b backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        {/* Brand & Left Navigation */}
+        <div className="flex items-center gap-3 md:gap-8">
+          <MobileNav currentLocale={currentLocale} navigation={navigation} />
+          <Link
+            href={getHref("/")}
+            className="group flex items-center gap-2.5 font-bold tracking-tight transition-opacity hover:opacity-90"
+          >
+            <div className="bg-primary text-primary-foreground flex h-9 w-9 items-center justify-center rounded-xl text-sm font-black shadow-sm transition-transform group-hover:scale-105">
+              N
+            </div>
+            <span className="text-base font-semibold tracking-tight sm:text-lg">
+              {siteConfig.name}
+            </span>
+          </Link>
+
+          <nav className="text-muted-foreground hidden items-center gap-6 text-sm font-medium md:flex">
+            <Link href={getHref("/#features")} className="hover:text-foreground transition-colors">
+              {navigation?.features || "Features"}
+            </Link>
+            <Link
+              href={getHref("/#architecture")}
+              className="hover:text-foreground transition-colors"
+            >
+              {navigation?.architecture || "Architecture"}
+            </Link>
+            <Link href={getHref("/api")} className="hover:text-foreground transition-colors">
+              {navigation?.api || "API"}
+            </Link>
+          </nav>
+        </div>
+
+        {/* Search, Locales, Theme & GitHub */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <GlobalSearchDialog
+            currentLocale={currentLocale}
+            searchI18n={search}
+            navigationI18n={navigation}
+          />
+          <div className="bg-border/60 hidden h-4 w-px sm:block" />
+          <LanguageToggle currentLocale={currentLocale} />
+          <ThemeToggle />
+          {siteConfig.social?.github && (
+            <a
+              href={siteConfig.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={navigation?.github || "GitHub"}
+              className="hidden sm:inline-flex"
+            >
+              <Button
+                size="sm"
+                className="bg-foreground text-background hover:bg-foreground/90 gap-2 text-xs font-semibold shadow-xs transition-colors"
+              >
+                <GithubIcon className="h-4 w-4 shrink-0" />
+                <span>{navigation?.github || "GitHub"}</span>
+              </Button>
+            </a>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}

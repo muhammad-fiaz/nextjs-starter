@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
 
@@ -9,8 +10,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-geist-serif), serif;
+  --font-pixel: var(--font-geist-pixel), monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -129,4 +132,51 @@
   html {
     @apply font-sans;
   }
+}
+
+/* Geist Pixel utilities for Tailwind v4 */
+@utility font-pixel-square {
+  font-family: var(--font-geist-pixel-square, var(--font-geist-pixel));
+  font-variation-settings: "ELSH" 1;
+}
+
+@utility font-pixel-circle {
+  font-family: var(--font-geist-pixel-circle, var(--font-geist-pixel));
+  font-variation-settings: "ELSH" 20;
+}
+
+@utility font-pixel-grid {
+  font-family: var(--font-geist-pixel-grid, var(--font-geist-pixel));
+  font-variation-settings: "ELSH" 40;
+}
+
+@utility font-pixel-triangle {
+  font-family: var(--font-geist-pixel-triangle, var(--font-geist-pixel));
+  font-variation-settings: "ELSH" 60;
+}
+
+@utility font-pixel-line {
+  font-family: var(--font-geist-pixel-line, var(--font-geist-pixel));
+  font-variation-settings: "ELSH" 80;
+}
+
+/* Geist Serif shape utilities for Tailwind v4 */
+@utility font-serif-regular {
+  font-family: var(--font-geist-serif-regular, var(--font-geist-serif));
+  font-variation-settings: "ELSH" 0;
+}
+
+@utility font-serif-square {
+  font-family: var(--font-geist-serif-square, var(--font-geist-serif));
+  font-variation-settings: "ELSH" 25;
+}
+
+@utility font-serif-triangle {
+  font-family: var(--font-geist-serif-triangle, var(--font-geist-serif));
+  font-variation-settings: "ELSH" 50;
+}
+
+@utility font-serif-heart {
+  font-family: var(--font-geist-serif-heart, var(--font-geist-serif));
+  font-variation-settings: "ELSH" 100;
 }

@@ -66,7 +66,6 @@ function BreadcrumbSeparator({ children, className, ...props }: React.ComponentP
   return (
     <li
       data-slot="breadcrumb-separator"
-      role="presentation"
       aria-hidden="true"
       className={cn("[&>svg]:size-3.5", className)}
       {...props}

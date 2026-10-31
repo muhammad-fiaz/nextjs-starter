@@ -1,0 +1,354 @@
+{
+  "metadata": {
+    "language": "es",
+    "locale": "es",
+    "direction": "ltr"
+  },
+  "common": {
+    "appName": "Next.js Starter",
+    "description": "Plantilla de inicio de Next.js de código abierto lista para producción",
+    "theme": {
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema",
+      "toggleLabel": "Alternar tema"
+    },
+    "actions": {
+      "retry": "Intentar de nuevo",
+      "goHome": "Volver al inicio",
+      "close": "Cerrar",
+      "accept": "Aceptar",
+      "deny": "Rechazar"
+    }
+  },
+  "navigation": {
+    "home": "Inicio",
+    "features": "Características",
+    "architecture": "Arquitectura",
+    "api": "API",
+    "search": "Buscar",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "cookies": "Política de Cookies",
+    "github": "GitHub",
+    "selectLanguage": "Seleccionar idioma"
+  },
+  "search": {
+    "placeholder": "Buscar páginas, características, legal...",
+    "triggerText": "Buscar documentación...",
+    "emptyTitle": "No se encontraron resultados",
+    "emptyDescription": "Prueba con otro término de búsqueda o verifica la ortografía.",
+    "initialPrompt": "Introduce un término de búsqueda para encontrar contenido.",
+    "resultsHeading": "Resultados",
+    "suggestionsHeading": "Sugerencias",
+    "noSuggestions": "No hay sugerencias disponibles",
+    "quickLinksHeading": "Enlaces Rápidos",
+    "pagesCategory": "Páginas",
+    "sectionsCategory": "Secciones",
+    "legalCategory": "Legal",
+    "developerCategory": "Desarrollador",
+    "title": "Búsqueda",
+    "pageDescription": "Explore documentación, guías, APIs y políticas legales en Next.js Starter.",
+    "allFilter": "Todo el Contenido",
+    "filtersHeading": "Filtros",
+    "contentTypeHeading": "Tipo de Contenido",
+    "sortByHeading": "Ordenar por",
+    "relevanceSort": "Relevancia",
+    "titleAscSort": "Título (A-Z)",
+    "titleDescSort": "Título (Z-A)",
+    "resultsFoundText": "resultados encontrados",
+    "clearFiltersText": "Limpiar todos los filtros",
+    "previousPageText": "Anterior",
+    "nextPageText": "Siguiente",
+    "pageIndicatorText": "Página",
+    "loadingText": "Buscando..."
+  },
+  "home": {
+    "hero": {
+      "badge": "Next.js 16 + React 19 + TypeScript + Tailwind CSS v4",
+      "titlePrimary": "Infraestructura Primero",
+      "titleHighlight": "Plantilla de Inicio Next.js",
+      "description": "Una base completa y lista para producción con SEO corporativo, i18n configurable, gestión de consentimiento de cookies y patrones modernos de App Router.",
+      "exploreFeatures": "Explorar Características",
+      "viewGithub": "Ver en GitHub"
+    },
+    "features": {
+      "heading": "Diseñado para aplicaciones escalables",
+      "subheading": "Todo lo necesario para lanzar de inmediato sin perder días configurando código repetitivo.",
+      "items": {
+        "nextjs": {
+          "title": "Next.js 16 y Turbopack",
+          "description": "App Router moderno, Partial Prerendering (PPR) y componentes de caché diseñados para escala y velocidad extrema."
+        },
+        "i18n": {
+          "title": "i18n Sin Sobrecarga",
+          "description": "Internacionalización nativa configurable directamente desde site.config.ts sin bibliotecas pesadas en tiempo de ejecución."
+        },
+        "privacy": {
+          "title": "Privacidad y RGPD Integrados",
+          "description": "Gestión modular de consentimiento de cookies, bloqueo automático de scripts y páginas legales estructuradas."
+        },
+        "seo": {
+          "title": "SEO y Metadatos Centralizados",
+          "description": "Herencia tipada de metadatos, generación dinámica de imágenes OpenGraph / Twitter y sitemap automatizado."
+        },
+        "modularTypes": {
+          "title": "Arquitectura Modular de Tipos",
+          "description": "Separación estricta de responsabilidades en dominios tipados con cero duplicación."
+        },
+        "shadcn": {
+          "title": "Shadcn UI y Tailwind CSS v4",
+          "description": "Biblioteca completa de componentes accesibles diseñados con variables CSS modernas y modo oscuro."
+        },
+        "webmcp": {
+          "title": "WebMCP y Preparado para Agentes IA",
+          "description": "Estándares WebMCP de Google Chrome y especificación ARD integrados para ejecución autónoma de agentes de IA."
+        }
+      }
+    },
+    "architecture": {
+      "heading": "Arquitectura Principal y Convenciones",
+      "items": [
+        "App Router con soporte para el segmento dinámico [lang] y compatibilidad con raíz",
+        "Manejador de enrutamiento proxy moderno (proxy.ts) adaptado a las convenciones de Next.js 16",
+        "Configuración centralizada (site.config.ts) que controla funcionalidades en ejecución",
+        "Estructura Progressive Web App (PWA) lista para desconexión con registro de Service Worker",
+        "Motor de búsqueda de texto completo Orama integrado con índices de cliente y servidor",
+        "Gestión de estado con Zustand y TanStack React Query v5 preconfigurados"
+      ]
+    }
+  },
+  "cookies": {
+    "title": "Opciones de Privacidad y Cookies",
+    "description": "Utilizamos cookies estrictamente necesarias para mantener la seguridad y el funcionamiento del sitio. Con su consentimiento, también utilizamos cookies analíticas para mejorar nuestros servicios.",
+    "policyLinkText": "Política de Cookies"
+  },
+  "offline": {
+    "title": "Sin conexión",
+    "description": "Por favor, compruebe su conexión de red y recargue la página.",
+    "retryAction": "Recargar página"
+  },
+  "footer": {
+    "navigationHeading": "Navegación",
+    "legalHeading": "Legal y Cumplimiento",
+    "copyright": "Código abierto bajo Licencia MIT."
+  },
+  "pages": {
+    "api": {
+      "metadata": {
+        "title": "Resumen de API y Rutas del Sistema",
+        "description": "Información sobre endpoints REST, rutas del sistema y telemetría de Next.js Starter."
+      },
+      "badge": "Endpoints del Sistema",
+      "title": "Resumen de API y Rutas del Sistema",
+      "description": "Endpoints públicos, recursos de metadatos e infraestructura del servidor expuestos por la aplicación.",
+      "returnHome": "Volver al inicio",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/robots.txt",
+          "desc": "Configuración dinámica del rastreador web y reglas de indexación.",
+          "category": "System"
+        },
+        {
+          "method": "GET",
+          "path": "/sitemap.xml",
+          "desc": "Mapa del sitio XML con rutas localizadas (en, es).",
+          "category": "System"
+        },
+        {
+          "method": "GET",
+          "path": "/manifest.webmanifest",
+          "desc": "Manifiesto de la aplicación web progresiva (PWA).",
+          "category": "System"
+        },
+        {
+          "method": "GET",
+          "path": "/opengraph-image",
+          "desc": "Generación dinámica de imágenes OpenGraph en tiempo de ejecución.",
+          "category": "System"
+        }
+      ]
+    },
+    "legal": {
+      "privacy": {
+        "metadata": {
+          "title": "Política de Privacidad",
+          "description": "Conozca cómo se recopila, procesa y protege la información personal."
+        },
+        "title": "Política de Privacidad",
+        "description": "Cómo recopilamos, utilizamos y protegemos su información a través de nuestra plataforma.",
+        "effectiveDate": "2026-01-01",
+        "lastUpdated": "2026-10-31",
+        "sections": [
+          {
+            "id": "introduction",
+            "heading": "1. Introducción y Alcance",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Nos comprometemos a salvaguardar sus datos personales y cumplir con los estándares internacionales de privacidad."
+              },
+              {
+                "type": "paragraph",
+                "text": "Esta política detalla los protocolos seguidos al navegar o interactuar con los servicios ofrecidos por esta aplicación."
+              }
+            ]
+          },
+          {
+            "id": "information-collected",
+            "heading": "2. Información que Recopilamos",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Recopilamos estrictamente la información mínima requerida para operar y proteger la plataforma:"
+              },
+              {
+                "type": "list",
+                "ordered": false,
+                "items": [
+                  "Información Directa: Comunicaciones voluntarias, identificadores de cuenta o correos electrónicos enviados durante el contacto.",
+                  "Datos Técnicos: Cabeceras de navegador anonimizadas, características del dispositivo y telemetría de sesión para diagnósticos del sistema."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "data-usage",
+            "heading": "3. Finalidad del Tratamiento de Datos",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "La información recopilada se procesa exclusivamente para las siguientes necesidades operativas:"
+              },
+              {
+                "type": "list",
+                "ordered": false,
+                "items": [
+                  "Mantener la disponibilidad de la plataforma y la resiliencia de la red.",
+                  "Aplicar políticas de seguridad y prevención de fraudes.",
+                  "Atender consultas y solicitudes legítimas de soporte del usuario."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "contact",
+            "heading": "4. Contacto de Privacidad",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Para cualquier consulta sobre sus derechos o prácticas de privacidad, puede contactar a nuestro equipo a través de los canales designados."
+              }
+            ]
+          }
+        ]
+      },
+      "terms": {
+        "metadata": {
+          "title": "Términos de Servicio",
+          "description": "Revise los términos, condiciones y pautas de uso aceptable."
+        },
+        "title": "Términos de Servicio",
+        "description": "Lea atentamente estos términos y condiciones antes de utilizar nuestra aplicación y servicios.",
+        "effectiveDate": "2026-01-01",
+        "lastUpdated": "2026-10-31",
+        "sections": [
+          {
+            "id": "acceptance",
+            "heading": "1. Aceptación de los Términos",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Al acceder, navegar o utilizar esta aplicación, reconoce que ha leído, comprendido y acepta quedar vinculado por estos Términos de Servicio."
+              }
+            ]
+          },
+          {
+            "id": "acceptable-use",
+            "heading": "2. Uso Aceptable y Seguridad de la Plataforma",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Usted acepta no participar en actividades maliciosas, pruebas de penetración no autorizadas, raspado ni ataques intencionales de denegación de servicio contra esta infraestructura."
+              }
+            ]
+          },
+          {
+            "id": "intellectual-property",
+            "heading": "3. Propiedad Intelectual y Código Abierto",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "A menos que se indique lo contrario, los componentes del código base se distribuyen bajo la licencia de código abierto aplicable del proyecto (Licencia MIT)."
+              }
+            ]
+          },
+          {
+            "id": "governing-law",
+            "heading": "4. Ley Aplicable",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Estos términos se regirán e interpretarán de conformidad con las leyes y estándares aplicables de código abierto y jurisdicción."
+              }
+            ]
+          }
+        ]
+      },
+      "cookies": {
+        "metadata": {
+          "title": "Política de Cookies",
+          "description": "Conozca cómo utilizamos cookies y tecnologías de seguimiento en nuestros servicios."
+        },
+        "title": "Política de Cookies",
+        "description": "Conozca cómo utilizamos las cookies y tecnologías de seguimiento relacionadas para garantizar y proteger nuestros servicios.",
+        "effectiveDate": "2026-01-01",
+        "lastUpdated": "2026-10-31",
+        "sections": [
+          {
+            "id": "what-are-cookies",
+            "heading": "1. ¿Qué son las Cookies?",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Las cookies y registros de almacenamiento local son pequeños archivos guardados en su dispositivo por su navegador. Facilitan funciones esenciales, preservan preferencias de sesión y protegen las elecciones del usuario."
+              }
+            ]
+          },
+          {
+            "id": "categories",
+            "heading": "2. Categorías de Cookies que Utilizamos",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Clasificamos las tecnologías de cookies y almacenamiento según su necesidad operativa:"
+              },
+              {
+                "type": "list",
+                "ordered": false,
+                "items": [
+                  "Estrictamente Necesarias: Esenciales para el enrutamiento, la seguridad y el registro del consentimiento. No se pueden desactivar.",
+                  "Funcionales y Preferencias: Recuerdan temas de interfaz seleccionados (claro/oscuro) e idiomas preferidos.",
+                  "Analíticas (Opcionales): Evalúan de forma anónima los patrones de tráfico. Solo se activan con el consentimiento del usuario."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "managing-cookies",
+            "heading": "3. Gestión del Consentimiento",
+            "blocks": [
+              {
+                "type": "paragraph",
+                "text": "Puede modificar o revocar sus preferencias de cookies en cualquier momento a través del banner de consentimiento interactivo disponible en toda la aplicación."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

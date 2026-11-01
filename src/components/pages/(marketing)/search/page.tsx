@@ -131,8 +131,10 @@ export default function SearchPage({
       <div className="mx-auto max-w-5xl space-y-8">
         {}
         <div className="space-y-2">
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{searchI18n.title}</h1>
-          <p className="text-muted-foreground text-sm sm:text-base">{searchI18n.pageDescription}</p>
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Search</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">
+            Search across features, architecture, and legal documentation.
+          </p>
         </div>
 
         {}

@@ -1,19 +1,17 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import SearchPage from "@/components/pages/(marketing)/search/page";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { createDynamicMetadata } from "@/lib/seo/create-page-seo";
+import { constructMetadata } from "@/lib/metadata/construct-metadata";
 
-export const generateMetadata = createDynamicMetadata(async ({ locale }) => {
-  const dictionary = await getDictionary(locale);
-
-  return {
-    locale,
-    title: dictionary.search.title,
-    description: dictionary.search.pageDescription,
+export function generateMetadata(): Metadata {
+  return constructMetadata({
+    title: "Search",
+    description: "Search across features, architecture, and legal documentation.",
     path: "/search",
-  };
-});
+  });
+}
 
 async function LocalizedSearchContent({
   params,

@@ -99,7 +99,7 @@ export const siteConfig: SiteConfig = {
   },
 
   pwa: {
-    enabled: false,
+    enabled: true,
     swUrl: "/sw.js",
     scope: "/",
     offlineFallbackUrl: "/offline",

@@ -7,6 +7,7 @@ import { TanStackProvider } from "@/components/providers/query-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { WebMCPProvider } from "@/components/providers/webmcp-provider";
 import { PWAProvider } from "@/components/pwa/pwa-provider";
+import { GlobalJsonLd } from "@/components/seo/json-ld";
 import { fontVariables } from "@/lib/fonts";
 import { constructMetadata } from "@/lib/metadata/construct-metadata";
 import "./globals.css";
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="ard" href="/.well-known/ard.json" />
       </head>
       <body className="flex min-h-full flex-col">
+        <GlobalJsonLd />
         <ThemeProvider>
           <TanStackProvider>
             <PWAProvider>

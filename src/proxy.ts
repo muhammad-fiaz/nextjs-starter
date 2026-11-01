@@ -12,10 +12,13 @@ const EXCLUDED_PREFIXES = [
   "/sw.js",
   "/robots.txt",
   "/sitemap.xml",
+  "/rss.xml",
   "/manifest.webmanifest",
   "/opengraph-image",
   "/twitter-image",
   "/favicon.ico",
+  "/icon",
+  "/apple-icon",
 ];
 
 const STATIC_EXTENSIONS_REGEX = /\.(.*)$/;
@@ -87,6 +90,6 @@ export function proxy(request: NextRequest): NextResponse {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|_vercel|favicon.ico|robots.txt|sitemap.xml|manifest.webmanifest|opengraph-image|twitter-image|.*\\..*).*)",
+    "/((?!api|_next/static|_next/image|_vercel|favicon.ico|icon|apple-icon|robots.txt|sitemap.xml|manifest.webmanifest|opengraph-image|twitter-image|.*\\..*).*)",
   ],
 };

@@ -49,8 +49,6 @@
     "sectionsCategory": "Sections",
     "legalCategory": "Legal",
     "developerCategory": "Developer",
-    "title": "Search",
-    "pageDescription": "Explore documentation, guides, APIs, and legal policies across Next.js Starter.",
     "allFilter": "All Content",
     "filtersHeading": "Filters",
     "contentTypeHeading": "Content Type",
@@ -157,10 +155,6 @@
   "pages": {
     "legal": {
       "privacy": {
-        "metadata": {
-          "title": "Privacy Policy",
-          "description": "Learn how personal information is collected, processed, and protected."
-        },
         "title": "Privacy Policy",
         "description": "How we collect, use, and protect your information across our application and platform.",
         "effectiveDate": "2026-01-01",
@@ -230,10 +224,6 @@
         ]
       },
       "terms": {
-        "metadata": {
-          "title": "Terms of Service",
-          "description": "Review terms, conditions, and acceptable use guidelines."
-        },
         "title": "Terms of Service",
         "description": "Please read these terms and conditions carefully before using our application and services.",
         "effectiveDate": "2026-01-01",
@@ -282,10 +272,6 @@
         ]
       },
       "cookies": {
-        "metadata": {
-          "title": "Cookie Policy",
-          "description": "Learn how we use cookies and tracking technologies to secure and operate our services."
-        },
         "title": "Cookie Policy",
         "description": "Learn how we use cookies and related tracking technologies to provide, secure, and improve our services.",
         "effectiveDate": "2026-01-01",

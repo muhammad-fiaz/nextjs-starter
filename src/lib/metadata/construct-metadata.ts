@@ -1,14 +1,59 @@
 import type { Metadata } from "next";
 
+import { env } from "@/env";
 import { getLocalizedPath } from "@/i18n/navigation";
 import { getAvailableLocalesForRoute, isRouteAvailable } from "@/i18n/routes";
 import { siteConfig } from "@/site.config";
-import type { Locale } from "@/types/config";
 import type { PageMetadataInput } from "@/types/seo";
 
-export function constructMetadata(input: PageMetadataInput = {}): Metadata {
+/**
+ * Resolves the active origin or fallback URL.
+ * Never accesses process.env directly; leverages env from @/env.
+ */
+export function resolveOrigin(customOrigin?: string): string {
+  if (customOrigin) {
+    const trimmed = customOrigin.trim().replace(/\/+$/, "");
+    if (trimmed) {
+      return trimmed.startsWith("http://") || trimmed.startsWith("https://")
+        ? trimmed
+        : `https://${trimmed}`;
+    }
+  }
+
+  const configured = env.NEXT_PUBLIC_APP_URL || siteConfig.url;
+  if (configured) {
+    const trimmed = configured.trim().replace(/\/+$/, "");
+    if (trimmed) {
+      return trimmed.startsWith("http://") || trimmed.startsWith("https://")
+        ? trimmed
+        : `https://${trimmed}`;
+    }
+  }
+
+  if (env.VERCEL_PROJECT_PRODUCTION_URL) {
+    const vUrl = env.VERCEL_PROJECT_PRODUCTION_URL.trim().replace(/\/+$/, "");
+    return vUrl.startsWith("http") ? vUrl : `https://${vUrl}`;
+  }
+
+  if (env.VERCEL_URL) {
+    const vUrl = env.VERCEL_URL.trim().replace(/\/+$/, "");
+    return vUrl.startsWith("http") ? vUrl : `https://${vUrl}`;
+  }
+
+  return "http://localhost:3000";
+}
+
+/**
+ * Constructs standard Next.js metadata for any route or layout.
+ * Ensures metadataBase, alternates, openGraph, twitter, robots, and icons are complete.
+ */
+export function constructMetadata(
+  input: PageMetadataInput = {},
+  explicitOrigin?: string,
+): Metadata {
   const i18nConfig = siteConfig.i18n;
   const {
+    origin,
     locale = i18nConfig.defaultLocale,
     title,
     description = siteConfig.description,
@@ -25,7 +70,7 @@ export function constructMetadata(input: PageMetadataInput = {}): Metadata {
     authors,
   } = input;
 
-  const siteUrl = siteConfig.url?.replace(/\/$/, "") || "http://localhost:3000";
+  const siteUrl = resolveOrigin(explicitOrigin || origin);
 
   const canonicalPath = getLocalizedPath(path, locale);
   const canonicalUrl = `${siteUrl}${canonicalPath === "/" ? "" : canonicalPath}`;
@@ -52,17 +97,31 @@ export function constructMetadata(input: PageMetadataInput = {}): Metadata {
     url: `${siteUrl}/opengraph-image?title=${ogTitleParam}&description=${ogDescParam}`,
     width: 1200,
     height: 630,
-    alt: siteConfig.name || "Open Graph Image",
+    alt: title || siteConfig.name || "Open Graph Image",
   };
 
-  const socialImage = ogImage
-    ? {
-        url: ogImage.url.startsWith("http") ? ogImage.url : `${siteUrl}${ogImage.url}`,
-        width: ogImage.width || 1200,
-        height: ogImage.height || 630,
-        alt: ogImage.alt || title || siteConfig.name,
-      }
-    : defaultImage;
+  const parsedOgImage =
+    typeof ogImage === "string"
+      ? {
+          url: ogImage.startsWith("http")
+            ? ogImage
+            : `${siteUrl}${ogImage.startsWith("/") ? "" : "/"}${ogImage}`,
+          width: 1200,
+          height: 630,
+          alt: title || siteConfig.name,
+        }
+      : ogImage
+        ? {
+            url: ogImage.url.startsWith("http")
+              ? ogImage.url
+              : `${siteUrl}${ogImage.url.startsWith("/") ? "" : "/"}${ogImage.url}`,
+            width: ogImage.width || 1200,
+            height: ogImage.height || 630,
+            alt: ogImage.alt || title || siteConfig.name,
+          }
+        : defaultImage;
+
+  const socialImage = parsedOgImage;
 
   const resolvedTitle = title
     ? siteConfig.name
@@ -100,8 +159,16 @@ export function constructMetadata(input: PageMetadataInput = {}): Metadata {
               "max-snippet": -1,
             },
           }),
+    icons: {
+      icon: [{ url: "/icon.png", sizes: "32x32", type: "image/png" }],
+      apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+      shortcut: ["/icon.png"],
+    },
     alternates: {
       canonical: canonicalUrl,
+      types: {
+        "application/rss+xml": `${siteUrl}/rss.xml`,
+      },
       ...(i18nConfig.enabled && Object.keys(languageAlternates).length > 0
         ? { languages: languageAlternates }
         : {}),

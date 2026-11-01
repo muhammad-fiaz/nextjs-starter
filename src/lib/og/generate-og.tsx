@@ -10,14 +10,30 @@ export const defaultOgDimensions = {
 
 export const defaultOgContentType = "image/png";
 
+// Sensible constraints for dynamic social card generation
+const MAX_BRAND_LENGTH = 50;
+const MAX_TITLE_LENGTH = 150;
+const MAX_DESC_LENGTH = 300;
+const MAX_CATEGORY_LENGTH = 30;
+
+function sanitizeInput(text: string | undefined, maxLength: number): string {
+  if (!text) return "";
+  // Strip null bytes and non-printable control characters (except common whitespace)
+  const cleaned = text.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "").trim();
+  if (cleaned.length <= maxLength) return cleaned;
+  return `${cleaned.slice(0, maxLength - 1)}…`;
+}
+
 export function createDynamicOgImage(props?: Partial<OgImageProps>): ImageResponse {
-  const brandName = props?.siteName || siteConfig.name || "Next.js Starter";
-  const title = props?.title || brandName;
+  const brandName =
+    sanitizeInput(props?.siteName, MAX_BRAND_LENGTH) || siteConfig.name || "Next.js Starter";
+  const rawTitle = sanitizeInput(props?.title, MAX_TITLE_LENGTH);
+  const title = rawTitle || brandName;
   const description =
-    props?.description ||
+    sanitizeInput(props?.description, MAX_DESC_LENGTH) ||
     siteConfig.description ||
     "Production-Ready Architecture & Application Foundation";
-  const category = props?.category;
+  const category = sanitizeInput(props?.category, MAX_CATEGORY_LENGTH);
 
   return new ImageResponse(
     <div
@@ -82,6 +98,7 @@ export function createDynamicOgImage(props?: Partial<OgImageProps>): ImageRespon
             letterSpacing: "-0.03em",
             color: "#ffffff",
             margin: 0,
+            wordBreak: "break-word",
           }}
         >
           {title}
@@ -92,6 +109,7 @@ export function createDynamicOgImage(props?: Partial<OgImageProps>): ImageRespon
             lineHeight: 1.4,
             color: "#a1a1aa",
             margin: 0,
+            wordBreak: "break-word",
           }}
         >
           {description}

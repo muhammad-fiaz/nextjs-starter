@@ -1,21 +1,17 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import PrivacyPolicyPage from "@/components/pages/(legal)/privacy/page";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { createDynamicMetadata } from "@/lib/seo/create-page-seo";
+import { constructMetadata } from "@/lib/metadata/construct-metadata";
 
-export const generateMetadata = createDynamicMetadata(async ({ locale }) => {
-  const dictionary = await getDictionary(locale);
-  const page = dictionary.pages.legal.privacy;
-
-  return {
-    locale,
-    title: page.metadata.title,
-    description: page.metadata.description,
-    keywords: page.metadata.keywords,
+export function generateMetadata(): Metadata {
+  return constructMetadata({
+    title: "Privacy Policy",
+    description: "Learn how we collect, use, and protect your personal information.",
     path: "/privacy",
-  };
-});
+  });
+}
 
 async function LocalizedPrivacyContent({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;

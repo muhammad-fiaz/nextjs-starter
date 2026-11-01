@@ -18,7 +18,6 @@ export function Navbar({ currentLocale, navigation, search }: NavbarProps): Reac
     <header className="border-border/40 bg-background/80 sticky top-0 z-40 w-full border-b backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3 md:gap-8">
-          <MobileNav currentLocale={currentLocale} navigation={navigation} />
           <Link
             href={getHref("/")}
             className="group flex items-center gap-2.5 font-bold tracking-tight transition-opacity hover:opacity-90"
@@ -76,6 +75,8 @@ export function Navbar({ currentLocale, navigation, search }: NavbarProps): Reac
               </Button>
             </a>
           )}
+
+          <MobileNav currentLocale={currentLocale} navigation={navigation} />
         </div>
       </div>
     </header>

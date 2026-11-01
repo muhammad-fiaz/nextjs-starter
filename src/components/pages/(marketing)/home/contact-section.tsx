@@ -6,7 +6,7 @@ import { type ReactNode, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -72,17 +72,7 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
 
         <div className="mx-auto max-w-xl">
           <Card className="border-border/60 bg-card/95 text-card-foreground rounded-2xl shadow-lg backdrop-blur-xs transition-shadow hover:shadow-xl">
-            <CardHeader className="space-y-1.5 pb-4">
-              <CardTitle className="text-xl font-bold tracking-tight">
-                {contactI18n?.heading}
-              </CardTitle>
-              {contactI18n?.subheading && (
-                <CardDescription className="text-muted-foreground text-xs leading-relaxed">
-                  {contactI18n.subheading}
-                </CardDescription>
-              )}
-            </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               {submitted ? (
                 <div className="border-primary/20 bg-primary/5 space-y-3 rounded-xl border p-8 text-center">
                   <CheckCircle2 className="text-primary mx-auto h-9 w-9" />

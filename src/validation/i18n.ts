@@ -29,14 +29,7 @@ export const contentSectionSchema = z.object({
   blocks: z.array(contentBlockSchema),
 });
 
-export const pageMetadataSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  keywords: z.array(z.string()).optional(),
-});
-
 export const legalPageContentSchema = z.object({
-  metadata: pageMetadataSchema,
   title: z.string(),
   description: z.string(),
   effectiveDate: z.string().optional(),
@@ -58,8 +51,6 @@ export const searchI18nSchema = z.object({
   sectionsCategory: z.string(),
   legalCategory: z.string(),
   developerCategory: z.string(),
-  title: z.string(),
-  pageDescription: z.string(),
   allFilter: z.string(),
   filtersHeading: z.string(),
   contentTypeHeading: z.string(),
@@ -182,7 +173,6 @@ export const dictionarySchema = z.object({
 
 export type ContentBlock = z.infer<typeof contentBlockSchema>;
 export type ContentSection = z.infer<typeof contentSectionSchema>;
-export type PageMetadata = z.infer<typeof pageMetadataSchema>;
 export type LegalPageContent = z.infer<typeof legalPageContentSchema>;
 export type SearchI18n = z.infer<typeof searchI18nSchema>;
 export type Dictionary = z.infer<typeof dictionarySchema>;

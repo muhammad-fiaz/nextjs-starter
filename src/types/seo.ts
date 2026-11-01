@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export type Locale = string;
 
 export interface PageMetadataInput {
+  readonly origin?: string;
   readonly locale?: Locale;
   readonly title?: string;
   readonly description?: string;
@@ -13,12 +14,14 @@ export interface PageMetadataInput {
   readonly openGraph?: Metadata["openGraph"];
   readonly twitter?: Metadata["twitter"];
   readonly robots?: Metadata["robots"];
-  readonly ogImage?: {
-    readonly url: string;
-    readonly width?: number;
-    readonly height?: number;
-    readonly alt?: string;
-  };
+  readonly ogImage?:
+    | string
+    | {
+        readonly url: string;
+        readonly width?: number;
+        readonly height?: number;
+        readonly alt?: string;
+      };
   readonly publishedTime?: string;
   readonly modifiedTime?: string;
   readonly authors?: readonly string[];

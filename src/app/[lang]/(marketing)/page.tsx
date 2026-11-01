@@ -1,18 +1,18 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import HomePage from "@/components/pages/(marketing)/home/page";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { createDynamicMetadata } from "@/lib/seo/create-page-seo";
+import { constructMetadata } from "@/lib/metadata/construct-metadata";
+import { siteConfig } from "@/site.config";
 
-export const generateMetadata = createDynamicMetadata(async ({ locale }) => {
-  const dictionary = await getDictionary(locale);
-  return {
-    locale,
-    title: dictionary.common.appName,
-    description: dictionary.home.hero.description,
+export function generateMetadata(): Metadata {
+  return constructMetadata({
+    title: siteConfig.name,
+    description: siteConfig.description,
     path: "/",
-  };
-});
+  });
+}
 
 async function LocalizedHomeContent({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;

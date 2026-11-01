@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { env } from "@/env";
 import { getLocalizedPath } from "@/i18n/navigation";
 import { getAvailableLocalesForRoute, getLocalizedRoutes } from "@/i18n/routes";
 import { sitemapRegistry } from "@/lib/seo/sitemap-registry";
@@ -10,7 +11,8 @@ const DEFAULT_SITEMAP_DATE = new Date("2026-01-01T00:00:00.000Z");
 export default function sitemap(): MetadataRoute.Sitemap {
   const i18nConfig = siteConfig.i18n;
   const registered = sitemapRegistry.getEntries();
-  const siteUrl = siteConfig.url?.replace(/\/$/, "") || "http://localhost:3000";
+  const rawUrl = env.NEXT_PUBLIC_APP_URL || siteConfig.url || "http://localhost:3000";
+  const siteUrl = rawUrl.replace(/\/$/, "");
 
   const defaultEntries: MetadataRoute.Sitemap = [];
   const routes = getLocalizedRoutes();

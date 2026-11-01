@@ -38,7 +38,6 @@ export interface SitemapEntry {
 export interface OgImageProps {
   readonly title: string;
   readonly description?: string;
-  readonly category?: string;
   readonly siteName?: string;
 }
 

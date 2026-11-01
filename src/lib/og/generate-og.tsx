@@ -14,7 +14,6 @@ export const defaultOgContentType = "image/png";
 const MAX_BRAND_LENGTH = 50;
 const MAX_TITLE_LENGTH = 150;
 const MAX_DESC_LENGTH = 300;
-const MAX_CATEGORY_LENGTH = 30;
 
 function sanitizeInput(text: string | undefined, maxLength: number): string {
   if (!text) return "";
@@ -33,7 +32,6 @@ export function createDynamicOgImage(props?: Partial<OgImageProps>): ImageRespon
     sanitizeInput(props?.description, MAX_DESC_LENGTH) ||
     siteConfig.description ||
     "Production-Ready Architecture & Application Foundation";
-  const category = sanitizeInput(props?.category, MAX_CATEGORY_LENGTH);
 
   return new ImageResponse(
     <div
@@ -70,23 +68,6 @@ export function createDynamicOgImage(props?: Partial<OgImageProps>): ImageRespon
         <span style={{ fontSize: "28px", fontWeight: 700, letterSpacing: "-0.02em" }}>
           {brandName}
         </span>
-        {category && (
-          <span
-            style={{
-              marginLeft: "12px",
-              padding: "4px 12px",
-              borderRadius: "6px",
-              backgroundColor: "#27272a",
-              color: "#a1a1aa",
-              fontSize: "14px",
-              fontWeight: 600,
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-            }}
-          >
-            {category}
-          </span>
-        )}
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "900px" }}>

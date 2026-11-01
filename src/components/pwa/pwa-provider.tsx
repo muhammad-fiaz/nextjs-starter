@@ -2,6 +2,7 @@
 
 import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 
+import { env } from "@/env";
 import { siteConfig } from "@/site.config";
 
 interface BeforeInstallPromptEvent extends Event {
@@ -47,7 +48,7 @@ export function PWAProvider({ children }: { readonly children: ReactNode }): Rea
 
     if (
       siteConfig.pwa?.enabled &&
-      process.env.NODE_ENV === "production" &&
+      env.NEXT_PUBLIC_NODE_ENV === "production" &&
       "serviceWorker" in navigator
     ) {
       const swUrl = siteConfig.pwa.swUrl || "/sw.js";

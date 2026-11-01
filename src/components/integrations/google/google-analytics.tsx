@@ -3,15 +3,12 @@
 import Script from "next/script";
 import type { ReactNode } from "react";
 
-import { useConsent } from "@/components/cookies/cookie-consent-provider";
 import { siteConfig } from "@/site.config";
 
 export function GoogleAnalytics(): ReactNode {
-  const { decision } = useConsent();
   const gaConfig = siteConfig.integrations?.googleAnalytics;
   const gtmConfig = siteConfig.integrations?.googleTagManager;
 
-  if (decision !== "accepted") return null;
   if (!gaConfig?.enabled || !gaConfig.measurementId) return null;
 
   if (

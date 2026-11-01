@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { getLocaleDirection, isSupportedLocale } from "@/i18n/validation";
 import { siteConfig } from "@/site.config";
 import type { Locale } from "@/types/config";
+import { getLocaleDirection, isSupportedLocale } from "@/validation/i18n-config";
 
 export const instant = false;
 

@@ -6,7 +6,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { ReactNode } from "react";
 
-import { getQueryClient } from "@/lib/providers/query-client";
+import { env } from "@/env";
+import { getQueryClient } from "@/query/query-client";
 
 export interface TanStackProviderProps {
   readonly children: ReactNode;
@@ -18,7 +19,7 @@ export function TanStackProvider({ children }: TanStackProviderProps): ReactNode
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      {process.env.NODE_ENV === "development" && (
+      {env.NEXT_PUBLIC_NODE_ENV === "development" && (
         <>
           <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
           <TanStackDevtools config={{ hideUntilHover: true }} plugins={[formDevtoolsPlugin()]} />

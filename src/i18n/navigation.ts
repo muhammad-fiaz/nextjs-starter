@@ -1,6 +1,6 @@
 import { isRouteAvailable } from "@/i18n/routes";
-import { isSupportedLocale } from "@/i18n/validation";
 import { siteConfig } from "@/site.config";
+import { isSupportedLocale } from "@/validation/i18n-config";
 
 export function isLocalizedPath(pathname: string): boolean {
   if (!pathname) return false;

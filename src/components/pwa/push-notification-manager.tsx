@@ -6,6 +6,7 @@ import { type ReactNode, useEffect, useState } from "react";
 import { sendNotification, subscribeUser, unsubscribeUser } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { env } from "@/env";
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -47,7 +48,7 @@ export function PushNotificationManager(): ReactNode {
 
   async function subscribeToPush() {
     try {
-      const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+      const vapidKey = env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
       if (!vapidKey) {
         setStatus("NEXT_PUBLIC_VAPID_PUBLIC_KEY is not configured in .env");
         return;

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { getLocalizedPath } from "@/i18n/navigation";
-import { localizedRoutes } from "@/i18n/routes";
+import { getAvailableLocalesForRoute, getLocalizedRoutes } from "@/i18n/routes";
 import { sitemapRegistry } from "@/lib/seo/sitemap-registry";
 import { siteConfig } from "@/site.config";
 
@@ -13,9 +13,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = siteConfig.url?.replace(/\/$/, "") || "http://localhost:3000";
 
   const defaultEntries: MetadataRoute.Sitemap = [];
+  const routes = getLocalizedRoutes();
 
   if (!i18nConfig.enabled) {
-    for (const route of Object.keys(localizedRoutes)) {
+    for (const route of routes) {
       defaultEntries.push({
         url: `${siteUrl}${route === "/" ? "" : route}`,
         lastModified: DEFAULT_SITEMAP_DATE,
@@ -24,7 +25,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
   } else {
-    for (const [route, availableLocales] of Object.entries(localizedRoutes)) {
+    for (const route of routes) {
+      const availableLocales = getAvailableLocalesForRoute(route);
       for (const loc of availableLocales) {
         const canonicalPath = getLocalizedPath(route, loc);
         defaultEntries.push({

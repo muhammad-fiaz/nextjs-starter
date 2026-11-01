@@ -154,42 +154,6 @@
     "copyright": "Open source under MIT License."
   },
   "pages": {
-    "api": {
-      "metadata": {
-        "title": "API & System Route Overview",
-        "description": "Information about REST endpoints, system routes, and telemetry exposed by Next.js Starter."
-      },
-      "badge": "System Endpoints",
-      "title": "API & System Route Overview",
-      "description": "Public endpoints, metadata resources, and server infrastructure exposed by the application.",
-      "returnHome": "Return to home",
-      "endpoints": [
-        {
-          "method": "GET",
-          "path": "/robots.txt",
-          "desc": "Dynamic crawler policies and search engine indexing directives.",
-          "category": "System"
-        },
-        {
-          "method": "GET",
-          "path": "/sitemap.xml",
-          "desc": "XML sitemap index with localized route alternate declarations.",
-          "category": "System"
-        },
-        {
-          "method": "GET",
-          "path": "/manifest.webmanifest",
-          "desc": "Progressive Web Application (PWA) manifest specification.",
-          "category": "System"
-        },
-        {
-          "method": "GET",
-          "path": "/opengraph-image",
-          "desc": "Dynamic runtime OpenGraph image generation via Next.js ImageResponse.",
-          "category": "System"
-        }
-      ]
-    },
     "legal": {
       "privacy": {
         "metadata": {

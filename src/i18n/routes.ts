@@ -1,24 +1,21 @@
 import { siteConfig } from "@/site.config";
 
-export const localizedRoutes: Record<string, readonly string[]> = {
-  "/": siteConfig.i18n.locales,
-  "/api": siteConfig.i18n.locales,
-  "/search": siteConfig.i18n.locales,
-  "/privacy": siteConfig.i18n.locales,
-  "/terms": siteConfig.i18n.locales,
-  "/cookies": siteConfig.i18n.locales,
-} as const;
+export function getLocalizedRoutes(): readonly string[] {
+  return ["/", "/search", "/privacy", "/terms", "/cookies"];
+}
 
 export function isRouteAvailable(pathname: string, locale: string): boolean {
-  const normalized = pathname.startsWith("/") ? pathname : `/${pathname}`;
-  const availableLocales = localizedRoutes[normalized];
-  if (!availableLocales) {
+  if (!siteConfig.i18n.locales.includes(locale as any)) {
     return false;
   }
-  return availableLocales.includes(locale);
+  const normalized = pathname.startsWith("/") ? pathname : `/${pathname}`;
+  return getLocalizedRoutes().includes(normalized);
 }
 
 export function getAvailableLocalesForRoute(pathname: string): readonly string[] {
   const normalized = pathname.startsWith("/") ? pathname : `/${pathname}`;
-  return localizedRoutes[normalized] || [];
+  if (!getLocalizedRoutes().includes(normalized)) {
+    return [];
+  }
+  return siteConfig.i18n.locales;
 }

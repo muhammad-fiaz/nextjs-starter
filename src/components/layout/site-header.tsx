@@ -2,20 +2,14 @@ import Link from "next/link";
 import { type ReactNode } from "react";
 
 import { GithubIcon } from "@/components/icons/social-icons";
-import { LanguageToggle } from "@/components/layout/language-toggle";
 import { MobileNav } from "@/components/layout/mobile-nav";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { GlobalSearchDialog } from "@/components/search/global-search-dialog";
 import { Button } from "@/components/ui/button";
+import { LanguageToggle } from "@/components/ui/language-toggle";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { getLocalizedPath } from "@/i18n/navigation";
 import { siteConfig } from "@/site.config";
-import type { DictionaryNavigation, SearchI18n } from "@/types/i18n";
-
-interface SiteHeaderProps {
-  readonly currentLocale?: string;
-  readonly navigation?: DictionaryNavigation;
-  readonly search?: SearchI18n;
-}
+import type { SiteHeaderProps } from "@/types/layouts";
 
 export function SiteHeader({ currentLocale, navigation, search }: SiteHeaderProps): ReactNode {
   const getHref = (path: string) => getLocalizedPath(path, currentLocale);
@@ -39,18 +33,22 @@ export function SiteHeader({ currentLocale, navigation, search }: SiteHeaderProp
           </Link>
 
           <nav className="text-muted-foreground hidden items-center gap-6 text-sm font-medium md:flex">
-            <Link href={getHref("/#features")} className="hover:text-foreground transition-colors">
-              {navigation?.features || "Features"}
-            </Link>
-            <Link
-              href={getHref("/#architecture")}
-              className="hover:text-foreground transition-colors"
-            >
-              {navigation?.architecture || "Architecture"}
-            </Link>
-            <Link href={getHref("/api")} className="hover:text-foreground transition-colors">
-              {navigation?.api || "API"}
-            </Link>
+            {navigation?.features && (
+              <Link
+                href={getHref("/#features")}
+                className="hover:text-foreground transition-colors"
+              >
+                {navigation.features}
+              </Link>
+            )}
+            {navigation?.architecture && (
+              <Link
+                href={getHref("/#architecture")}
+                className="hover:text-foreground transition-colors"
+              >
+                {navigation.architecture}
+              </Link>
+            )}
           </nav>
         </div>
 
@@ -69,7 +67,7 @@ export function SiteHeader({ currentLocale, navigation, search }: SiteHeaderProp
               href={siteConfig.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={navigation?.github || "GitHub"}
+              aria-label={navigation?.github}
               className="hidden sm:inline-flex"
             >
               <Button
@@ -77,7 +75,7 @@ export function SiteHeader({ currentLocale, navigation, search }: SiteHeaderProp
                 className="bg-foreground text-background hover:bg-foreground/90 gap-2 text-xs font-semibold shadow-xs transition-colors"
               >
                 <GithubIcon className="h-4 w-4 shrink-0" />
-                <span>{navigation?.github || "GitHub"}</span>
+                {navigation?.github && <span>{navigation.github}</span>}
               </Button>
             </a>
           )}

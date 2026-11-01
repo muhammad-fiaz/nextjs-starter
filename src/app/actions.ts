@@ -8,13 +8,13 @@ import { siteConfig } from "@/site.config";
 let globalSubscription: webpush.PushSubscription | null = null;
 
 function ensureVapidConfigured(): boolean {
-  const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-  const privateKey = process.env.VAPID_PRIVATE_KEY;
-  const email = siteConfig.organization?.email || "mailto:contact@example.com";
-  const contactSubject = email.startsWith("mailto:") ? email : `mailto:${email}`;
+  const publicKey = env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const privateKey = env.VAPID_PRIVATE_KEY;
+  const email = siteConfig.organization?.email;
 
-  if (publicKey && privateKey) {
+  if (publicKey && privateKey && email) {
     try {
+      const contactSubject = email.startsWith("mailto:") ? email : `mailto:${email}`;
       webpush.setVapidDetails(contactSubject, publicKey, privateKey);
       return true;
     } catch {

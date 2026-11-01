@@ -2,13 +2,9 @@ import type { ReactNode } from "react";
 
 import { LegalPage } from "@/components/layout/legal-page";
 import { LocalizedContent } from "@/components/layout/localized-content";
-import type { LegalPageContent } from "@/types/i18n";
+import type { LegalDocumentPageProps } from "@/types/pages";
 
-interface TermsOfServicePageProps {
-  readonly content: LegalPageContent;
-}
-
-export default function TermsOfServicePage({ content }: TermsOfServicePageProps): ReactNode {
+export default function TermsOfServicePage({ content }: LegalDocumentPageProps): ReactNode {
   return (
     <main className="min-h-[70vh] w-full">
       <LegalPage.Root width="default">

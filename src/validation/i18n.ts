@@ -23,23 +23,17 @@ export const contentBlockSchema = z.discriminatedUnion("type", [
   }),
 ]);
 
-export type ContentBlock = z.infer<typeof contentBlockSchema>;
-
 export const contentSectionSchema = z.object({
   id: z.string(),
   heading: z.string(),
   blocks: z.array(contentBlockSchema),
 });
 
-export type ContentSection = z.infer<typeof contentSectionSchema>;
-
 export const pageMetadataSchema = z.object({
   title: z.string(),
   description: z.string(),
   keywords: z.array(z.string()).optional(),
 });
-
-export type PageMetadata = z.infer<typeof pageMetadataSchema>;
 
 export const legalPageContentSchema = z.object({
   metadata: pageMetadataSchema,
@@ -49,28 +43,6 @@ export const legalPageContentSchema = z.object({
   lastUpdated: z.string().optional(),
   sections: z.array(contentSectionSchema),
 });
-
-export type LegalPageContent = z.infer<typeof legalPageContentSchema>;
-
-export const apiEndpointSchema = z.object({
-  method: z.string(),
-  path: z.string(),
-  desc: z.string(),
-  category: z.string(),
-});
-
-export type ApiEndpoint = z.infer<typeof apiEndpointSchema>;
-
-export const apiPageContentSchema = z.object({
-  metadata: pageMetadataSchema,
-  badge: z.string(),
-  title: z.string(),
-  description: z.string(),
-  endpoints: z.array(apiEndpointSchema),
-  returnHome: z.string(),
-});
-
-export type ApiPageContent = z.infer<typeof apiPageContentSchema>;
 
 export const searchI18nSchema = z.object({
   placeholder: z.string(),
@@ -103,8 +75,6 @@ export const searchI18nSchema = z.object({
   loadingText: z.string(),
 });
 
-export type SearchI18n = z.infer<typeof searchI18nSchema>;
-
 export const dictionarySchema = z.object({
   metadata: z.object({
     language: z.string(),
@@ -132,7 +102,6 @@ export const dictionarySchema = z.object({
     home: z.string(),
     features: z.string(),
     architecture: z.string(),
-    api: z.string(),
     search: z.string(),
     about: z.string().optional(),
     contact: z.string().optional(),
@@ -202,7 +171,6 @@ export const dictionarySchema = z.object({
     copyright: z.string(),
   }),
   pages: z.object({
-    api: apiPageContentSchema,
     legal: z.object({
       privacy: legalPageContentSchema,
       terms: legalPageContentSchema,
@@ -211,7 +179,13 @@ export const dictionarySchema = z.object({
   }),
 });
 
+export type ContentBlock = z.infer<typeof contentBlockSchema>;
+export type ContentSection = z.infer<typeof contentSectionSchema>;
+export type PageMetadata = z.infer<typeof pageMetadataSchema>;
+export type LegalPageContent = z.infer<typeof legalPageContentSchema>;
+export type SearchI18n = z.infer<typeof searchI18nSchema>;
 export type Dictionary = z.infer<typeof dictionarySchema>;
+
 export type DictionaryMetadata = Dictionary["metadata"];
 export type DictionaryCommon = Dictionary["common"];
 export type DictionaryNavigation = Dictionary["navigation"];

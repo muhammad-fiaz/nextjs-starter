@@ -3,14 +3,11 @@
 import Script from "next/script";
 import type { ReactNode } from "react";
 
-import { useConsent } from "@/components/cookies/cookie-consent-provider";
 import { siteConfig } from "@/site.config";
 
 export function GoogleTagManager(): ReactNode {
-  const { decision } = useConsent();
   const gtmConfig = siteConfig.integrations?.googleTagManager;
 
-  if (decision !== "accepted") return null;
   if (!gtmConfig?.enabled || !gtmConfig.containerId) return null;
 
   const containerId = gtmConfig.containerId;

@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 
 import { getLocalizedPath } from "@/i18n/navigation";
 import { getAvailableLocalesForRoute } from "@/i18n/routes";
-import { isSupportedLocale } from "@/i18n/validation";
 import { constructMetadata } from "@/lib/metadata/construct-metadata";
 import { sitemapRegistry } from "@/lib/seo/sitemap-registry";
 import { siteConfig } from "@/site.config";
 import type { Locale } from "@/types/config";
 import type { PageMetadataInput, SitemapEntry } from "@/types/seo";
+import { isSupportedLocale } from "@/validation/i18n-config";
 
 export interface CreatePageSeoOptions extends PageMetadataInput {
   readonly sitemap?: boolean | Omit<SitemapEntry, "url">;

@@ -1,5 +1,5 @@
-import { OramaEngine } from "@/lib/search/engine/orama-engine";
 import { getOramaLanguage, resolveSearchLocale } from "@/lib/search/normalize";
+import { OramaEngine } from "@/lib/search/orama-engine";
 import { siteConfig } from "@/site.config";
 import type {
   SearchDocument,

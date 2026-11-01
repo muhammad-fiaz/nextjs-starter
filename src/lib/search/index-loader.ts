@@ -1,5 +1,5 @@
-import { OramaEngine } from "@/lib/search/engine/orama-engine";
 import { getOramaLanguage, resolveSearchLocale } from "@/lib/search/normalize";
+import { OramaEngine } from "@/lib/search/orama-engine";
 import type { SearchDocument, SearchQueryRequest, SearchResponse } from "@/types/search";
 
 class ClientIndexCache {

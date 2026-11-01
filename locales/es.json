@@ -154,42 +154,6 @@
     "copyright": "Código abierto bajo Licencia MIT."
   },
   "pages": {
-    "api": {
-      "metadata": {
-        "title": "Resumen de API y Rutas del Sistema",
-        "description": "Información sobre endpoints REST, rutas del sistema y telemetría de Next.js Starter."
-      },
-      "badge": "Endpoints del Sistema",
-      "title": "Resumen de API y Rutas del Sistema",
-      "description": "Endpoints públicos, recursos de metadatos e infraestructura del servidor expuestos por la aplicación.",
-      "returnHome": "Volver al inicio",
-      "endpoints": [
-        {
-          "method": "GET",
-          "path": "/robots.txt",
-          "desc": "Configuración dinámica del rastreador web y reglas de indexación.",
-          "category": "System"
-        },
-        {
-          "method": "GET",
-          "path": "/sitemap.xml",
-          "desc": "Mapa del sitio XML con rutas localizadas (en, es).",
-          "category": "System"
-        },
-        {
-          "method": "GET",
-          "path": "/manifest.webmanifest",
-          "desc": "Manifiesto de la aplicación web progresiva (PWA).",
-          "category": "System"
-        },
-        {
-          "method": "GET",
-          "path": "/opengraph-image",
-          "desc": "Generación dinámica de imágenes OpenGraph en tiempo de ejecución.",
-          "category": "System"
-        }
-      ]
-    },
     "legal": {
       "privacy": {
         "metadata": {

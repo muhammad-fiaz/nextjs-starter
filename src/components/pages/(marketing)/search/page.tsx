@@ -16,15 +16,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getLocalizedPath } from "@/i18n/navigation";
-import { searchClient } from "@/lib/search/client/index-loader";
-import type { SearchI18n } from "@/types/i18n";
+import { searchClient } from "@/lib/search/index-loader";
+import type { DedicatedSearchPageProps } from "@/types/pages";
 import type { SearchDocument, SearchHit } from "@/types/search";
-
-export interface DedicatedSearchPageProps {
-  readonly locale: string;
-  readonly searchI18n: SearchI18n;
-  readonly initialQuery?: string;
-}
 
 export default function SearchPage({
   locale,
@@ -229,9 +223,7 @@ export default function SearchPage({
             {}
             {!isSearching && !hasError && !query.trim() && (
               <div className="border-border/60 bg-card rounded-2xl border p-12 text-center shadow-xs">
-                <p className="text-muted-foreground text-sm">
-                  {searchI18n.initialPrompt || "Enter a search term to find content."}
-                </p>
+                <p className="text-muted-foreground text-sm">{searchI18n.initialPrompt}</p>
               </div>
             )}
 

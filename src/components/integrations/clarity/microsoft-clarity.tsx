@@ -3,14 +3,11 @@
 import Script from "next/script";
 import type { ReactNode } from "react";
 
-import { useConsent } from "@/components/cookies/cookie-consent-provider";
 import { siteConfig } from "@/site.config";
 
 export function MicrosoftClarity(): ReactNode {
-  const { decision } = useConsent();
   const clarityConfig = siteConfig.integrations?.clarity;
 
-  if (decision !== "accepted") return null;
   if (!clarityConfig?.enabled || !clarityConfig.projectId) return null;
 
   const projectId = clarityConfig.projectId;

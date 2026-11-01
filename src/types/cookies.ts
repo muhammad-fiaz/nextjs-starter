@@ -1,10 +1,27 @@
-export type ConsentDecision = "accepted" | "denied";
+export type ConsentDecision = "accepted" | "denied" | "custom";
+
+export interface CookieCategoriesConsent {
+  readonly necessary: boolean;
+  readonly analytics: boolean;
+  readonly advertising: boolean;
+  readonly preferences: boolean;
+}
 
 export interface StoredConsentRecord {
   readonly decision: ConsentDecision;
+  readonly categories: CookieCategoriesConsent;
   readonly policyVersion: string;
   readonly decidedAt: number;
   readonly expiresAt: number;
+}
+
+export interface CookieAttributes {
+  readonly path?: string;
+  readonly domain?: string;
+  readonly maxAge?: number;
+  readonly expires?: Date;
+  readonly secure?: boolean;
+  readonly sameSite?: "strict" | "lax" | "none";
 }
 
 export interface CookieConsentConfig {

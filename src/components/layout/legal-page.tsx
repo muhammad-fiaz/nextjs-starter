@@ -1,37 +1,21 @@
 import type { ReactNode } from "react";
 
-export interface LegalPageRootProps {
-  readonly width?: "narrow" | "default" | "full";
-  readonly className?: string;
-  readonly children: ReactNode;
-}
+import type {
+  LegalPageContentProps,
+  LegalPageHeaderProps,
+  LegalPageMetadataProps,
+  LegalPageRootProps,
+  LegalPageTableOfContentsProps,
+} from "@/types/layouts";
 
-export interface LegalPageHeaderProps {
-  readonly className?: string;
-  readonly children: ReactNode;
-}
-
-export interface LegalPageMetadataProps {
-  readonly effectiveDate?: string;
-  readonly lastUpdated?: string;
-  readonly className?: string;
-}
-
-export interface LegalPageTableOfContentsItem {
-  readonly id: string;
-  readonly title: string;
-}
-
-export interface LegalPageTableOfContentsProps {
-  readonly title?: string;
-  readonly items?: readonly LegalPageTableOfContentsItem[];
-  readonly className?: string;
-}
-
-export interface LegalPageContentProps {
-  readonly className?: string;
-  readonly children: ReactNode;
-}
+export type {
+  LegalPageContentProps,
+  LegalPageHeaderProps,
+  LegalPageMetadataProps,
+  LegalPageRootProps,
+  LegalPageTableOfContentsItem,
+  LegalPageTableOfContentsProps,
+} from "@/types/layouts";
 
 export function LegalPageRoot({
   width = "default",

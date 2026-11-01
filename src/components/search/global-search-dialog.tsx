@@ -10,10 +10,10 @@ import { SearchSuggestions } from "@/components/search/search-suggestions";
 import { Button } from "@/components/ui/button";
 import { CommandDialog, CommandInput, CommandList } from "@/components/ui/command";
 import { getLocalizedPath } from "@/i18n/navigation";
-import { loadClientSearchIndex, searchClient } from "@/lib/search/client/index-loader";
+import { loadClientSearchIndex, searchClient } from "@/lib/search/index-loader";
 import { siteConfig } from "@/site.config";
-import type { DictionaryNavigation, SearchI18n } from "@/types/i18n";
 import type { SearchDocument, SearchHit } from "@/types/search";
+import type { DictionaryNavigation, SearchI18n } from "@/validation/i18n";
 
 export interface GlobalSearchDialogProps {
   readonly currentLocale?: string;
@@ -41,8 +41,7 @@ export function GlobalSearchDialog({
       ? currentLocale
       : siteConfig.i18n.defaultLocale;
 
-  const defaultPlaceholder =
-    placeholder || searchI18n?.placeholder || "Search documentation, features, pages...";
+  const defaultPlaceholder = placeholder || searchI18n?.placeholder;
 
   useEffect(() => {
     if (open) {
@@ -109,9 +108,9 @@ export function GlobalSearchDialog({
       >
         <div className="flex items-center gap-2">
           <Search className="h-4 w-4 shrink-0 opacity-70" />
-          <span className="hidden text-xs sm:inline-flex">
-            {searchI18n?.triggerText || "Search documentation..."}
-          </span>
+          {searchI18n?.triggerText && (
+            <span className="hidden text-xs sm:inline-flex">{searchI18n.triggerText}</span>
+          )}
         </div>
         <kbd className="bg-muted text-muted-foreground pointer-events-none hidden h-5 items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 sm:inline-flex">
           <span className="text-xs">⌘</span>K
@@ -130,10 +129,8 @@ export function GlobalSearchDialog({
 
           {!isPending && query.trim() !== "" && results.length === 0 && (
             <SearchEmptyState
-              title={searchI18n?.emptyTitle || "No results found"}
-              description={
-                searchI18n?.emptyDescription || "Try another search term or verify your spelling."
-              }
+              title={searchI18n?.emptyTitle || ""}
+              description={searchI18n?.emptyDescription || ""}
             />
           )}
 
@@ -141,14 +138,14 @@ export function GlobalSearchDialog({
             <SearchSuggestions
               hits={results}
               onSelect={handleSelect}
-              heading={searchI18n?.suggestionsHeading || "Suggestions"}
-              emptyText={searchI18n?.noSuggestions || "No suggestions available"}
+              heading={searchI18n?.suggestionsHeading || ""}
+              emptyText={searchI18n?.noSuggestions || ""}
             />
           )}
 
-          {!isPending && !query.trim() && (
+          {!isPending && !query.trim() && searchI18n?.initialPrompt && (
             <div className="text-muted-foreground p-4 text-center text-xs">
-              {searchI18n?.initialPrompt || "Enter a search term to find content."}
+              {searchI18n.initialPrompt}
             </div>
           )}
         </CommandList>

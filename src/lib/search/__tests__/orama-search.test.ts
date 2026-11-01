@@ -1,17 +1,13 @@
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 
-import {
-  clientIndexCache,
-  loadClientSearchIndex,
-  searchClient,
-} from "@/lib/search/client/index-loader";
-import { OramaEngine } from "@/lib/search/engine/orama-engine";
+import { clientIndexCache, loadClientSearchIndex, searchClient } from "@/lib/search/index-loader";
 import {
   normalizeSearchDocument,
   normalizeSearchQuery,
   resolveSearchLocale,
 } from "@/lib/search/normalize";
-import { ServerSearchManager } from "@/lib/search/server/search-manager";
+import { OramaEngine } from "@/lib/search/orama-engine";
+import { ServerSearchManager } from "@/lib/search/search-manager";
 import type { SearchDocument } from "@/types/search";
 
 describe("Production Orama Search Engine & Architecture", () => {

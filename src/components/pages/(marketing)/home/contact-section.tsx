@@ -7,22 +7,13 @@ import { z } from "zod";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { WebMCPForm } from "@/components/webmcp/webmcp-form";
-import type { DictionaryHome } from "@/types/i18n";
-
-interface ContactSectionProps {
-  readonly contactI18n?: DictionaryHome["contact"];
-}
-
-const contactFormSchema = z.object({
-  name: z.string().min(1, "Full name is required"),
-  email: z.string().email("Please enter a valid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
+import { WebMCPForm } from "@/components/ui/webmcp-form";
+import type { ContactSectionProps } from "@/types/pages";
+import { contactFormSchema } from "@/validation/contact";
 
 export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode {
   const [submitted, setSubmitted] = useState(false);
@@ -32,9 +23,6 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
       name: "",
       email: "",
       message: "",
-    },
-    validators: {
-      onChange: contactFormSchema,
     },
     onSubmit: async ({ value }) => {
       await new Promise((resolve) => setTimeout(resolve, 600));
@@ -68,38 +56,27 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
     <section id="contact" className="border-border/40 border-t py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl space-y-4 text-center">
-          <Badge variant="outline" className="gap-1.5 px-3 py-1 text-xs font-medium">
-            <Sparkles className="text-primary h-3.5 w-3.5" />
-            {contactI18n?.badge || "WebMCP + TanStack Form"}
-          </Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            {contactI18n?.heading || "Contact & Agentic Demo"}
-          </h2>
-          <p className="text-muted-foreground text-base">
-            {contactI18n?.subheading ||
-              "Send us a message or test autonomous AI agent WebMCP form interactions."}
-          </p>
+          {contactI18n?.badge && (
+            <Badge variant="outline" className="gap-1.5 px-3 py-1 text-xs font-medium">
+              <Sparkles className="text-primary h-3.5 w-3.5" />
+              {contactI18n.badge}
+            </Badge>
+          )}
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{contactI18n?.heading}</h2>
+          <p className="text-muted-foreground text-base">{contactI18n?.subheading}</p>
         </div>
 
         <div className="mx-auto max-w-xl">
           <Card className="border-border/60 shadow-xs">
             <CardHeader>
-              <CardTitle className="text-lg">{contactI18n?.heading || "Contact Form"}</CardTitle>
-              <CardDescription>
-                Powered by TanStack Form with first-class type safety and WebMCP agent annotations.
-              </CardDescription>
+              <CardTitle className="text-lg">{contactI18n?.heading}</CardTitle>
             </CardHeader>
             <CardContent>
               {submitted ? (
                 <div className="border-primary/20 bg-primary/5 space-y-3 rounded-xl border p-6 text-center">
                   <CheckCircle2 className="text-primary mx-auto h-8 w-8" />
-                  <h3 className="text-foreground font-semibold">
-                    {contactI18n?.successTitle || "Message sent successfully!"}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {contactI18n?.successDescription ||
-                      "Thank you for getting in touch. We will reply to your inquiry shortly."}
-                  </p>
+                  <h3 className="text-foreground font-semibold">{contactI18n?.successTitle}</h3>
+                  <p className="text-muted-foreground text-sm">{contactI18n?.successDescription}</p>
                   <Button
                     variant="outline"
                     size="sm"
@@ -115,7 +92,7 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
               ) : (
                 <WebMCPForm
                   toolname="submit_contact_message"
-                  tooldescription="Submit user inquiry, contact message, or feedback to Next.js Starter team"
+                  tooldescription="Submit user inquiry, contact message, or feedback"
                   toolautosubmit={false}
                   onAgentSubmit={handleAgentSubmit}
                   onSubmit={(e) => {
@@ -130,25 +107,34 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                     name="name"
                     validators={{
                       onChange: ({ value }) =>
-                        !value ? contactI18n?.errorNameRequired || "Name is required" : undefined,
+                        !value ? contactI18n?.errorNameRequired : undefined,
                     }}
                   >
                     {(field) => (
                       <Field>
-                        <FieldLabel htmlFor={field.name}>
-                          {contactI18n?.nameLabel || "Full Name"}
-                        </FieldLabel>
+                        <FieldLabel htmlFor={field.name}>{contactI18n?.nameLabel}</FieldLabel>
                         <Input
                           id={field.name}
                           name={field.name}
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder={contactI18n?.namePlaceholder || "Ada Lovelace"}
+                          placeholder={contactI18n?.namePlaceholder}
                           aria-invalid={!field.state.meta.isValid}
                         />
-                        {field.state.meta.isTouched && !field.state.meta.isValid && (
-                          <FieldError>{field.state.meta.errors.join(", ")}</FieldError>
+                        {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
+                          <FieldError>
+                            {field.state.meta.errors
+                              .map((err: unknown) =>
+                                typeof err === "string"
+                                  ? err
+                                  : typeof err === "object" && err !== null && "message" in err
+                                    ? String((err as { message?: unknown }).message)
+                                    : "",
+                              )
+                              .filter(Boolean)
+                              .join(", ")}
+                          </FieldError>
                         )}
                       </Field>
                     )}
@@ -161,9 +147,7 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                       onChange: ({ value }) => {
                         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                         if (!value || !emailRegex.test(value)) {
-                          return (
-                            contactI18n?.errorEmailInvalid || "Please enter a valid email address"
-                          );
+                          return contactI18n?.errorEmailInvalid;
                         }
                         return undefined;
                       },
@@ -171,9 +155,7 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                   >
                     {(field) => (
                       <Field>
-                        <FieldLabel htmlFor={field.name}>
-                          {contactI18n?.emailLabel || "Email Address"}
-                        </FieldLabel>
+                        <FieldLabel htmlFor={field.name}>{contactI18n?.emailLabel}</FieldLabel>
                         <Input
                           id={field.name}
                           name={field.name}
@@ -181,11 +163,22 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder={contactI18n?.emailPlaceholder || "ada@example.com"}
+                          placeholder={contactI18n?.emailPlaceholder}
                           aria-invalid={!field.state.meta.isValid}
                         />
-                        {field.state.meta.isTouched && !field.state.meta.isValid && (
-                          <FieldError>{field.state.meta.errors.join(", ")}</FieldError>
+                        {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
+                          <FieldError>
+                            {field.state.meta.errors
+                              .map((err: unknown) =>
+                                typeof err === "string"
+                                  ? err
+                                  : typeof err === "object" && err !== null && "message" in err
+                                    ? String((err as { message?: unknown }).message)
+                                    : "",
+                              )
+                              .filter(Boolean)
+                              .join(", ")}
+                          </FieldError>
                         )}
                       </Field>
                     )}
@@ -196,17 +189,12 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                     name="message"
                     validators={{
                       onChange: ({ value }) =>
-                        !value || value.length < 10
-                          ? contactI18n?.errorMessageRequired ||
-                            "Message must be at least 10 characters"
-                          : undefined,
+                        !value || value.length < 10 ? contactI18n?.errorMessageRequired : undefined,
                     }}
                   >
                     {(field) => (
                       <Field>
-                        <FieldLabel htmlFor={field.name}>
-                          {contactI18n?.messageLabel || "Message"}
-                        </FieldLabel>
+                        <FieldLabel htmlFor={field.name}>{contactI18n?.messageLabel}</FieldLabel>
                         <Textarea
                           id={field.name}
                           name={field.name}
@@ -214,14 +202,22 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder={
-                            contactI18n?.messagePlaceholder ||
-                            "Tell us about your project or question..."
-                          }
+                          placeholder={contactI18n?.messagePlaceholder}
                           aria-invalid={!field.state.meta.isValid}
                         />
-                        {field.state.meta.isTouched && !field.state.meta.isValid && (
-                          <FieldError>{field.state.meta.errors.join(", ")}</FieldError>
+                        {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
+                          <FieldError>
+                            {field.state.meta.errors
+                              .map((err: unknown) =>
+                                typeof err === "string"
+                                  ? err
+                                  : typeof err === "object" && err !== null && "message" in err
+                                    ? String((err as { message?: unknown }).message)
+                                    : "",
+                              )
+                              .filter(Boolean)
+                              .join(", ")}
+                          </FieldError>
                         )}
                       </Field>
                     )}
@@ -237,9 +233,7 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                           className="gap-2"
                         >
                           <Send className="h-4 w-4" />
-                          {isSubmitting
-                            ? contactI18n?.submittingButton || "Sending..."
-                            : contactI18n?.submitButton || "Send Message"}
+                          {isSubmitting ? contactI18n?.submittingButton : contactI18n?.submitButton}
                         </Button>
                         <Button
                           type="button"

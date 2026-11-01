@@ -1,12 +1,10 @@
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
-import type { ContentBlock, ContentSection } from "@/types/i18n";
+import type { LocalizedContentProps } from "@/types/pages";
+import type { ContentBlock } from "@/validation/i18n";
 
-export interface LocalizedContentProps {
-  readonly sections: readonly ContentSection[];
-  readonly className?: string;
-}
+export type { LocalizedContentProps } from "@/types/pages";
 
 function renderBlock(block: ContentBlock, index: number): ReactNode {
   switch (block.type) {

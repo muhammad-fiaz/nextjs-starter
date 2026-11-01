@@ -20,7 +20,7 @@ import { DocumentValidationError, IndexNotFoundError } from "@/lib/search/errors
 import { normalizeSearchDocument } from "@/lib/search/normalize";
 import { defaultSearchSchema } from "@/lib/search/schema";
 import type { SearchDocument, SearchHit, SearchQueryRequest, SearchResponse } from "@/types/search";
-import { searchDocumentSchema } from "@/types/search";
+import { searchDocumentSchema } from "@/validation/search";
 
 export interface CreateIndexOptions {
   readonly name: string;

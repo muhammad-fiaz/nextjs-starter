@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-import { isSupportedLocale } from "@/i18n/validation";
 import { siteConfig } from "@/site.config";
+import { isSupportedLocale } from "@/validation/i18n-config";
 
 const EXCLUDED_PREFIXES = [
   "/api",

@@ -1,13 +1,12 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { CheckCircle2, Send, Sparkles } from "lucide-react";
+import { CheckCircle2, RotateCcw, Send, Sparkles } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { z } from "zod";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -55,27 +54,41 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
   return (
     <section id="contact" className="border-border/40 border-t py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-12 max-w-2xl space-y-4 text-center">
+        <div className="mx-auto mb-12 max-w-2xl space-y-3 text-center">
           {contactI18n?.badge && (
-            <Badge variant="outline" className="gap-1.5 px-3 py-1 text-xs font-medium">
+            <Badge
+              variant="outline"
+              className="gap-1.5 rounded-full px-3.5 py-1 text-xs font-semibold tracking-wide"
+            >
               <Sparkles className="text-primary h-3.5 w-3.5" />
               {contactI18n.badge}
             </Badge>
           )}
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{contactI18n?.heading}</h2>
-          <p className="text-muted-foreground text-base">{contactI18n?.subheading}</p>
+          <p className="text-muted-foreground text-base leading-relaxed">
+            {contactI18n?.subheading}
+          </p>
         </div>
 
         <div className="mx-auto max-w-xl">
-          <Card className="border-border/60 shadow-xs">
-            <CardHeader>
-              <CardTitle className="text-lg">{contactI18n?.heading}</CardTitle>
+          <Card className="border-border/60 bg-card/95 text-card-foreground rounded-2xl shadow-lg backdrop-blur-xs transition-shadow hover:shadow-xl">
+            <CardHeader className="space-y-1.5 pb-4">
+              <CardTitle className="text-xl font-bold tracking-tight">
+                {contactI18n?.heading}
+              </CardTitle>
+              {contactI18n?.subheading && (
+                <CardDescription className="text-muted-foreground text-xs leading-relaxed">
+                  {contactI18n.subheading}
+                </CardDescription>
+              )}
             </CardHeader>
             <CardContent>
               {submitted ? (
-                <div className="border-primary/20 bg-primary/5 space-y-3 rounded-xl border p-6 text-center">
-                  <CheckCircle2 className="text-primary mx-auto h-8 w-8" />
-                  <h3 className="text-foreground font-semibold">{contactI18n?.successTitle}</h3>
+                <div className="border-primary/20 bg-primary/5 space-y-3 rounded-xl border p-8 text-center">
+                  <CheckCircle2 className="text-primary mx-auto h-9 w-9" />
+                  <h3 className="text-foreground text-base font-semibold">
+                    {contactI18n?.successTitle}
+                  </h3>
                   <p className="text-muted-foreground text-sm">{contactI18n?.successDescription}</p>
                   <Button
                     variant="outline"
@@ -84,7 +97,7 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                       form.reset();
                       setSubmitted(false);
                     }}
-                    className="mt-2 text-xs"
+                    className="mt-3 text-xs"
                   >
                     Send another message
                   </Button>
@@ -100,51 +113,49 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                     e.stopPropagation();
                     form.handleSubmit();
                   }}
-                  className="space-y-5"
+                  className="space-y-4"
                 >
-                  {}
                   <form.Field
                     name="name"
                     validators={{
-                      onChange: ({ value }) =>
-                        !value ? contactI18n?.errorNameRequired : undefined,
+                      onBlur: ({ value }) => (!value ? contactI18n?.errorNameRequired : undefined),
                     }}
                   >
-                    {(field) => (
-                      <Field>
-                        <FieldLabel htmlFor={field.name}>{contactI18n?.nameLabel}</FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder={contactI18n?.namePlaceholder}
-                          aria-invalid={!field.state.meta.isValid}
-                        />
-                        {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
-                          <FieldError>
-                            {field.state.meta.errors
-                              .map((err: unknown) =>
-                                typeof err === "string"
-                                  ? err
-                                  : typeof err === "object" && err !== null && "message" in err
-                                    ? String((err as { message?: unknown }).message)
-                                    : "",
-                              )
-                              .filter(Boolean)
-                              .join(", ")}
-                          </FieldError>
-                        )}
-                      </Field>
-                    )}
+                    {(field) => {
+                      const hasError =
+                        field.state.meta.isTouched && field.state.meta.errors.length > 0;
+                      return (
+                        <Field>
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-foreground text-sm font-medium"
+                          >
+                            {contactI18n?.nameLabel}
+                          </FieldLabel>
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder={contactI18n?.namePlaceholder}
+                            aria-invalid={hasError}
+                            className="h-10 rounded-lg transition-all duration-200"
+                          />
+                          {hasError && (
+                            <FieldError className="text-destructive text-xs">
+                              {field.state.meta.errors.filter(Boolean).join(", ")}
+                            </FieldError>
+                          )}
+                        </Field>
+                      );
+                    }}
                   </form.Field>
 
-                  {}
                   <form.Field
                     name="email"
                     validators={{
-                      onChange: ({ value }) => {
+                      onBlur: ({ value }) => {
                         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                         if (!value || !emailRegex.test(value)) {
                           return contactI18n?.errorEmailInvalid;
@@ -153,84 +164,84 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                       },
                     }}
                   >
-                    {(field) => (
-                      <Field>
-                        <FieldLabel htmlFor={field.name}>{contactI18n?.emailLabel}</FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          type="email"
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder={contactI18n?.emailPlaceholder}
-                          aria-invalid={!field.state.meta.isValid}
-                        />
-                        {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
-                          <FieldError>
-                            {field.state.meta.errors
-                              .map((err: unknown) =>
-                                typeof err === "string"
-                                  ? err
-                                  : typeof err === "object" && err !== null && "message" in err
-                                    ? String((err as { message?: unknown }).message)
-                                    : "",
-                              )
-                              .filter(Boolean)
-                              .join(", ")}
-                          </FieldError>
-                        )}
-                      </Field>
-                    )}
+                    {(field) => {
+                      const hasError =
+                        field.state.meta.isTouched && field.state.meta.errors.length > 0;
+                      return (
+                        <Field>
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-foreground text-sm font-medium"
+                          >
+                            {contactI18n?.emailLabel}
+                          </FieldLabel>
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            type="email"
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder={contactI18n?.emailPlaceholder}
+                            aria-invalid={hasError}
+                            className="h-10 rounded-lg transition-all duration-200"
+                          />
+                          {hasError && (
+                            <FieldError className="text-destructive text-xs">
+                              {field.state.meta.errors.filter(Boolean).join(", ")}
+                            </FieldError>
+                          )}
+                        </Field>
+                      );
+                    }}
                   </form.Field>
 
-                  {}
                   <form.Field
                     name="message"
                     validators={{
-                      onChange: ({ value }) =>
+                      onBlur: ({ value }) =>
                         !value || value.length < 10 ? contactI18n?.errorMessageRequired : undefined,
                     }}
                   >
-                    {(field) => (
-                      <Field>
-                        <FieldLabel htmlFor={field.name}>{contactI18n?.messageLabel}</FieldLabel>
-                        <Textarea
-                          id={field.name}
-                          name={field.name}
-                          rows={4}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder={contactI18n?.messagePlaceholder}
-                          aria-invalid={!field.state.meta.isValid}
-                        />
-                        {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
-                          <FieldError>
-                            {field.state.meta.errors
-                              .map((err: unknown) =>
-                                typeof err === "string"
-                                  ? err
-                                  : typeof err === "object" && err !== null && "message" in err
-                                    ? String((err as { message?: unknown }).message)
-                                    : "",
-                              )
-                              .filter(Boolean)
-                              .join(", ")}
-                          </FieldError>
-                        )}
-                      </Field>
-                    )}
+                    {(field) => {
+                      const hasError =
+                        field.state.meta.isTouched && field.state.meta.errors.length > 0;
+                      return (
+                        <Field>
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-foreground text-sm font-medium"
+                          >
+                            {contactI18n?.messageLabel}
+                          </FieldLabel>
+                          <Textarea
+                            id={field.name}
+                            name={field.name}
+                            rows={4}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder={contactI18n?.messagePlaceholder}
+                            aria-invalid={hasError}
+                            className="scrollbar-thumb-border hover:scrollbar-thumb-muted-foreground field-sizing-fixed max-h-48 scrollbar-thin scrollbar-track-transparent overflow-y-auto rounded-lg transition-all duration-200"
+                          />
+                          {hasError && (
+                            <FieldError className="text-destructive text-xs">
+                              {field.state.meta.errors.filter(Boolean).join(", ")}
+                            </FieldError>
+                          )}
+                        </Field>
+                      );
+                    }}
                   </form.Field>
 
-                  {}
                   <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
                     {([canSubmit, isSubmitting]) => (
                       <div className="flex items-center justify-between pt-2">
                         <Button
                           type="submit"
                           disabled={!canSubmit || Boolean(isSubmitting)}
-                          className="gap-2"
+                          className="h-10 gap-2 px-5 font-semibold shadow-xs transition-all"
                         >
                           <Send className="h-4 w-4" />
                           {isSubmitting ? contactI18n?.submittingButton : contactI18n?.submitButton}
@@ -240,9 +251,10 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                           variant="ghost"
                           size="sm"
                           onClick={() => form.reset()}
-                          className="text-muted-foreground text-xs"
+                          className="text-muted-foreground hover:text-foreground gap-1.5 text-xs"
                         >
-                          Reset
+                          <RotateCcw className="h-3.5 w-3.5" />
+                          <span>{contactI18n?.resetButton ?? "Reset"}</span>
                         </Button>
                       </div>
                     )}

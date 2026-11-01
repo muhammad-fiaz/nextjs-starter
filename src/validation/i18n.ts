@@ -148,6 +148,7 @@ export const dictionarySchema = z.object({
       messagePlaceholder: z.string(),
       submitButton: z.string(),
       submittingButton: z.string(),
+      resetButton: z.string().optional(),
       successTitle: z.string(),
       successDescription: z.string(),
       errorNameRequired: z.string(),

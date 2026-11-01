@@ -1,7 +1,5 @@
 {
-  "$schema": "https://agenticresourcediscovery.org/spec/v1/schema.json",
   "specVersion": "1.0",
-  "@context": "https://agenticresourcediscovery.org/context/v1",
   "entries": [
     {
       "identifier": "urn:air:muhammadfiaz.com:nextjs-starter:navigation",

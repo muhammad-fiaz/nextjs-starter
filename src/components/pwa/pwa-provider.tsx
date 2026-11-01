@@ -14,10 +14,13 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
+export type PlatformType = "chromium" | "firefox" | "ios" | "other";
+
 interface PWAContextValue {
   readonly isOnline: boolean;
   readonly isInstalled: boolean;
   readonly canInstall: boolean;
+  readonly platform: PlatformType;
   readonly promptInstall: () => Promise<boolean>;
 }
 
@@ -25,6 +28,7 @@ const PWAContext = createContext<PWAContextValue>({
   isOnline: true,
   isInstalled: false,
   canInstall: false,
+  platform: "other",
   promptInstall: async () => false,
 });
 
@@ -36,9 +40,24 @@ export function PWAProvider({ children }: { readonly children: ReactNode }): Rea
   const [isOnline, setIsOnline] = useState(true);
   const [isInstalled, setIsInstalled] = useState(false);
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [platform, setPlatform] = useState<PlatformType>("other");
 
   useEffect(() => {
     setIsOnline(navigator.onLine);
+
+    const ua = navigator.userAgent.toLowerCase();
+    const isIOSDevice =
+      /iphone|ipad|ipod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isFirefoxBrowser = /firefox|fxios/.test(ua);
+
+    if (isIOSDevice) {
+      setPlatform("ios");
+    } else if (isFirefoxBrowser) {
+      setPlatform("firefox");
+    } else {
+      setPlatform("chromium");
+    }
 
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
@@ -61,7 +80,9 @@ export function PWAProvider({ children }: { readonly children: ReactNode }): Rea
     }
 
     const handleBeforeInstall = (e: Event) => {
-      e.preventDefault();
+      if (siteConfig.pwa?.autoPrompt !== false) {
+        e.preventDefault();
+      }
       setInstallPrompt(e as BeforeInstallPromptEvent);
     };
 
@@ -100,6 +121,7 @@ export function PWAProvider({ children }: { readonly children: ReactNode }): Rea
         isOnline,
         isInstalled,
         canInstall: Boolean(installPrompt),
+        platform,
         promptInstall,
       }}
     >

@@ -1,64 +1,19 @@
 {
-  "$schema": "https://agenticresourcediscovery.org/spec/v1/schema.json",
   "specVersion": "1.0",
-  "name": "Next.js Starter AI Agent Catalog",
-  "description": "Standardized AI agent and WebMCP tool discovery catalog for Next.js Starter",
-  "version": "1.0.0",
-  "provider": {
-    "name": "Muhammad Fiaz",
-    "url": "https://github.com/muhammad-fiaz"
-  },
   "entries": [
     {
-      "id": "webmcp-site-navigation",
-      "name": "Next.js Starter WebMCP Agent Tools",
-      "type": "webmcp",
-      "description": "Client-side interactive WebMCP tools for site exploration, navigation, and contact submission",
-      "tools": [
-        {
-          "name": "navigate_to_page",
-          "description": "Navigate to a specific path within Next.js Starter web application.",
-          "inputSchema": {
-            "type": "object",
-            "properties": {
-              "path": {
-                "type": "string",
-                "description": "The destination route path (e.g., '/', '/api', '/privacy', '/terms')"
-              }
-            },
-            "required": ["path"]
-          }
-        },
-        {
-          "name": "get_current_context",
-          "description": "Returns the current active page path, title, and site configuration.",
-          "inputSchema": {
-            "type": "object",
-            "properties": {}
-          }
-        },
-        {
-          "name": "submit_contact_message",
-          "description": "Submit a user inquiry, feedback, or support message via the contact form.",
-          "inputSchema": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Sender full name"
-              },
-              "email": {
-                "type": "string",
-                "description": "Sender email address"
-              },
-              "message": {
-                "type": "string",
-                "description": "Message content or inquiry"
-              }
-            },
-            "required": ["name", "email", "message"]
-          }
-        }
+      "identifier": "urn:air:muhammadfiaz.com:nextjs-starter:navigation",
+      "displayName": "Next.js Starter Site Navigator",
+      "type": "application/mcp-server-card+json",
+      "url": "https://github.com/muhammad-fiaz/nextjs-starter",
+      "description": "Navigation and site context tools for Next.js Starter web application.",
+      "capabilities": ["navigate_to_page", "get_current_context", "submit_contact_message"],
+      "representativeQueries": [
+        "navigate to the privacy policy page",
+        "show terms of service",
+        "get current page and locale context",
+        "submit contact message or feedback",
+        "explore available API routes"
       ]
     }
   ]

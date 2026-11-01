@@ -160,9 +160,12 @@ export function constructMetadata(
             },
           }),
     icons: {
-      icon: [{ url: "/icon.png", sizes: "32x32", type: "image/png" }],
-      apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
-      shortcut: ["/icon.png"],
+      icon: [
+        { url: "/icon", sizes: "32x32", type: "image/png" },
+        { url: "/icon?size=32", sizes: "32x32", type: "image/png" },
+      ],
+      apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+      shortcut: ["/icon"],
     },
     alternates: {
       canonical: canonicalUrl,

@@ -130,6 +130,7 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                             onChange={(e) => field.handleChange(e.target.value)}
                             placeholder={contactI18n?.namePlaceholder}
                             aria-invalid={hasError}
+                            {...({ toolparamdescription: "Sender full name" } as any)}
                             className="h-10 rounded-lg transition-all duration-200"
                           />
                           {hasError && (
@@ -174,6 +175,7 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                             onChange={(e) => field.handleChange(e.target.value)}
                             placeholder={contactI18n?.emailPlaceholder}
                             aria-invalid={hasError}
+                            {...({ toolparamdescription: "Sender email address" } as any)}
                             className="h-10 rounded-lg transition-all duration-200"
                           />
                           {hasError && (
@@ -213,6 +215,9 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                             onChange={(e) => field.handleChange(e.target.value)}
                             placeholder={contactI18n?.messagePlaceholder}
                             aria-invalid={hasError}
+                            {...({
+                              toolparamdescription: "Message content or user inquiry",
+                            } as any)}
                             className="scrollbar-thumb-border hover:scrollbar-thumb-muted-foreground field-sizing-fixed max-h-48 scrollbar-thin scrollbar-track-transparent overflow-y-auto rounded-lg transition-all duration-200"
                           />
                           {hasError && (
@@ -244,7 +249,7 @@ export function ContactSection({ contactI18n }: ContactSectionProps): ReactNode 
                           className="text-muted-foreground hover:text-foreground gap-1.5 text-xs"
                         >
                           <RotateCcw className="h-3.5 w-3.5" />
-                          <span>{contactI18n?.resetButton ?? "Reset"}</span>
+                          <span>{contactI18n?.resetButton}</span>
                         </Button>
                       </div>
                     )}

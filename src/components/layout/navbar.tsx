@@ -3,6 +3,7 @@ import { type ReactNode } from "react";
 
 import { GithubIcon } from "@/components/icons/social-icons";
 import { MobileNav } from "@/components/layout/mobile-nav";
+import { PWAInstallButton } from "@/components/pwa/pwa-install-button";
 import { GlobalSearchDialog } from "@/components/search/global-search-dialog";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/ui/language-toggle";
@@ -15,17 +16,17 @@ export function Navbar({ currentLocale, navigation, search }: NavbarProps): Reac
   const getHref = (path: string) => getLocalizedPath(path, currentLocale);
 
   return (
-    <header className="border-border/40 bg-background/80 sticky top-0 z-40 w-full border-b backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3 md:gap-8">
+    <header className="border-border/60 bg-background/80 dark:bg-background/90 dark:border-border/40 sticky top-0 z-40 w-full border-b backdrop-blur-md transition-colors">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 shrink items-center gap-2 sm:gap-3 md:gap-8">
           <Link
             href={getHref("/")}
-            className="group flex items-center gap-2.5 font-bold tracking-tight transition-opacity hover:opacity-90"
+            className="group flex shrink-0 items-center gap-2 font-bold tracking-tight transition-opacity hover:opacity-90 sm:gap-2.5"
           >
-            <div className="bg-primary text-primary-foreground flex h-9 w-9 items-center justify-center rounded-xl text-sm font-black shadow-sm transition-transform group-hover:scale-105">
+            <div className="bg-primary text-primary-foreground flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-black shadow-xs transition-transform group-hover:scale-105">
               N
             </div>
-            <span className="text-base font-semibold tracking-tight sm:text-lg">
+            <span className="truncate text-sm font-semibold tracking-tight whitespace-nowrap sm:text-base md:text-lg">
               {siteConfig.name}
             </span>
           </Link>
@@ -50,10 +51,10 @@ export function Navbar({ currentLocale, navigation, search }: NavbarProps): Reac
           </nav>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
           <GlobalSearchDialog currentLocale={currentLocale} searchI18n={search} />
 
-          <div className="bg-border/60 mx-1 hidden h-4 w-px sm:block" />
+          <div className="bg-border/60 mx-0.5 hidden h-4 w-px sm:mx-1 sm:block" />
 
           <LanguageToggle currentLocale={currentLocale} />
           <ThemeToggle />
@@ -75,6 +76,8 @@ export function Navbar({ currentLocale, navigation, search }: NavbarProps): Reac
               </Button>
             </a>
           )}
+
+          <PWAInstallButton className="hidden h-9 px-3 text-xs font-medium md:inline-flex" />
 
           <MobileNav currentLocale={currentLocale} navigation={navigation} />
         </div>

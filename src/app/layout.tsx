@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { CookieConsentProvider } from "@/components/cookies/cookie-consent-provider";
 import { IntegrationManager } from "@/components/integrations/integration-manager";
@@ -8,6 +9,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { WebMCPProvider } from "@/components/providers/webmcp-provider";
 import { PWAProvider } from "@/components/pwa/pwa-provider";
 import { GlobalJsonLd } from "@/components/seo/json-ld";
+import { TopLoader } from "@/components/ui/top-loader";
 import { fontVariables } from "@/lib/fonts";
 import { constructMetadata } from "@/lib/metadata/construct-metadata";
 import "./globals.css";
@@ -38,6 +40,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-full flex-col">
         <GlobalJsonLd />
         <ThemeProvider>
+          <Suspense fallback={null}>
+            <TopLoader />
+          </Suspense>
           <TanStackProvider>
             <PWAProvider>
               <WebMCPProvider>

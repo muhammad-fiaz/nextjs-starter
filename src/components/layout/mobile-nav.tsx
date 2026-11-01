@@ -5,6 +5,7 @@ import Link from "next/link";
 import { type ReactNode, useState } from "react";
 
 import { GithubIcon } from "@/components/icons/social-icons";
+import { PWAInstallButton } from "@/components/pwa/pwa-install-button";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { getLocalizedPath } from "@/i18n/navigation";
@@ -31,14 +32,14 @@ export function MobileNav({ currentLocale, navigation }: MobileNavProps): ReactN
         }
       />
 
-      <CollapsibleContent className="border-border/40 bg-background/95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 absolute top-16 right-0 left-0 border-b shadow-lg backdrop-blur-xl">
+      <CollapsibleContent className="border-border/60 bg-background/95 dark:bg-card/95 dark:border-border/50 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 absolute top-16 right-0 left-0 border-b shadow-xl backdrop-blur-2xl transition-colors">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 p-4 sm:px-6">
-          <nav className="flex flex-col gap-1 text-sm font-medium">
+          <nav className="flex flex-col gap-1.5 text-sm font-medium">
             {navigation?.features && (
               <Link
                 href={getHref("/#features")}
                 onClick={() => setOpen(false)}
-                className="hover:bg-accent hover:text-foreground rounded-lg px-3 py-2.5 transition-colors"
+                className="hover:bg-accent hover:text-foreground active:bg-accent/80 rounded-lg px-3 py-2.5 transition-colors"
               >
                 {navigation.features}
               </Link>
@@ -47,15 +48,21 @@ export function MobileNav({ currentLocale, navigation }: MobileNavProps): ReactN
               <Link
                 href={getHref("/#architecture")}
                 onClick={() => setOpen(false)}
-                className="hover:bg-accent hover:text-foreground rounded-lg px-3 py-2.5 transition-colors"
+                className="hover:bg-accent hover:text-foreground active:bg-accent/80 rounded-lg px-3 py-2.5 transition-colors"
               >
                 {navigation.architecture}
               </Link>
             )}
           </nav>
 
-          {siteConfig.social?.github && (
-            <div className="border-border/40 border-t pt-3">
+          <div className="border-border/60 dark:border-border/40 flex flex-col gap-2.5 border-t pt-3">
+            <PWAInstallButton
+              showIconOnlyOnMobile={false}
+              className="w-full justify-center text-xs font-semibold shadow-xs"
+              onInstalled={() => setOpen(false)}
+            />
+
+            {siteConfig.social?.github && (
               <a
                 href={siteConfig.social.github}
                 target="_blank"
@@ -72,8 +79,8 @@ export function MobileNav({ currentLocale, navigation }: MobileNavProps): ReactN
                   {navigation?.github && <span>{navigation.github}</span>}
                 </Button>
               </a>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </CollapsibleContent>
     </Collapsible>

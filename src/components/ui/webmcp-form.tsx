@@ -69,11 +69,12 @@ export function WebMCPForm({
   return (
     <form
       ref={formRef}
+      {...(toolname ? { toolname } : {})}
+      {...(tooldescription ? { tooldescription } : {})}
       {...(toolautosubmit ? { toolautosubmit: "true" } : {})}
-      {...props}
-
       data-toolname={toolname}
       data-tooldescription={tooldescription}
+      {...props}
     >
       {children}
     </form>

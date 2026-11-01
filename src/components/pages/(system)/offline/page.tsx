@@ -3,14 +3,22 @@ import { OfflineContent } from "./sections/offline-content";
 
 export interface OfflinePageProps {
   readonly onRetry?: () => void;
+  readonly title?: string;
+  readonly description?: string;
+  readonly retryAction?: string;
 }
 
-export default function OfflinePage({ onRetry }: OfflinePageProps) {
+export default function OfflinePage({
+  onRetry,
+  title,
+  description,
+  retryAction,
+}: OfflinePageProps) {
   return (
     <main className="flex min-h-[70vh] w-full flex-col items-center justify-center p-6 text-center">
       <div className="flex max-w-md flex-col items-center space-y-6">
-        <OfflineContent />
-        <OfflineActions onRetry={onRetry} />
+        <OfflineContent title={title} description={description} />
+        <OfflineActions onRetry={onRetry} retryLabel={retryAction} />
       </div>
     </main>
   );

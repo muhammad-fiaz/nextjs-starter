@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import TermsOfServicePage from "@/components/pages/(legal)/terms/page";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { constructMetadata } from "@/lib/metadata/construct-metadata";
+import { siteConfig } from "@/site.config";
+import type { Locale } from "@/types/config";
+
+export const instant = false;
+
+export function generateStaticParams(): { lang: Locale }[] {
+  return siteConfig.i18n.locales.map((lang) => ({ lang }));
+}
 
 export function generateMetadata(): Metadata {
   return constructMetadata({
@@ -13,16 +20,8 @@ export function generateMetadata(): Metadata {
   });
 }
 
-async function LocalizedTermsContent({ params }: { params: Promise<{ lang: string }> }) {
+export default async function Page({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
   return <TermsOfServicePage content={dictionary.pages.legal.terms} />;
-}
-
-export default function Page({ params }: { params: Promise<{ lang: string }> }) {
-  return (
-    <Suspense fallback={<div className="min-h-[70vh]" />}>
-      <LocalizedTermsContent params={params} />
-    </Suspense>
-  );
 }

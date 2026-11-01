@@ -1,8 +1,5 @@
 import type { ApiPaginationParams } from "@/types/api";
 
-/**
- * Builds a search query string or URLSearchParams from typed pagination & filter parameters.
- */
 export function buildQueryString(params?: ApiPaginationParams & Record<string, unknown>): string {
   if (!params) return "";
 
@@ -17,9 +14,6 @@ export function buildQueryString(params?: ApiPaginationParams & Record<string, u
   return query ? `?${query}` : "";
 }
 
-/**
- * Safe JSON parser utility that returns a fallback value instead of throwing on invalid JSON.
- */
 export function safeJsonParse<T>(json: string, fallback: T): T {
   try {
     return JSON.parse(json) as T;

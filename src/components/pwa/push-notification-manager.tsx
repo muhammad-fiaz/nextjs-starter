@@ -42,9 +42,7 @@ export function PushNotificationManager(): ReactNode {
       );
       const sub = await registration.pushManager.getSubscription();
       setSubscription(sub);
-    } catch {
-      // Service worker registration error handled silently
-    }
+    } catch {}
   }
 
   async function subscribeToPush() {

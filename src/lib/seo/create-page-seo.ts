@@ -1,24 +1,22 @@
 import type { Metadata } from "next";
 
-import { i18nConfig, isSupportedLocale, type Locale } from "@/i18n/config";
 import { getLocalizedPath } from "@/i18n/navigation";
 import { getAvailableLocalesForRoute } from "@/i18n/routes";
+import { isSupportedLocale } from "@/i18n/validation";
 import { constructMetadata } from "@/lib/metadata/construct-metadata";
 import { sitemapRegistry } from "@/lib/seo/sitemap-registry";
+import { siteConfig } from "@/site.config";
+import type { Locale } from "@/types/config";
 import type { PageMetadataInput, SitemapEntry } from "@/types/seo";
 
 export interface CreatePageSeoOptions extends PageMetadataInput {
   readonly sitemap?: boolean | Omit<SitemapEntry, "url">;
 }
 
-// Build-time static fallback to avoid unstable runtime new Date() during static page prerendering
 const STATIC_LAST_MODIFIED = new Date("2026-01-01T00:00:00.000Z");
 
-/**
- * Reusable page metadata generator for static and dynamic localized routes.
- * Automatically registers canonical URLs in the sitemap according to i18nConfig and route availability.
- */
 export function createPageMetadata(options: CreatePageSeoOptions): Metadata {
+  const i18nConfig = siteConfig.i18n;
   const metadata = constructMetadata(options);
 
   if (options.path && options.sitemap !== false && !options.noIndex) {
@@ -26,7 +24,6 @@ export function createPageMetadata(options: CreatePageSeoOptions): Metadata {
     const normalizedPath = options.path.startsWith("/") ? options.path : `/${options.path}`;
 
     if (!i18nConfig.enabled) {
-      // Single-language mode: register exact path once
       sitemapRegistry.register({
         url: normalizedPath,
         lastModified:
@@ -36,7 +33,6 @@ export function createPageMetadata(options: CreatePageSeoOptions): Metadata {
         priority: sitemapOpts.priority ?? (normalizedPath === "/" ? 1.0 : 0.7),
       });
     } else {
-      // Localized mode: only register published translations
       const availableLocales = getAvailableLocalesForRoute(normalizedPath);
       const localesToRegister =
         availableLocales.length > 0 ? availableLocales : [i18nConfig.defaultLocale];
@@ -58,9 +54,6 @@ export function createPageMetadata(options: CreatePageSeoOptions): Metadata {
   return metadata;
 }
 
-/**
- * Creates dynamic metadata for route segments with promise params.
- */
 export function createDynamicMetadata<TParams extends { lang: string }>(
   resolver: (
     params: TParams & { locale: Locale },
@@ -70,7 +63,7 @@ export function createDynamicMetadata<TParams extends { lang: string }>(
     const resolvedParams = await params;
     const locale = isSupportedLocale(resolvedParams.lang)
       ? resolvedParams.lang
-      : i18nConfig.defaultLocale;
+      : siteConfig.i18n.defaultLocale;
     const options = await resolver({ ...resolvedParams, locale });
     return createPageMetadata({ ...options, locale });
   };

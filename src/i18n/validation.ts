@@ -1,12 +1,6 @@
 import { siteConfig } from "@/site.config";
 import type { I18nConfig, LocalePrefix } from "@/types/config";
 
-/**
- * Validate configuration contract on initialization:
- * 1. defaultLocale must exist in locales
- * 2. locales must contain unique identifiers
- * 3. localeLabels must provide a label for every configured locale
- */
 export function validateI18nConfig(config: I18nConfig): void {
   const { locales, defaultLocale, localeLabels, localePrefix } = config;
 
@@ -35,18 +29,24 @@ export function validateI18nConfig(config: I18nConfig): void {
     if (!localeLabels || !localeLabels[locale]) {
       throw new Error(`[i18n] Missing localeLabel for configured locale "${locale}".`);
     }
-    // Basic BCP 47 sanity check (e.g. en, en-US, es, pt-BR)
+
     if (!/^[a-z]{2,3}(-[A-Za-z0-9]+)?$/.test(locale)) {
       throw new Error(`[i18n] Invalid BCP 47 language identifier: "${locale}".`);
     }
   }
 }
 
-// Validate once at module load
 validateI18nConfig(siteConfig.i18n);
 
 export function isLocale(value: unknown): value is string {
   return (
     typeof value === "string" && (siteConfig.i18n.locales as readonly string[]).includes(value)
   );
+}
+
+export const isSupportedLocale = isLocale;
+
+export function getLocaleDirection(locale: string): "ltr" | "rtl" {
+  const rtlList = siteConfig.i18n.rtlLocales || ["ar", "he", "fa", "ur"];
+  return rtlList.includes(locale.toLowerCase().split("-")[0] || "") ? "rtl" : "ltr";
 }

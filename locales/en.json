@@ -118,6 +118,24 @@
         "Integrated Orama full-text search engine with client and server index capabilities",
         "Zustand state management and TanStack React Query v5 preconfigured"
       ]
+    },
+    "contact": {
+      "badge": "WebMCP + TanStack Form",
+      "heading": "Contact & Agentic Demo",
+      "subheading": "Send us a message or test autonomous AI agent WebMCP form interactions.",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "Ada Lovelace",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "ada@example.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Tell us about your project or question...",
+      "submitButton": "Send Message",
+      "submittingButton": "Sending...",
+      "successTitle": "Message sent successfully!",
+      "successDescription": "Thank you for getting in touch. We will reply to your inquiry shortly.",
+      "errorNameRequired": "Full name is required",
+      "errorEmailInvalid": "Please enter a valid email address",
+      "errorMessageRequired": "Message must be at least 10 characters"
     }
   },
   "cookies": {

@@ -1,6 +1,7 @@
 import type { CookieConsentConfig, SiteIntegrationsConfig } from "@/types/cookies";
 import type { PWAConfig } from "@/types/pwa";
 
+export type Locale = string;
 export type LocalePrefix = "always" | "as-needed";
 
 export interface I18nConfig {
@@ -9,6 +10,8 @@ export interface I18nConfig {
   readonly locales: readonly string[];
   readonly localePrefix: LocalePrefix;
   readonly localeLabels: Record<string, string>;
+  readonly localeToLanguage?: Record<string, string>;
+  readonly rtlLocales?: readonly string[];
 }
 
 export interface SiteAuthor {

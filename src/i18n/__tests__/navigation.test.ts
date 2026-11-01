@@ -1,6 +1,5 @@
 import { describe, expect, it } from "bun:test";
 
-import { i18nConfig } from "@/i18n/config";
 import {
   getCurrentLocale,
   getLocalizedPath,
@@ -9,6 +8,7 @@ import {
   switchLocalePath,
 } from "@/i18n/navigation";
 import { getAvailableLocalesForRoute, isRouteAvailable } from "@/i18n/routes";
+import { siteConfig } from "@/site.config";
 
 describe("i18n Navigation Utility", () => {
   describe("Path Detection & Inspection", () => {

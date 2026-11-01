@@ -23,7 +23,6 @@ export function SearchFilters({
   allLabel = "All Content",
   clearLabel = "Clear all filters",
 }: SearchFiltersProps): ReactNode {
-  // Only render filter panel if actual indexed types exist
   if (types.length === 0) {
     return null;
   }

@@ -10,7 +10,6 @@ export function MicrosoftClarity(): ReactNode {
   const { decision } = useConsent();
   const clarityConfig = siteConfig.integrations?.clarity;
 
-  // Strict consent check: only load if user accepted optional tracking and project ID configured
   if (decision !== "accepted") return null;
   if (!clarityConfig?.enabled || !clarityConfig.projectId) return null;
 

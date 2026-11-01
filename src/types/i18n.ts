@@ -7,14 +7,14 @@ export const contentBlockSchema = z.discriminatedUnion("type", [
   }),
   z.object({
     type: z.literal("list"),
-    ordered: z.boolean().default(false),
+    ordered: z.boolean(),
     items: z.array(z.string()),
   }),
   z.object({
     type: z.literal("callout"),
     title: z.string().optional(),
     text: z.string(),
-    variant: z.enum(["info", "warning", "success", "default"]).default("default"),
+    variant: z.enum(["info", "warning", "success", "default"]),
   }),
   z.object({
     type: z.literal("link"),
@@ -39,6 +39,8 @@ export const pageMetadataSchema = z.object({
   keywords: z.array(z.string()).optional(),
 });
 
+export type PageMetadata = z.infer<typeof pageMetadataSchema>;
+
 export const legalPageContentSchema = z.object({
   metadata: pageMetadataSchema,
   title: z.string(),
@@ -54,7 +56,7 @@ export const apiEndpointSchema = z.object({
   method: z.string(),
   path: z.string(),
   desc: z.string(),
-  category: z.string().default("System"),
+  category: z.string(),
 });
 
 export type ApiEndpoint = z.infer<typeof apiEndpointSchema>;
@@ -75,30 +77,30 @@ export const searchI18nSchema = z.object({
   triggerText: z.string(),
   emptyTitle: z.string(),
   emptyDescription: z.string(),
-  initialPrompt: z.string().default("Enter a search term to find content."),
+  initialPrompt: z.string(),
   resultsHeading: z.string(),
-  suggestionsHeading: z.string().default("Suggestions"),
-  noSuggestions: z.string().default("No suggestions available"),
+  suggestionsHeading: z.string(),
+  noSuggestions: z.string(),
   quickLinksHeading: z.string(),
   pagesCategory: z.string(),
   sectionsCategory: z.string(),
   legalCategory: z.string(),
   developerCategory: z.string(),
-  title: z.string().default("Search"),
-  pageDescription: z.string().default("Explore documentation, guides, APIs, and legal policies."),
-  allFilter: z.string().default("All"),
-  filtersHeading: z.string().default("Filters"),
-  contentTypeHeading: z.string().default("Content Type"),
-  sortByHeading: z.string().default("Sort by"),
-  relevanceSort: z.string().default("Relevance"),
-  titleAscSort: z.string().default("Title (A-Z)"),
-  titleDescSort: z.string().default("Title (Z-A)"),
-  resultsFoundText: z.string().default("results found"),
-  clearFiltersText: z.string().default("Clear all filters"),
-  previousPageText: z.string().default("Previous"),
-  nextPageText: z.string().default("Next"),
-  pageIndicatorText: z.string().default("Page"),
-  loadingText: z.string().default("Searching..."),
+  title: z.string(),
+  pageDescription: z.string(),
+  allFilter: z.string(),
+  filtersHeading: z.string(),
+  contentTypeHeading: z.string(),
+  sortByHeading: z.string(),
+  relevanceSort: z.string(),
+  titleAscSort: z.string(),
+  titleDescSort: z.string(),
+  resultsFoundText: z.string(),
+  clearFiltersText: z.string(),
+  previousPageText: z.string(),
+  nextPageText: z.string(),
+  pageIndicatorText: z.string(),
+  loadingText: z.string(),
 });
 
 export type SearchI18n = z.infer<typeof searchI18nSchema>;
@@ -107,7 +109,7 @@ export const dictionarySchema = z.object({
   metadata: z.object({
     language: z.string(),
     locale: z.string(),
-    direction: z.enum(["ltr", "rtl"]).default("ltr"),
+    direction: z.enum(["ltr", "rtl"]),
   }),
   common: z.object({
     appName: z.string(),
@@ -130,8 +132,8 @@ export const dictionarySchema = z.object({
     home: z.string(),
     features: z.string(),
     architecture: z.string(),
-    api: z.string().default("API"),
-    search: z.string().default("Search"),
+    api: z.string(),
+    search: z.string(),
     about: z.string().optional(),
     contact: z.string().optional(),
     privacy: z.string(),
@@ -165,6 +167,24 @@ export const dictionarySchema = z.object({
       heading: z.string(),
       items: z.array(z.string()),
     }),
+    contact: z.object({
+      badge: z.string(),
+      heading: z.string(),
+      subheading: z.string(),
+      nameLabel: z.string(),
+      namePlaceholder: z.string(),
+      emailLabel: z.string(),
+      emailPlaceholder: z.string(),
+      messageLabel: z.string(),
+      messagePlaceholder: z.string(),
+      submitButton: z.string(),
+      submittingButton: z.string(),
+      successTitle: z.string(),
+      successDescription: z.string(),
+      errorNameRequired: z.string(),
+      errorEmailInvalid: z.string(),
+      errorMessageRequired: z.string(),
+    }),
   }),
   cookies: z.object({
     title: z.string(),
@@ -192,9 +212,11 @@ export const dictionarySchema = z.object({
 });
 
 export type Dictionary = z.infer<typeof dictionarySchema>;
+export type DictionaryMetadata = Dictionary["metadata"];
 export type DictionaryCommon = Dictionary["common"];
 export type DictionaryNavigation = Dictionary["navigation"];
 export type DictionaryHome = Dictionary["home"];
 export type DictionaryCookies = Dictionary["cookies"];
 export type DictionaryOffline = Dictionary["offline"];
 export type DictionaryFooter = Dictionary["footer"];
+export type DictionaryPages = Dictionary["pages"];

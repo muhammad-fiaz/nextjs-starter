@@ -1,9 +1,5 @@
 import type { QueryKeyFactory } from "@/types/query";
 
-/**
- * Creates a strongly typed query key factory for resources.
- * Ensures consistent, predictable cache invalidation and queries.
- */
 export function createQueryKeyFactory<TRoot extends string>(root: TRoot): QueryKeyFactory<TRoot> {
   return {
     all: [root] as const,

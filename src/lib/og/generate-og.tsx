@@ -10,10 +10,6 @@ export const defaultOgDimensions = {
 
 export const defaultOgContentType = "image/png";
 
-/**
- * Universal OpenGraph and Twitter Image generator for Next.js App Router.
- * Ensures consistent branding, styling, and typography across all metadata images.
- */
 export function createDynamicOgImage(props?: Partial<OgImageProps>): ImageResponse {
   const brandName = props?.siteName || siteConfig.name || "Next.js Starter";
   const title = props?.title || brandName;

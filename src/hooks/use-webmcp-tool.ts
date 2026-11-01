@@ -5,10 +5,6 @@ import { useEffect, useRef } from "react";
 import { registerWebMCPTool } from "@/lib/webmcp/registry";
 import type { WebMCPTool } from "@/types/webmcp";
 
-/**
- * React hook to register a WebMCP tool on document.modelContext during component lifecycle.
- * Automatically unregisters when the component unmounts or dependencies change.
- */
 export function useWebMCPTool<TInput = Record<string, unknown>, TOutput = unknown>(
   tool: WebMCPTool<TInput, TOutput>,
   deps: React.DependencyList = [],
@@ -28,6 +24,5 @@ export function useWebMCPTool<TInput = Record<string, unknown>, TOutput = unknow
     return () => {
       unregister();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }

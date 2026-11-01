@@ -4,10 +4,6 @@ import type { UIActions, UIState } from "@/types/stores";
 
 export type UIStore = UIState & UIActions;
 
-/**
- * Reusable client-side UI store for transient state (drawers, sidebars, modals).
- * Server-safe and hydration friendly.
- */
 export const useUIStore = create<UIStore>((set) => ({
   isSidebarOpen: false,
   isSearchOpen: false,

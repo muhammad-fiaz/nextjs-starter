@@ -2,13 +2,15 @@ import type { ReactNode } from "react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { getLocaleDirection, i18nConfig, isSupportedLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { getLocaleDirection, isSupportedLocale } from "@/i18n/validation";
+import { siteConfig } from "@/site.config";
+import type { Locale } from "@/types/config";
 
 export const instant = false;
 
 export function generateStaticParams(): { lang: Locale }[] {
-  return i18nConfig.locales.map((lang) => ({ lang }));
+  return siteConfig.i18n.locales.map((lang) => ({ lang }));
 }
 
 interface LocaleLayoutProps {
@@ -21,7 +23,7 @@ export default async function LocaleLayout({
   params,
 }: LocaleLayoutProps): Promise<ReactNode> {
   const { lang } = await params;
-  const currentLang = isSupportedLocale(lang) ? lang : i18nConfig.defaultLocale;
+  const currentLang = isSupportedLocale(lang) ? lang : siteConfig.i18n.defaultLocale;
   const dir = getLocaleDirection(currentLang);
   const dictionary = await getDictionary(currentLang);
 

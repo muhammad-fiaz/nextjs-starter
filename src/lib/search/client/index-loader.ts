@@ -1,10 +1,7 @@
 import { OramaEngine } from "@/lib/search/engine/orama-engine";
-import { getOramaLanguage, resolveSearchLocale } from "@/lib/search/shared/normalize";
-import type { SearchDocument, SearchQueryRequest, SearchResponse } from "@/lib/search/shared/types";
+import { getOramaLanguage, resolveSearchLocale } from "@/lib/search/normalize";
+import type { SearchDocument, SearchQueryRequest, SearchResponse } from "@/types/search";
 
-/**
- * In-memory client cache for deserialized Orama instances.
- */
 class ClientIndexCache {
   private readonly instances = new Map<string, OramaEngine>();
   private readonly inflight = new Map<string, Promise<OramaEngine>>();
@@ -37,22 +34,14 @@ class ClientIndexCache {
 
 export const clientIndexCache = new ClientIndexCache();
 
-/**
- * Loads and initializes the search index for the specified locale.
- * Fetches from `/search/[locale]/index.json` if available.
- * If not present or empty, initializes a clean, valid in-memory index for the locale.
- * Does not fabricate artificial documents.
- */
 export async function loadClientSearchIndex(locale: string): Promise<OramaEngine> {
   const normalizedLocale = resolveSearchLocale(locale);
 
-  // Return cached engine if already initialized
   const cached = clientIndexCache.get(normalizedLocale);
   if (cached) {
     return cached;
   }
 
-  // Deduplicate inflight requests
   const inflight = clientIndexCache.getInflight(normalizedLocale);
   if (inflight) {
     return await inflight;
@@ -63,7 +52,6 @@ export async function loadClientSearchIndex(locale: string): Promise<OramaEngine
     const indexName = `client-${normalizedLocale}`;
 
     try {
-      // Attempt to fetch static index from public assets if one exists
       const response = await fetch(`/search/${normalizedLocale}/index.json`, {
         headers: { Accept: "application/json" },
       });
@@ -76,11 +64,8 @@ export async function loadClientSearchIndex(locale: string): Promise<OramaEngine
           return engine;
         }
       }
-    } catch {
-      // Network or parsing failure: proceed to clean empty index creation
-    }
+    } catch {}
 
-    // Initialize clean, valid Orama index with no artificial/fabricated documents
     await engine.createIndex({
       name: indexName,
       language: getOramaLanguage(normalizedLocale),
@@ -99,9 +84,6 @@ export async function loadClientSearchIndex(locale: string): Promise<OramaEngine
   }
 }
 
-/**
- * Executes a client-side search against the locally loaded Orama index.
- */
 export async function searchClient(
   locale: string,
   request: SearchQueryRequest,

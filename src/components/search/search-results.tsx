@@ -11,9 +11,6 @@ export interface SearchResultsProps extends HTMLAttributes<HTMLDivElement> {
   readonly renderCustomItem?: (hit: SearchHit<SearchDocument>) => ReactNode;
 }
 
-/**
- * Reusable list component for rendering structured search results.
- */
 export function SearchResults({
   hits,
   heading,

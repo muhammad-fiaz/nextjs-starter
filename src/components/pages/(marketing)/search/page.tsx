@@ -16,8 +16,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getLocalizedPath } from "@/i18n/navigation";
-import type { SearchI18n } from "@/i18n/types";
 import { searchClient } from "@/lib/search/client/index-loader";
+import type { SearchI18n } from "@/types/i18n";
 import type { SearchDocument, SearchHit } from "@/types/search";
 
 export interface DedicatedSearchPageProps {
@@ -34,7 +34,6 @@ export default function SearchPage({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Read query from URL or prop fallback
   const urlQuery = searchParams.get("q") ?? initialQuery;
 
   const [query, setQuery] = useState(urlQuery);
@@ -47,12 +46,10 @@ export default function SearchPage({
 
   const pageSize = 5;
 
-  // Sync state if URL query param changes from external navigation
   useEffect(() => {
     setQuery(urlQuery);
   }, [urlQuery]);
 
-  // Execute search via in-memory Orama client
   const runSearch = useCallback(
     (searchTerm: string) => {
       setHasError(false);
@@ -84,7 +81,6 @@ export default function SearchPage({
     runSearch(query);
   }, [query, runSearch]);
 
-  // Handle query submission and synchronize URL
   const handleQuerySubmit = (newQuery: string) => {
     const trimmed = newQuery.trim();
     const encoded = encodeURIComponent(trimmed);
@@ -102,7 +98,6 @@ export default function SearchPage({
     }
   };
 
-  // Extract actual unique types present in the indexed hits for filtering
   const availableTypes = useMemo(() => {
     const types = new Set<string>();
     for (const hit of hits) {
@@ -113,18 +108,15 @@ export default function SearchPage({
     return Array.from(types);
   }, [hits]);
 
-  // Apply active filters and sorting
   const processedHits = useMemo(() => {
     let result = [...hits];
 
-    // Filter by type
     if (selectedType !== "all") {
       result = result.filter(
         (hit) => hit.document.type.toLowerCase() === selectedType.toLowerCase(),
       );
     }
 
-    // Sort
     if (sortBy === "title-asc") {
       result.sort((a, b) => a.document.title.localeCompare(b.document.title));
     } else if (sortBy === "title-desc") {
@@ -134,7 +126,6 @@ export default function SearchPage({
     return result;
   }, [hits, selectedType, sortBy]);
 
-  // Pagination calculation
   const totalPages = Math.max(1, Math.ceil(processedHits.length / pageSize));
   const paginatedHits = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
@@ -144,13 +135,13 @@ export default function SearchPage({
   return (
     <main className="min-h-[calc(100vh-16rem)] w-full px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl space-y-8">
-        {/* Page Header */}
+        {}
         <div className="space-y-2">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{searchI18n.title}</h1>
           <p className="text-muted-foreground text-sm sm:text-base">{searchI18n.pageDescription}</p>
         </div>
 
-        {/* Search Input Bar */}
+        {}
         <SearchInput
           value={query}
           onChange={(val) => {
@@ -161,9 +152,9 @@ export default function SearchPage({
           className="max-w-3xl"
         />
 
-        {/* Content Layout: Filters Sidebar + Results Area */}
+        {}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-          {/* Sidebar Filters - rendered only if real types exist */}
+          {}
           {availableTypes.length > 0 && (
             <aside className="space-y-6 lg:col-span-1">
               <SearchFilters
@@ -184,11 +175,11 @@ export default function SearchPage({
             </aside>
           )}
 
-          {/* Results Area */}
+          {}
           <div
             className={`space-y-6 ${availableTypes.length > 0 ? "lg:col-span-3" : "lg:col-span-4"}`}
           >
-            {/* Results Header: Count & Sort */}
+            {}
             <div className="border-border/60 flex flex-wrap items-center justify-between gap-4 border-b pb-4">
               <div className="text-muted-foreground text-sm">
                 {!isSearching && (
@@ -215,10 +206,10 @@ export default function SearchPage({
               )}
             </div>
 
-            {/* Loading State: Skeletons (No spinners) */}
+            {}
             {isSearching && <SearchSkeleton variant="page" count={3} />}
 
-            {/* Error State with localized retry */}
+            {}
             {!isSearching && hasError && (
               <div className="border-destructive/20 bg-destructive/10 space-y-3 rounded-xl border p-6 text-center">
                 <AlertCircle className="text-destructive mx-auto h-8 w-8" />
@@ -235,7 +226,7 @@ export default function SearchPage({
               </div>
             )}
 
-            {/* Empty Query Prompt */}
+            {}
             {!isSearching && !hasError && !query.trim() && (
               <div className="border-border/60 bg-card rounded-2xl border p-12 text-center shadow-xs">
                 <p className="text-muted-foreground text-sm">
@@ -244,7 +235,7 @@ export default function SearchPage({
               </div>
             )}
 
-            {/* No Results Found */}
+            {}
             {!isSearching && !hasError && query.trim() !== "" && processedHits.length === 0 && (
               <SearchEmptyState
                 title={searchI18n.emptyTitle}
@@ -252,7 +243,7 @@ export default function SearchPage({
               />
             )}
 
-            {/* Results List */}
+            {}
             {!isSearching && !hasError && paginatedHits.length > 0 && (
               <div className="space-y-4">
                 {paginatedHits.map((hit) => {
@@ -298,7 +289,7 @@ export default function SearchPage({
                   );
                 })}
 
-                {/* Pagination */}
+                {}
                 <SearchPagination
                   currentPage={currentPage}
                   totalPages={totalPages}

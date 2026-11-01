@@ -37,7 +37,6 @@ export function PWAProvider({ children }: { readonly children: ReactNode }): Rea
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
-    // Sync online/offline state
     setIsOnline(navigator.onLine);
 
     const handleOnline = () => setIsOnline(true);
@@ -46,7 +45,6 @@ export function PWAProvider({ children }: { readonly children: ReactNode }): Rea
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
 
-    // Register Service Worker in production if enabled
     if (
       siteConfig.pwa?.enabled &&
       process.env.NODE_ENV === "production" &&
@@ -54,17 +52,13 @@ export function PWAProvider({ children }: { readonly children: ReactNode }): Rea
     ) {
       const swUrl = siteConfig.pwa.swUrl || "/sw.js";
       const scope = siteConfig.pwa.scope || "/";
-      navigator.serviceWorker.register(swUrl, { scope }).catch(() => {
-        // Silent catch for unregistered SW
-      });
+      navigator.serviceWorker.register(swUrl, { scope }).catch(() => {});
     }
 
-    // Check display-mode standalone
     if (window.matchMedia("(display-mode: standalone)").matches) {
       setIsInstalled(true);
     }
 
-    // Capture install prompt
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
       setInstallPrompt(e as BeforeInstallPromptEvent);
@@ -95,9 +89,7 @@ export function PWAProvider({ children }: { readonly children: ReactNode }): Rea
         setInstallPrompt(null);
         return true;
       }
-    } catch {
-      // Ignored
-    }
+    } catch {}
     return false;
   };
 

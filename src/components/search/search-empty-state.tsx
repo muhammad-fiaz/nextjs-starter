@@ -8,9 +8,6 @@ export interface SearchEmptyStateProps extends HTMLAttributes<HTMLDivElement> {
   readonly description?: string;
 }
 
-/**
- * Reusable empty state component when no search results match.
- */
 export function SearchEmptyState({
   title = "No results found",
   description = "Try adjusting your search terms or filters.",

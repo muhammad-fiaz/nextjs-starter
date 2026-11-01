@@ -30,9 +30,7 @@ function getStoredTheme(defaultPreference: ThemePreference): ThemePreference {
     if (stored === "light" || stored === "dark" || stored === "system") {
       return stored;
     }
-  } catch {
-    // Storage access might be restricted
-  }
+  } catch {}
   return defaultPreference;
 }
 
@@ -55,7 +53,6 @@ export function ThemeProvider({ children, defaultTheme = "system" }: ThemeProvid
   const [theme, setThemeState] = useState<ThemePreference>(defaultTheme);
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
 
-  // Initialize theme on mount from localStorage / system preference
   useEffect(() => {
     const initialTheme = getStoredTheme(defaultTheme);
     setThemeState(initialTheme);
@@ -64,7 +61,6 @@ export function ThemeProvider({ children, defaultTheme = "system" }: ThemeProvid
     applyThemeToDocument(resolved);
   }, [defaultTheme]);
 
-  // Listen to OS system preference changes only when theme === "system"
   useEffect(() => {
     if (theme !== "system" || typeof window === "undefined" || !window.matchMedia) {
       return;
@@ -88,9 +84,7 @@ export function ThemeProvider({ children, defaultTheme = "system" }: ThemeProvid
     setThemeState(newTheme);
     try {
       window.localStorage.setItem(THEME_STORAGE_KEY, newTheme);
-    } catch {
-      // Ignore storage errors in restricted contexts
-    }
+    } catch {}
 
     const resolved = newTheme === "system" ? getSystemTheme() : newTheme;
     setResolvedTheme(resolved);

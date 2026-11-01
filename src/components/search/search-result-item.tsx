@@ -12,10 +12,6 @@ export interface SearchResultItemProps extends HTMLAttributes<HTMLDivElement> {
   readonly onSelect?: () => void;
 }
 
-/**
- * Reusable presentational component for individual search result items.
- * Works in both server and client rendering contexts.
- */
 export function SearchResultItem({
   title,
   description,

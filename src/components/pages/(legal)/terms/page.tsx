@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { LegalPage } from "@/components/layout/legal-page";
 import { LocalizedContent } from "@/components/layout/localized-content";
-import type { LegalPageContent } from "@/i18n/types";
+import type { LegalPageContent } from "@/types/i18n";
 
 interface TermsOfServicePageProps {
   readonly content: LegalPageContent;

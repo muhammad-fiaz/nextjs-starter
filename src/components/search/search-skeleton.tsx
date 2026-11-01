@@ -33,7 +33,6 @@ export function SearchSkeleton({ variant = "dialog", count = 3, className }: Sea
     );
   }
 
-  // Dialog variant (used in global search popup)
   return (
     <div className={cn("space-y-2 p-2", className)} aria-label="Loading search suggestions">
       {Array.from({ length: count }).map((_, i) => (

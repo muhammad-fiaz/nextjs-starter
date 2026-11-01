@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 
-// Client-only dynamic third-party integrations loaded without blocking initial HTML
 const DynamicGoogleTagManager = dynamic(
   () =>
     import("@/components/integrations/google/google-tag-manager").then(

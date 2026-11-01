@@ -14,11 +14,12 @@ import Link from "next/link";
 import { type ReactNode } from "react";
 
 import { GithubIcon } from "@/components/icons/social-icons";
+import { ContactSection } from "@/components/pages/(marketing)/home/contact-section";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getLocalizedPath } from "@/i18n/navigation";
-import type { Dictionary } from "@/i18n/types";
 import { siteConfig } from "@/site.config";
+import type { Dictionary } from "@/types/i18n";
 
 interface HomePageProps {
   readonly currentLocale?: string;
@@ -95,7 +96,7 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
 
   return (
     <>
-      {/* Hero Section */}
+      {}
       <section className="border-border/40 relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden border-b py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl space-y-6 text-center">
@@ -139,7 +140,7 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
         </div>
       </section>
 
-      {/* Features Grid */}
+      {}
       <section id="features" className="py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-16 max-w-2xl text-center">
@@ -173,7 +174,7 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
         </div>
       </section>
 
-      {/* Architecture Checklist */}
+      {}
       <section id="architecture" className="border-border/40 bg-muted/20 border-t py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
@@ -194,6 +195,9 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
           </div>
         </div>
       </section>
+
+      {}
+      <ContactSection contactI18n={dictionary?.home.contact} />
     </>
   );
 }

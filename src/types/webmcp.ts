@@ -1,24 +1,10 @@
-/**
- * WebMCP (Web Model Context Protocol) Type Definitions
- * Based on Google Chrome WebMCP Imperative & Declarative API Specification
- */
-
 export interface WebMCPAnnotations {
-  /**
-   * Indicates whether the tool performs only read operations without mutating state.
-   */
   readOnlyHint?: boolean;
-  /**
-   * Indicates whether the tool execution has consequences (destructive, external mutation, payment).
-   */
+
   consequentialHint?: boolean;
-  /**
-   * Indicates whether the tool accepts or handles untrusted content.
-   */
+
   untrustedContentHint?: boolean;
-  /**
-   * Optional debugging or telemetry flag for agent execution.
-   */
+
   debugging?: boolean;
 }
 

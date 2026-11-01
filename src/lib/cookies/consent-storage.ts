@@ -4,10 +4,6 @@ import type { ConsentDecision, StoredConsentRecord } from "@/types/cookies";
 export const COOKIE_CONSENT_KEY = "app-cookie-consent";
 export const COOKIE_CONSENT_VERSION = siteConfig.cookies?.consent?.policyVersion ?? "1.0.0";
 
-/**
- * Validates whether a record matches expected schema, policyVersion, and has not expired.
- * Fail-closed: returns null if invalid, tampered, expired, or version mismatch.
- */
 export function validateConsentRecord(
   rawRecord: unknown,
   expectedVersion: string,
@@ -30,10 +26,6 @@ export function validateConsentRecord(
   };
 }
 
-/**
- * Retrieves the stored consent record from localStorage.
- * Returns null if not in browser, no storage, expired, or version mismatch.
- */
 export function getStoredConsent(): StoredConsentRecord | null {
   if (typeof window === "undefined") return null;
 
@@ -49,9 +41,6 @@ export function getStoredConsent(): StoredConsentRecord | null {
   }
 }
 
-/**
- * Stores a user consent decision (accepted | denied) with expiration based on configured duration.
- */
 export function setStoredConsent(decision: ConsentDecision): StoredConsentRecord {
   const policyVersion = COOKIE_CONSENT_VERSION;
   const durationDays = siteConfig.cookies?.consent.defaultDurationDays ?? 180;
@@ -69,24 +58,17 @@ export function setStoredConsent(decision: ConsentDecision): StoredConsentRecord
     try {
       window.localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(record));
       window.dispatchEvent(new CustomEvent("consentDecisionChanged", { detail: record }));
-    } catch {
-      // Storage access blocked or quota exceeded
-    }
+    } catch {}
   }
 
   return record;
 }
 
-/**
- * Clears stored consent record (e.g. for testing or reset)
- */
 export function clearStoredConsent(): void {
   if (typeof window !== "undefined") {
     try {
       window.localStorage.removeItem(COOKIE_CONSENT_KEY);
       window.dispatchEvent(new CustomEvent("consentDecisionChanged", { detail: null }));
-    } catch {
-      // Storage access blocked
-    }
+    } catch {}
   }
 }

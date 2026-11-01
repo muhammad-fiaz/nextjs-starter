@@ -3,8 +3,8 @@ import { type ReactNode } from "react";
 
 import { GithubIcon, TwitterIcon } from "@/components/icons/social-icons";
 import { getLocalizedPath } from "@/i18n/navigation";
-import type { DictionaryFooter, DictionaryNavigation } from "@/i18n/types";
 import { siteConfig } from "@/site.config";
+import type { DictionaryFooter, DictionaryNavigation } from "@/types/i18n";
 
 interface SiteFooterProps {
   readonly currentLocale?: string;
@@ -31,7 +31,7 @@ export function SiteFooter({ currentLocale, navigation, footer }: SiteFooterProp
               {siteConfig.description}
             </p>
 
-            {/* Social Links */}
+            {}
             <div className="flex items-center gap-3 pt-2">
               {siteConfig.social?.github && (
                 <a

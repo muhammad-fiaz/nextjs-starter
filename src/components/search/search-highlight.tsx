@@ -8,9 +8,6 @@ export interface SearchHighlightProps extends HTMLAttributes<HTMLSpanElement> {
   readonly query?: string;
 }
 
-/**
- * Highlights matching search substrings safely without innerHTML.
- */
 export function SearchHighlight({
   text,
   query,

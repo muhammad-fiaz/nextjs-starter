@@ -1,4 +1,6 @@
 {
+  "$schema": "https://agenticresourcediscovery.org/spec/v1/schema.json",
+  "specVersion": "1.0",
   "name": "Next.js Starter AI Agent Catalog",
   "description": "Standardized AI agent and WebMCP tool discovery catalog for Next.js Starter",
   "version": "1.0.0",
@@ -6,12 +8,12 @@
     "name": "Muhammad Fiaz",
     "url": "https://github.com/muhammad-fiaz"
   },
-  "services": [
+  "entries": [
     {
       "id": "webmcp-site-navigation",
       "name": "Next.js Starter WebMCP Agent Tools",
       "type": "webmcp",
-      "description": "Client-side interactive WebMCP tools for site exploration and navigation",
+      "description": "Client-side interactive WebMCP tools for site exploration, navigation, and contact submission",
       "tools": [
         {
           "name": "navigate_to_page",
@@ -20,7 +22,8 @@
             "type": "object",
             "properties": {
               "path": {
-                "type": "string"
+                "type": "string",
+                "description": "The destination route path (e.g., '/', '/api', '/privacy', '/terms')"
               }
             },
             "required": ["path"]
@@ -33,9 +36,30 @@
             "type": "object",
             "properties": {}
           }
+        },
+        {
+          "name": "submit_contact_message",
+          "description": "Submit a user inquiry, feedback, or support message via the contact form.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Sender full name"
+              },
+              "email": {
+                "type": "string",
+                "description": "Sender email address"
+              },
+              "message": {
+                "type": "string",
+                "description": "Message content or inquiry"
+              }
+            },
+            "required": ["name", "email", "message"]
+          }
         }
       ]
     }
   ]
 }
-

@@ -17,15 +17,10 @@ import {
 } from "@orama/orama";
 
 import { DocumentValidationError, IndexNotFoundError } from "@/lib/search/errors";
-import { normalizeSearchDocument } from "@/lib/search/shared/normalize";
-import { defaultSearchSchema } from "@/lib/search/shared/schema";
-import type {
-  SearchDocument,
-  SearchHit,
-  SearchQueryRequest,
-  SearchResponse,
-} from "@/lib/search/shared/types";
-import { searchDocumentSchema } from "@/lib/search/shared/types";
+import { normalizeSearchDocument } from "@/lib/search/normalize";
+import { defaultSearchSchema } from "@/lib/search/schema";
+import type { SearchDocument, SearchHit, SearchQueryRequest, SearchResponse } from "@/types/search";
+import { searchDocumentSchema } from "@/types/search";
 
 export interface CreateIndexOptions {
   readonly name: string;
@@ -33,9 +28,6 @@ export interface CreateIndexOptions {
   readonly language?: string;
 }
 
-/**
- * Universal Orama Search Engine for node, edge, and browser environments.
- */
 export class OramaEngine {
   private readonly indexes: Map<string, AnyOrama> = new Map();
 

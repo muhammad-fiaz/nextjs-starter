@@ -1,4 +1,6 @@
 {
+  "$schema": "https://agenticresourcediscovery.org/spec/v1/schema.json",
+  "specVersion": "1.0",
   "@context": "https://agenticresourcediscovery.org/context/v1",
   "entries": [
     {
@@ -7,14 +9,14 @@
       "type": "application/mcp-server-card+json",
       "url": "https://github.com/muhammad-fiaz/nextjs-starter",
       "description": "Navigation and site context tools for Next.js Starter web application.",
-      "capabilities": ["navigate_to_page", "get_current_context"],
+      "capabilities": ["navigate_to_page", "get_current_context", "submit_contact_message"],
       "representativeQueries": [
         "navigate to the privacy policy page",
         "show terms of service",
         "get current page and locale context",
+        "submit contact message or feedback",
         "explore available API routes"
       ]
     }
   ]
 }
-

@@ -2,9 +2,6 @@ import type { MetadataRoute } from "next";
 
 import { siteConfig } from "@/site.config";
 
-/**
- * Native Next.js Manifest generator using centralized site configuration.
- */
 export default function manifest(): MetadataRoute.Manifest {
   const m = siteConfig.manifest;
 

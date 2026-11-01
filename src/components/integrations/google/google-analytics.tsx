@@ -11,11 +11,9 @@ export function GoogleAnalytics(): ReactNode {
   const gaConfig = siteConfig.integrations?.googleAnalytics;
   const gtmConfig = siteConfig.integrations?.googleTagManager;
 
-  // Strict check: only run if accepted, enabled, and has valid ID
   if (decision !== "accepted") return null;
   if (!gaConfig?.enabled || !gaConfig.measurementId) return null;
 
-  // Prevent double tracking if GTM is handling analytics
   if (
     gtmConfig?.enabled &&
     gtmConfig.analyticsStrategy === "gtm" &&

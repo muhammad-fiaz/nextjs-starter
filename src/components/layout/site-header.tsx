@@ -8,8 +8,8 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { GlobalSearchDialog } from "@/components/search/global-search-dialog";
 import { Button } from "@/components/ui/button";
 import { getLocalizedPath } from "@/i18n/navigation";
-import type { DictionaryNavigation, SearchI18n } from "@/i18n/types";
 import { siteConfig } from "@/site.config";
+import type { DictionaryNavigation, SearchI18n } from "@/types/i18n";
 
 interface SiteHeaderProps {
   readonly currentLocale?: string;
@@ -23,7 +23,7 @@ export function SiteHeader({ currentLocale, navigation, search }: SiteHeaderProp
   return (
     <header className="border-border/40 bg-background/80 sticky top-0 z-40 w-full border-b backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Brand & Left Navigation */}
+        {}
         <div className="flex items-center gap-3 md:gap-8">
           <MobileNav currentLocale={currentLocale} navigation={navigation} />
           <Link
@@ -54,7 +54,7 @@ export function SiteHeader({ currentLocale, navigation, search }: SiteHeaderProp
           </nav>
         </div>
 
-        {/* Search, Locales, Theme & GitHub */}
+        {}
         <div className="flex items-center gap-2 sm:gap-3">
           <GlobalSearchDialog
             currentLocale={currentLocale}

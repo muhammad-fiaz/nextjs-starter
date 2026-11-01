@@ -191,7 +191,6 @@ function CodeBlockLine({
   children,
   ...props
 }: React.ComponentProps<"span"> & VariantProps<typeof codeBlockLineVariants>) {
-  // An empty line holds a newline so copying a selection keeps blank lines.
   const empty =
     children === undefined ||
     children === null ||

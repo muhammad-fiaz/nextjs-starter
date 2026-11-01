@@ -10,7 +10,6 @@ export function GoogleTagManager(): ReactNode {
   const { decision } = useConsent();
   const gtmConfig = siteConfig.integrations?.googleTagManager;
 
-  // Strict consent check: only render when explicitly accepted and configured
   if (decision !== "accepted") return null;
   if (!gtmConfig?.enabled || !gtmConfig.containerId) return null;
 

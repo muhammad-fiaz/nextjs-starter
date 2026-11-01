@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { CookieConsentProvider } from "@/components/cookies/cookie-consent-provider";
 import { IntegrationManager } from "@/components/integrations/integration-manager";
 import { VercelInsights } from "@/components/integrations/vercel/vercel-insights";
-import { TanStackQueryProvider } from "@/components/providers/query-provider";
+import { TanStackProvider } from "@/components/providers/query-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { WebMCPProvider } from "@/components/providers/webmcp-provider";
 import { PWAProvider } from "@/components/pwa/pwa-provider";
@@ -13,7 +13,6 @@ import "./globals.css";
 
 export const metadata: Metadata = constructMetadata();
 
-// Inline script to prevent theme flash on load before hydration
 const themeInitScript = `
 (function() {
   try {
@@ -37,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
-          <TanStackQueryProvider>
+          <TanStackProvider>
             <PWAProvider>
               <WebMCPProvider>
                 <CookieConsentProvider>
@@ -47,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </WebMCPProvider>
               <VercelInsights />
             </PWAProvider>
-          </TanStackQueryProvider>
+          </TanStackProvider>
         </ThemeProvider>
       </body>
     </html>

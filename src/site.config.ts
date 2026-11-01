@@ -1,13 +1,6 @@
 import { env } from "@/env";
 import type { SiteConfig } from "@/types/config";
 
-/**
- * Universal Open-Source Next.js Starter Template Configuration.
- * Strongly typed centralized configuration for branding, contact, legal identity,
- * social links, cookies, third-party integrations, and PWA capabilities.
- *
- * site.config.ts is the single authoritative source of truth.
- */
 export const siteConfig: SiteConfig = {
   name: "Next.js Starter",
   shortName: "NextStarter",
@@ -15,7 +8,6 @@ export const siteConfig: SiteConfig = {
     "Production-ready, infrastructure-first open source Next.js starter template featuring React 19, TypeScript, Tailwind CSS v4, and modern web foundations.",
   url: env.NEXT_PUBLIC_APP_URL,
 
-  // Central Authoritative Internationalization (i18n) Configuration
   i18n: {
     enabled: true,
     defaultLocale: "en",
@@ -25,9 +17,13 @@ export const siteConfig: SiteConfig = {
       en: "English",
       es: "Español",
     },
+    localeToLanguage: {
+      en: "english",
+      es: "spanish",
+    },
+    rtlLocales: ["ar", "he", "fa", "ur"],
   },
 
-  // Creator & Open Source Attribution
   creator: "Muhammad Fiaz",
   publisher: "Next.js Starter",
   authors: [
@@ -37,7 +33,6 @@ export const siteConfig: SiteConfig = {
     },
   ],
 
-  // Contact & Brand Details
   organization: {
     name: "Next.js Starter",
     legalName: "Next.js Starter",
@@ -53,7 +48,6 @@ export const siteConfig: SiteConfig = {
     },
   },
 
-  // Social Profiles
   social: {
     github: "https://github.com/muhammad-fiaz/nextjs-starter",
     twitter: "https://x.com/muhammadfiaz_",

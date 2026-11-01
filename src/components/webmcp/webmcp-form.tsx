@@ -17,11 +17,6 @@ interface WebMCPFormProps extends FormHTMLAttributes<HTMLFormElement> {
   ) => Promise<unknown> | unknown;
 }
 
-/**
- * Declarative WebMCP Form component compliant with Chrome WebMCP declarative API specifications.
- * Supports toolname, tooldescription, and toolautosubmit annotations.
- * Catches agentInvoked custom events and handles responses.
- */
 export function WebMCPForm({
   children,
   toolname,
@@ -76,7 +71,7 @@ export function WebMCPForm({
       ref={formRef}
       {...(toolautosubmit ? { toolautosubmit: "true" } : {})}
       {...props}
-      // HTML attributes for WebMCP
+
       data-toolname={toolname}
       data-tooldescription={tooldescription}
     >

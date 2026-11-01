@@ -11,9 +11,9 @@ Next.js Starter is an open-source web application and template designed for high
 - [Privacy Policy](/privacy) - Privacy notice, user consent, and data governance principles.
 - [Terms of Service](/terms) - Usage guidelines, MIT open source rights, and platform terms.
 - [Cookie Policy](/cookies) - Detailed cookie consent, tracking classification, and policy settings.
-- [Agentic Resource Discovery (ARD)](/.well-known/ard.json) - Formal ARD v0.91 catalog for autonomous AI agents.
-- [Search Index - English](/search/en/index.json) - Pre-built serialized Orama search index for English content.
-- [Search Index - Spanish](/search/es/index.json) - Pre-built serialized Orama search index for Spanish content.
+- [Contact Form & WebMCP Demo](/#contact) - Interactive contact form built with TanStack Form and WebMCP agent annotations.
+- [Agentic Resource Discovery (ARD)](/.well-known/ard.json) - Formal ARD v1.0 specification catalog for autonomous AI agents.
+- [AI Catalog Manifest](/.well-known/ai-catalog.json) - AI agent manifest adhering to standard AI catalog and WebMCP schemas.
 
 ## Technical Capabilities
 

@@ -62,7 +62,6 @@ export class ApiClient implements ApiClientContract {
         );
       }
 
-      // Handle 204 No Content
       if (response.status === 204) {
         return undefined as T;
       }

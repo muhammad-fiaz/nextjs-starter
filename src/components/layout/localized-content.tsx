@@ -1,16 +1,13 @@
 import type { ReactNode } from "react";
 
-import type { ContentBlock, ContentSection } from "@/i18n/types";
 import { cn } from "@/lib/utils";
+import type { ContentBlock, ContentSection } from "@/types/i18n";
 
 export interface LocalizedContentProps {
   readonly sections: readonly ContentSection[];
   readonly className?: string;
 }
 
-/**
- * Renders individual content blocks from JSON specification safely without innerHTML.
- */
 function renderBlock(block: ContentBlock, index: number): ReactNode {
   switch (block.type) {
     case "paragraph":
@@ -77,10 +74,6 @@ function renderBlock(block: ContentBlock, index: number): ReactNode {
   }
 }
 
-/**
- * Reusable JSON-driven content renderer.
- * Preserves section IDs for table-of-contents navigation and renders structured semantic HTML.
- */
 export function LocalizedContent({ sections, className }: LocalizedContentProps): ReactNode {
   return (
     <div className={cn("space-y-10", className)}>

@@ -118,6 +118,24 @@
         "Motor de búsqueda de texto completo Orama integrado con índices de cliente y servidor",
         "Gestión de estado con Zustand y TanStack React Query v5 preconfigurados"
       ]
+    },
+    "contact": {
+      "badge": "WebMCP + TanStack Form",
+      "heading": "Contacto y Demostración Agéntica",
+      "subheading": "Envíenos un mensaje o pruebe interacciones de formularios WebMCP con agentes de IA.",
+      "nameLabel": "Nombre Completo",
+      "namePlaceholder": "Ada Lovelace",
+      "emailLabel": "Correo Electrónico",
+      "emailPlaceholder": "ada@ejemplo.com",
+      "messageLabel": "Mensaje",
+      "messagePlaceholder": "Cuéntenos sobre su proyecto o consulta...",
+      "submitButton": "Enviar Mensaje",
+      "submittingButton": "Enviando...",
+      "successTitle": "¡Mensaje enviado con éxito!",
+      "successDescription": "Gracias por contactarnos. Le responderemos a la brevedad.",
+      "errorNameRequired": "El nombre completo es obligatorio",
+      "errorEmailInvalid": "Por favor, introduzca un correo electrónico válido",
+      "errorMessageRequired": "El mensaje debe tener al menos 10 caracteres"
     }
   },
   "cookies": {

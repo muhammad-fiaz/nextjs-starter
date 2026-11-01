@@ -10,7 +10,6 @@ export function GoogleAdSense(): ReactNode {
   const { decision } = useConsent();
   const adsenseConfig = siteConfig.integrations?.googleAdsense;
 
-  // Strict check: only run if accepted, enabled, and publisherId configured
   if (decision !== "accepted") return null;
   if (!adsenseConfig?.enabled || !adsenseConfig.publisherId) return null;
 

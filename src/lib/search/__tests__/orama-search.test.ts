@@ -6,12 +6,12 @@ import {
   searchClient,
 } from "@/lib/search/client/index-loader";
 import { OramaEngine } from "@/lib/search/engine/orama-engine";
-import { ServerSearchManager } from "@/lib/search/server/search-manager";
 import {
   normalizeSearchDocument,
   normalizeSearchQuery,
   resolveSearchLocale,
-} from "@/lib/search/shared/normalize";
+} from "@/lib/search/normalize";
+import { ServerSearchManager } from "@/lib/search/server/search-manager";
 import type { SearchDocument } from "@/types/search";
 
 describe("Production Orama Search Engine & Architecture", () => {

@@ -7,7 +7,6 @@ import { getStoredConsent, setStoredConsent } from "@/lib/cookies/consent-storag
 import { siteConfig } from "@/site.config";
 import type { ConsentDecision, StoredConsentRecord } from "@/types/cookies";
 
-// Dynamically load the banner UI client-side only when needed
 const DynamicBanner = dynamic(
   () => import("@/components/cookies/cookie-consent-banner").then((mod) => mod.CookieConsentBanner),
   { ssr: false },

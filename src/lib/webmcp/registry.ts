@@ -56,12 +56,8 @@ class InMemoryModelContext implements ModelContext {
   }
 }
 
-// Active controllers tracking per tool name for React HMR and component lifecycle
 const activeControllers: Map<string, AbortController> = new Map();
 
-/**
- * Initializes document.modelContext polyfill/runtime if not already present.
- */
 export function ensureModelContext(): ModelContext | null {
   if (typeof document === "undefined") {
     return null;
@@ -74,13 +70,6 @@ export function ensureModelContext(): ModelContext | null {
   return document.modelContext;
 }
 
-/**
- * Imperatively registers a WebMCP tool on document.modelContext.
- * Adheres strictly to the Chrome WebMCP specification:
- * - Controls lifecycle via AbortSignal to prevent and resolve InvalidStateError: Duplicate tool name.
- * - Catches rejected promises safely so unhandledRejection is never thrown.
- * - Returns an unregister function for component unmount / cleanup.
- */
 export function registerWebMCPTool<TInput = Record<string, unknown>, TOutput = unknown>(
   tool: WebMCPTool<TInput, TOutput>,
 ): () => void {
@@ -89,14 +78,11 @@ export function registerWebMCPTool<TInput = Record<string, unknown>, TOutput = u
     return () => {};
   }
 
-  // 1. If an active AbortController exists for this tool name, abort it to clean up previous registration
   const existingController = activeControllers.get(tool.name);
   if (existingController) {
     try {
       existingController.abort();
-    } catch {
-      // Ignore abort errors
-    }
+    } catch {}
     activeControllers.delete(tool.name);
   }
 
@@ -114,7 +100,6 @@ export function registerWebMCPTool<TInput = Record<string, unknown>, TOutput = u
           errorName === "InvalidStateError" ||
           message.includes("Duplicate tool name")
         ) {
-          // Gracefully handled duplicate or aborted tool registration in Chrome WebMCP
           return;
         }
         console.warn(`[WebMCP] Failed to register tool "${tool.name}":`, err);
@@ -128,7 +113,6 @@ export function registerWebMCPTool<TInput = Record<string, unknown>, TOutput = u
       errorName === "InvalidStateError" ||
       message.includes("Duplicate tool name")
     ) {
-      // Ignore expected duplicate in browser context
     } else {
       console.warn(`[WebMCP] Failed to register tool "${tool.name}":`, err);
     }
@@ -137,18 +121,14 @@ export function registerWebMCPTool<TInput = Record<string, unknown>, TOutput = u
   return () => {
     try {
       controller.abort();
-    } catch {
-      // Ignore abort errors on cleanup
-    }
+    } catch {}
     if (activeControllers.get(tool.name) === controller) {
       activeControllers.delete(tool.name);
     }
     if (context.unregisterTool) {
       try {
         context.unregisterTool(tool.name);
-      } catch {
-        // Safe catch on cleanup
-      }
+      } catch {}
     }
   };
 }

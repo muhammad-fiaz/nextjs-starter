@@ -1,19 +1,15 @@
-import { i18nConfig, isSupportedLocale } from "@/i18n/config";
 import { isRouteAvailable } from "@/i18n/routes";
+import { isSupportedLocale } from "@/i18n/validation";
+import { siteConfig } from "@/site.config";
 
-/**
- * Checks whether a given path is prefixed with a supported locale.
- */
 export function isLocalizedPath(pathname: string): boolean {
   if (!pathname) return false;
   const segments = pathname.split("?")[0]?.split("#")[0]?.split("/").filter(Boolean) || [];
   return segments.length > 0 && isSupportedLocale(segments[0]);
 }
 
-/**
- * Extracts the current locale from a pathname, returning defaultLocale if unprefixed.
- */
 export function getCurrentLocale(pathname: string): string {
+  const i18nConfig = siteConfig.i18n;
   if (!pathname) return i18nConfig.defaultLocale;
   const segments = pathname.split("?")[0]?.split("#")[0]?.split("/").filter(Boolean) || [];
   if (segments[0] && isSupportedLocale(segments[0])) {
@@ -22,13 +18,9 @@ export function getCurrentLocale(pathname: string): string {
   return i18nConfig.defaultLocale;
 }
 
-/**
- * Strips any supported locale prefix from a pathname, preserving queries and fragments.
- */
 export function removeLocalePrefix(pathname: string): string {
   if (!pathname) return "/";
 
-  // Separate pathname from query and fragment
   const [baseAndQuery, fragment] = pathname.split("#");
   const [pathOnly, query] = (baseAndQuery || "").split("?");
 
@@ -42,18 +34,13 @@ export function removeLocalePrefix(pathname: string): string {
   return fragment !== undefined ? `${withQuery}#${fragment}` : withQuery;
 }
 
-/**
- * Generates the canonical localized path for an internal route and target locale.
- * Respects i18nConfig.enabled and i18nConfig.localePrefix ("as-needed" vs "always").
- */
 export function getLocalizedPath(pathname: string, targetLocale?: string): string {
   if (!pathname) return "/";
 
-  // Separate path from query and fragment
+  const i18nConfig = siteConfig.i18n;
   const [baseAndQuery, fragment] = pathname.split("#");
   const [pathOnly, query] = (baseAndQuery || "").split("?");
 
-  // Strip existing locale if present to avoid double-prefixing
   const segments = (pathOnly || "").split("/").filter(Boolean);
   if (segments[0] && isSupportedLocale(segments[0])) {
     segments.shift();
@@ -79,11 +66,6 @@ export function getLocalizedPath(pathname: string, targetLocale?: string): strin
   return fragment !== undefined ? `${withQuery}#${fragment}` : withQuery;
 }
 
-/**
- * Switches the locale of the current pathname, preserving query params and hash.
- * If the target locale does not have a translation registered for this route,
- * gracefully falls back to the target locale's homepage.
- */
 export function switchLocalePath(pathname: string, targetLocale: string): string {
   if (!isSupportedLocale(targetLocale)) {
     return pathname;
@@ -92,14 +74,11 @@ export function switchLocalePath(pathname: string, targetLocale: string): string
   const [baseAndQuery, fragment] = pathname.split("#");
   const [pathOnly, query] = (baseAndQuery || "").split("?");
 
-  // Get raw un-prefixed route
   const rawPath = removeLocalePrefix(pathOnly || "/");
 
-  // Check if route exists in the target locale
   const isAvailable = isRouteAvailable(rawPath, targetLocale);
 
   if (!isAvailable) {
-    // Route translation unavailable: fallback safely to target locale homepage
     return getLocalizedPath("/", targetLocale);
   }
 

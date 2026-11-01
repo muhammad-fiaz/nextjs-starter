@@ -17,9 +17,8 @@ export function CookieConsentBanner({
   cookiePolicyUrl = "/cookies",
 }: CookieConsentBannerProps): ReactNode {
   return (
-    <aside
-      role="dialog"
-      aria-live="polite"
+    <div
+      role="region"
       aria-label="Cookie preferences"
       className="border-border bg-background/95 supports-backdrop-filter:bg-background/85 fixed inset-x-4 bottom-4 z-50 mx-auto max-w-5xl rounded-xl border p-4 shadow-2xl backdrop-blur sm:px-6 sm:py-3.5"
     >
@@ -55,6 +54,6 @@ export function CookieConsentBanner({
           </Button>
         </div>
       </div>
-    </aside>
+    </div>
   );
 }

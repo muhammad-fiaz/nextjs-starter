@@ -16,8 +16,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { getLocalizedPath } from "@/i18n/navigation";
-import type { DictionaryNavigation } from "@/i18n/types";
 import { siteConfig } from "@/site.config";
+import type { DictionaryNavigation } from "@/types/i18n";
 
 interface MobileNavProps {
   readonly currentLocale?: string;

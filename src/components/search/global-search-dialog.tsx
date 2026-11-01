@@ -10,9 +10,9 @@ import { SearchSuggestions } from "@/components/search/search-suggestions";
 import { Button } from "@/components/ui/button";
 import { CommandDialog, CommandInput, CommandList } from "@/components/ui/command";
 import { getLocalizedPath } from "@/i18n/navigation";
-import type { DictionaryNavigation, SearchI18n } from "@/i18n/types";
 import { loadClientSearchIndex, searchClient } from "@/lib/search/client/index-loader";
 import { siteConfig } from "@/site.config";
+import type { DictionaryNavigation, SearchI18n } from "@/types/i18n";
 import type { SearchDocument, SearchHit } from "@/types/search";
 
 export interface GlobalSearchDialogProps {
@@ -44,16 +44,12 @@ export function GlobalSearchDialog({
   const defaultPlaceholder =
     placeholder || searchI18n?.placeholder || "Search documentation, features, pages...";
 
-  // Preload client index when dialog is opened
   useEffect(() => {
     if (open) {
-      loadClientSearchIndex(activeLocale).catch(() => {
-        // Handled silently
-      });
+      loadClientSearchIndex(activeLocale).catch(() => {});
     }
   }, [open, activeLocale]);
 
-  // Keyboard shortcut Ctrl+K / Cmd+K
   useEffect(() => {
     const down = (e: globalThis.KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -65,7 +61,6 @@ export function GlobalSearchDialog({
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  // Search locally via browser-side Orama when query changes
   useEffect(() => {
     if (!open) return;
     if (!query.trim()) {
@@ -87,15 +82,12 @@ export function GlobalSearchDialog({
     });
   }, [query, open, activeLocale, limit]);
 
-  // Handle explicit result item selection
   const handleSelect = (url: string) => {
     setOpen(false);
     const targetUrl = getLocalizedPath(url, activeLocale);
     router.push(targetUrl);
   };
 
-  // Critical Enter behavior: When pressing Enter in global search popup,
-  // navigate to dedicated localized search page with the query
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && query.trim()) {
       e.preventDefault();

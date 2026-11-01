@@ -2,10 +2,10 @@ import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { dictionarySchema } from "@/i18n/types";
+import { dictionarySchema } from "@/types/i18n";
 
 describe("JSON-Driven Localization Architecture", () => {
-  const localesDir = join(process.cwd(), "src", "i18n", "locales");
+  const localesDir = join(process.cwd(), "locales");
   const files = readdirSync(localesDir).filter((f) => f.endsWith(".json"));
 
   test("all locale files conform to strict dictionary schema", () => {

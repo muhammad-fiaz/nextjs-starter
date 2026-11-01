@@ -10,8 +10,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { i18nConfig, type Locale } from "@/i18n/config";
 import { getCurrentLocale, switchLocalePath } from "@/i18n/navigation";
+import { siteConfig } from "@/site.config";
+import type { Locale } from "@/types/config";
 
 interface LanguageToggleProps {
   readonly currentLocale?: Locale;
@@ -23,18 +24,15 @@ export function LanguageToggle({ currentLocale, className }: LanguageToggleProps
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
-  // If i18n is disabled or only 1 locale configured, do not render switcher
-  if (!i18nConfig.enabled || i18nConfig.locales.length <= 1) {
+  if (!siteConfig.i18n.enabled || siteConfig.i18n.locales.length <= 1) {
     return null;
   }
 
-  // Detect active locale accurately
   const activeLocale = currentLocale || getCurrentLocale(pathname);
 
   const switchLocale = (newLocale: string) => {
     if (newLocale === activeLocale) return;
 
-    // Use authoritative switchLocalePath which validates route availability
     const targetPath = switchLocalePath(pathname, newLocale);
 
     startTransition(() => {
@@ -43,7 +41,7 @@ export function LanguageToggle({ currentLocale, className }: LanguageToggleProps
     });
   };
 
-  const currentLabel = i18nConfig.localeLabels?.[activeLocale] || activeLocale.toUpperCase();
+  const currentLabel = siteConfig.i18n.localeLabels?.[activeLocale] || activeLocale.toUpperCase();
 
   return (
     <DropdownMenu>
@@ -58,8 +56,8 @@ export function LanguageToggle({ currentLocale, className }: LanguageToggleProps
         <span>{currentLabel}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-36">
-        {i18nConfig.locales.map((loc) => {
-          const label = i18nConfig.localeLabels?.[loc] || loc.toUpperCase();
+        {siteConfig.i18n.locales.map((loc) => {
+          const label = siteConfig.i18n.localeLabels?.[loc] || loc.toUpperCase();
           const isSelected = loc === activeLocale;
 
           return (

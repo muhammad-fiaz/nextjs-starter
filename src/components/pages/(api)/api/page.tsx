@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardDescription, CardHeader } from "@/components/ui/card";
 import { getLocalizedPath } from "@/i18n/navigation";
-import type { ApiPageContent } from "@/i18n/types";
+import type { ApiPageContent } from "@/types/i18n";
 
 interface ApiPageProps {
   readonly locale: string;

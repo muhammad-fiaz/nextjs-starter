@@ -6,11 +6,7 @@ export interface JsonLdProps {
   readonly data: ThingSchema | readonly ThingSchema[];
 }
 
-/**
- * Safely renders JSON-LD structured data script tag with XSS protection.
- */
 export function JsonLd({ data }: JsonLdProps): ReactNode {
-  // Sanitize to prevent script injection
   const jsonString = JSON.stringify(data).replace(/</g, "\\u003c");
 
   return (

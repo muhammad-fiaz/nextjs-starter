@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
 
-import { i18nConfig, type Locale } from "@/i18n/config";
 import { getLocalizedPath } from "@/i18n/navigation";
 import { getAvailableLocalesForRoute, isRouteAvailable } from "@/i18n/routes";
 import { siteConfig } from "@/site.config";
+import type { Locale } from "@/types/config";
 import type { PageMetadataInput } from "@/types/seo";
 
-/**
- * Universal Metadata Constructor.
- * - Handles root defaults inheritance and explicit overrides.
- * - Manages canonical URLs and hreflang alternate language links.
- * - Adheres strictly to i18nConfig.enabled, i18nConfig.localePrefix, and route availability.
- * - Constructs OpenGraph and Twitter card metadata with deterministic fallbacks.
- * - Respects robots indexing and bot instructions.
- */
 export function constructMetadata(input: PageMetadataInput = {}): Metadata {
+  const i18nConfig = siteConfig.i18n;
   const {
     locale = i18nConfig.defaultLocale,
     title,
@@ -34,11 +27,9 @@ export function constructMetadata(input: PageMetadataInput = {}): Metadata {
 
   const siteUrl = siteConfig.url?.replace(/\/$/, "") || "http://localhost:3000";
 
-  // Build canonical path using centralized navigation utility
   const canonicalPath = getLocalizedPath(path, locale);
   const canonicalUrl = `${siteUrl}${canonicalPath === "/" ? "" : canonicalPath}`;
 
-  // Build hreflang alternate language URLs for available translations only
   const languageAlternates: Record<string, string> = {};
   if (i18nConfig.enabled) {
     const rawPath = path.startsWith("/") ? path : `/${path}`;
@@ -49,14 +40,12 @@ export function constructMetadata(input: PageMetadataInput = {}): Metadata {
       languageAlternates[loc] = `${siteUrl}${locPath === "/" ? "" : locPath}`;
     }
 
-    // Add x-default pointing to default locale canonical version if route is available in default locale
     if (isRouteAvailable(rawPath, i18nConfig.defaultLocale)) {
       const defaultPath = getLocalizedPath(rawPath, i18nConfig.defaultLocale);
       languageAlternates["x-default"] = `${siteUrl}${defaultPath === "/" ? "" : defaultPath}`;
     }
   }
 
-  // Automatic OG/Twitter image generation fallback with query parameters
   const ogTitleParam = encodeURIComponent(title || siteConfig.name || "Next.js Starter");
   const ogDescParam = encodeURIComponent(description || "");
   const defaultImage = {

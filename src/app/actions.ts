@@ -5,8 +5,6 @@ import webpush from "web-push";
 import { env } from "@/env";
 import { siteConfig } from "@/site.config";
 
-// In-memory subscription store for server actions in starter template
-// In production, persist subscriptions to your database
 let globalSubscription: webpush.PushSubscription | null = null;
 
 function ensureVapidConfigured(): boolean {

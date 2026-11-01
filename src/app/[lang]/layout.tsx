@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/layout/navbar";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { siteConfig } from "@/site.config";
 import type { Locale } from "@/types/config";
@@ -33,13 +33,13 @@ export default async function LocaleLayout({
       dir={dir}
       className="bg-background text-foreground flex min-h-screen flex-col"
     >
-      <SiteHeader
+      <Navbar
         currentLocale={currentLang}
         navigation={dictionary.navigation}
         search={dictionary.search}
       />
       <main className="flex-1">{children}</main>
-      <SiteFooter
+      <Footer
         currentLocale={currentLang}
         navigation={dictionary.navigation}
         footer={dictionary.footer}

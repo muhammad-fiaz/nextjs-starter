@@ -4,9 +4,9 @@ import { type ReactNode } from "react";
 import { GithubIcon, TwitterIcon } from "@/components/icons/social-icons";
 import { getLocalizedPath } from "@/i18n/navigation";
 import { siteConfig } from "@/site.config";
-import type { SiteFooterProps } from "@/types/layouts";
+import type { FooterProps } from "@/types/layouts";
 
-export function SiteFooter({ currentLocale, navigation, footer }: SiteFooterProps): ReactNode {
+export function Footer({ currentLocale, navigation, footer }: FooterProps): ReactNode {
   const currentYear = 2026;
   const getHref = (path: string) => getLocalizedPath(path, currentLocale);
 
@@ -25,7 +25,6 @@ export function SiteFooter({ currentLocale, navigation, footer }: SiteFooterProp
               {siteConfig.description}
             </p>
 
-            {}
             <div className="flex items-center gap-3 pt-2">
               {siteConfig.social?.github && (
                 <a

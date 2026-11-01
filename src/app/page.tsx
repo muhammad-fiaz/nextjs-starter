@@ -1,5 +1,5 @@
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/layout/navbar";
 import HomePage from "@/components/pages/(marketing)/home/page";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { createPageMetadata } from "@/lib/seo/create-page-seo";
@@ -15,19 +15,11 @@ export default async function RootPage() {
   const dictionary = await getDictionary("en");
   return (
     <div className="bg-background text-foreground flex min-h-screen flex-col">
-      <SiteHeader
-        currentLocale="en"
-        navigation={dictionary.navigation}
-        search={dictionary.search}
-      />
+      <Navbar currentLocale="en" navigation={dictionary.navigation} search={dictionary.search} />
       <main className="flex-1">
         <HomePage currentLocale="en" dictionary={dictionary} />
       </main>
-      <SiteFooter
-        currentLocale="en"
-        navigation={dictionary.navigation}
-        footer={dictionary.footer}
-      />
+      <Footer currentLocale="en" navigation={dictionary.navigation} footer={dictionary.footer} />
     </div>
   );
 }

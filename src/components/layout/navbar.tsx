@@ -9,15 +9,14 @@ import { LanguageToggle } from "@/components/ui/language-toggle";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { getLocalizedPath } from "@/i18n/navigation";
 import { siteConfig } from "@/site.config";
-import type { SiteHeaderProps } from "@/types/layouts";
+import type { NavbarProps } from "@/types/layouts";
 
-export function SiteHeader({ currentLocale, navigation, search }: SiteHeaderProps): ReactNode {
+export function Navbar({ currentLocale, navigation, search }: NavbarProps): ReactNode {
   const getHref = (path: string) => getLocalizedPath(path, currentLocale);
 
   return (
     <header className="border-border/40 bg-background/80 sticky top-0 z-40 w-full border-b backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        {}
         <div className="flex items-center gap-3 md:gap-8">
           <MobileNav currentLocale={currentLocale} navigation={navigation} />
           <Link
@@ -52,16 +51,14 @@ export function SiteHeader({ currentLocale, navigation, search }: SiteHeaderProp
           </nav>
         </div>
 
-        {}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <GlobalSearchDialog
-            currentLocale={currentLocale}
-            searchI18n={search}
-            navigationI18n={navigation}
-          />
-          <div className="bg-border/60 hidden h-4 w-px sm:block" />
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <GlobalSearchDialog currentLocale={currentLocale} searchI18n={search} />
+
+          <div className="bg-border/60 mx-1 hidden h-4 w-px sm:block" />
+
           <LanguageToggle currentLocale={currentLocale} />
           <ThemeToggle />
+
           {siteConfig.social?.github && (
             <a
               href={siteConfig.social.github}

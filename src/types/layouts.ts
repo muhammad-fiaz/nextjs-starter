@@ -30,13 +30,13 @@ export interface DocumentationLayoutProps extends BaseLayoutProps {
   readonly footer?: ReactNode;
 }
 
-export interface SiteHeaderProps {
+export interface NavbarProps {
   readonly currentLocale?: string;
   readonly navigation?: DictionaryNavigation;
   readonly search?: SearchI18n;
 }
 
-export interface SiteFooterProps {
+export interface FooterProps {
   readonly currentLocale?: string;
   readonly navigation?: DictionaryNavigation;
   readonly footer?: DictionaryFooter;

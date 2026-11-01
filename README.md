@@ -68,7 +68,7 @@ src/
 │   ├── errors/                # Unified atomic system error pages
 │   ├── icons/                 # Custom SVG icons (GitHub, Facebook, LinkedIn, etc.)
 │   ├── integrations/          # Third-party integrations (Clarity, GA, GTM, Vercel)
-│   ├── layout/                # SiteHeader, SiteFooter, LanguageToggle, ThemeToggle
+│   ├── layout/                # Navbar, Footer, MobileNav, LegalPage
 │   ├── pages/                 # Composed page implementations
 │   ├── providers/             # TanStack Query, ThemeProvider, PWAProvider
 │   ├── seo/                   # JSON-LD structured data and breadcrumbs

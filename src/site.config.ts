@@ -21,7 +21,7 @@ export const siteConfig: SiteConfig = {
       en: "english",
       es: "spanish",
     },
-    rtlLocales: ["ar", "he", "fa", "ur"],
+    rtlLocales: [],
   },
 
   creator: "Muhammad Fiaz",
@@ -73,6 +73,8 @@ export const siteConfig: SiteConfig = {
     },
   },
 
+  // All integration enable/disable flags and public identifiers live here.
+  // These values are safe in client code: they are public by design.
   integrations: {
     googleTagManager: {
       enabled: false,

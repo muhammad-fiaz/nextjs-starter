@@ -1,14 +1,7 @@
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
-
-export interface ErrorContentProps {
-  readonly title: string;
-  readonly description?: string;
-  readonly statusCode?: number | string;
-  readonly icon?: ReactNode;
-  readonly showStatusCode?: boolean;
-}
+import type { ErrorContentProps } from "@/types/errors";
 
 export function ErrorContent({
   title,

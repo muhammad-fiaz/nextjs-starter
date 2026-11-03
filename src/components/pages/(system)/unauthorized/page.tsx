@@ -1,9 +1,7 @@
+import type { UnauthorizedPageProps } from "@/types/errors";
+
 import { UnauthorizedActions } from "./sections/unauthorized-actions";
 import { UnauthorizedContent } from "./sections/unauthorized-content";
-
-export interface UnauthorizedPageProps {
-  readonly loginHref?: string;
-}
 
 export default function UnauthorizedPage({ loginHref }: UnauthorizedPageProps) {
   return (

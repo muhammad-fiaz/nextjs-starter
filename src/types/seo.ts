@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import type { ThingSchema } from "@/types/schema";
+
 export type Locale = string;
 
 export interface PageMetadataInput {
@@ -41,7 +43,15 @@ export interface OgImageProps {
   readonly siteName?: string;
 }
 
-export type DynamicMetadataBuilder<TParams = Record<string, string | string[]>> = (props: {
-  params: Promise<TParams>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) => Promise<Metadata>;
+export interface JsonLdProps {
+  readonly data: ThingSchema | Record<string, unknown>;
+}
+
+export interface BreadcrumbJsonLdItem {
+  readonly name: string;
+  readonly url?: string;
+}
+
+export interface BreadcrumbJsonLdProps {
+  readonly items: readonly BreadcrumbJsonLdItem[];
+}

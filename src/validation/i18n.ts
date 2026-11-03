@@ -161,6 +161,7 @@ export const dictionarySchema = z.object({
     navigationHeading: z.string(),
     legalHeading: z.string(),
     copyright: z.string(),
+    cookiePreferences: z.string(),
   }),
   pages: z.object({
     legal: z.object({
@@ -170,18 +171,3 @@ export const dictionarySchema = z.object({
     }),
   }),
 });
-
-export type ContentBlock = z.infer<typeof contentBlockSchema>;
-export type ContentSection = z.infer<typeof contentSectionSchema>;
-export type LegalPageContent = z.infer<typeof legalPageContentSchema>;
-export type SearchI18n = z.infer<typeof searchI18nSchema>;
-export type Dictionary = z.infer<typeof dictionarySchema>;
-
-export type DictionaryMetadata = Dictionary["metadata"];
-export type DictionaryCommon = Dictionary["common"];
-export type DictionaryNavigation = Dictionary["navigation"];
-export type DictionaryHome = Dictionary["home"];
-export type DictionaryCookies = Dictionary["cookies"];
-export type DictionaryOffline = Dictionary["offline"];
-export type DictionaryFooter = Dictionary["footer"];
-export type DictionaryPages = Dictionary["pages"];

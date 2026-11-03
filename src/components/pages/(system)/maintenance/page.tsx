@@ -1,9 +1,7 @@
+import type { MaintenancePageProps } from "@/types/errors";
+
 import { MaintenanceActions } from "./sections/maintenance-actions";
 import { MaintenanceContent } from "./sections/maintenance-content";
-
-export interface MaintenancePageProps {
-  readonly onCheckStatus?: () => void;
-}
 
 export default function MaintenancePage({ onCheckStatus }: MaintenancePageProps) {
   return (

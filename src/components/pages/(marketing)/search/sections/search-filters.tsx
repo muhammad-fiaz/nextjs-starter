@@ -3,16 +3,7 @@ import type { ReactNode } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
-export interface SearchFiltersProps {
-  readonly types: readonly string[];
-  readonly selectedType: string;
-  readonly onSelectType: (type: string) => void;
-  readonly onClearFilters: () => void;
-  readonly filtersHeading?: string;
-  readonly allLabel?: string;
-  readonly clearLabel?: string;
-}
+import type { SearchFiltersProps } from "@/types/search";
 
 export function SearchFilters({
   types,
@@ -37,13 +28,16 @@ export function SearchFilters({
           {filtersHeading}
         </span>
         {hasActiveFilter && (
-          <button
+          <Button
+            type="button"
+            variant="link"
+            size="xs"
             onClick={onClearFilters}
-            className="text-muted-foreground hover:text-foreground flex cursor-pointer items-center gap-1 text-[11px] underline transition-colors"
+            className="text-muted-foreground hover:text-foreground h-auto gap-1 p-0 text-[11px] underline-offset-2"
           >
-            <X className="h-3 w-3" />
+            <X className="h-3 w-3" aria-hidden="true" />
             {clearLabel}
-          </button>
+          </Button>
         )}
       </div>
 

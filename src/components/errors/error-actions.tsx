@@ -4,12 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
-import type { SystemPageAction } from "@/types/errors";
-
-export interface ErrorActionsProps {
-  readonly primaryAction?: SystemPageAction;
-  readonly secondaryAction?: SystemPageAction;
-}
+import type { ErrorActionsProps, SystemPageAction } from "@/types/errors";
 
 export function ErrorActions({ primaryAction, secondaryAction }: ErrorActionsProps): ReactNode {
   if (!primaryAction && !secondaryAction) {

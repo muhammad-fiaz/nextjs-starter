@@ -1,9 +1,7 @@
+import type { ServiceUnavailablePageProps } from "@/types/errors";
+
 import { ServiceUnavailableActions } from "./sections/service-unavailable-actions";
 import { ServiceUnavailableContent } from "./sections/service-unavailable-content";
-
-export interface ServiceUnavailablePageProps {
-  readonly onRetry?: () => void;
-}
 
 export default function ServiceUnavailablePage({ onRetry }: ServiceUnavailablePageProps) {
   return (

@@ -1,12 +1,7 @@
+import type { OfflinePageProps } from "@/types/errors";
+
 import { OfflineActions } from "./sections/offline-actions";
 import { OfflineContent } from "./sections/offline-content";
-
-export interface OfflinePageProps {
-  readonly onRetry?: () => void;
-  readonly title?: string;
-  readonly description?: string;
-  readonly retryAction?: string;
-}
 
 export default function OfflinePage({
   onRetry,

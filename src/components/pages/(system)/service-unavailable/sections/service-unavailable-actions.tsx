@@ -1,10 +1,7 @@
 import type { ReactNode } from "react";
 
 import { ErrorActions } from "@/components/errors/error-actions";
-
-export interface ServiceUnavailableActionsProps {
-  readonly onRetry?: () => void;
-}
+import type { ServiceUnavailableActionsProps } from "@/types/errors";
 
 export function ServiceUnavailableActions({ onRetry }: ServiceUnavailableActionsProps): ReactNode {
   return (

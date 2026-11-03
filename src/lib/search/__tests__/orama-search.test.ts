@@ -250,21 +250,15 @@ describe("Production Orama Search Engine & Architecture", () => {
 
   describe("Client Index Loading & In-Memory Execution", () => {
     test("loads clean client index without requiring external assets or fake data", async () => {
-      const res = await searchClient("en", { term: "anything" });
+      const res = await searchClient({ term: "anything" });
       expect(res.count).toBe(0);
       expect(res.hits).toEqual([]);
     });
 
     test("caches initialized client index across multiple calls", async () => {
-      const engine1 = await loadClientSearchIndex("en");
-      const engine2 = await loadClientSearchIndex("en");
+      const engine1 = await loadClientSearchIndex();
+      const engine2 = await loadClientSearchIndex();
       expect(engine1).toBe(engine2); // Strict instance reference equality from client cache
-    });
-
-    test("switches client index when locale changes", async () => {
-      const enEngine = await loadClientSearchIndex("en");
-      const esEngine = await loadClientSearchIndex("es");
-      expect(enEngine).not.toBe(esEngine);
     });
   });
 });

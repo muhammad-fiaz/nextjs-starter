@@ -1,10 +1,7 @@
 import type { ReactNode } from "react";
 
 import { ErrorActions } from "@/components/errors/error-actions";
-
-export interface UnauthorizedActionsProps {
-  readonly loginHref?: string;
-}
+import type { UnauthorizedActionsProps } from "@/types/errors";
 
 export function UnauthorizedActions({ loginHref = "/login" }: UnauthorizedActionsProps): ReactNode {
   return (

@@ -4,25 +4,7 @@ import { createContext, type ReactNode, useContext, useEffect, useState } from "
 
 import { env } from "@/env";
 import { siteConfig } from "@/site.config";
-
-interface BeforeInstallPromptEvent extends Event {
-  readonly platforms: string[];
-  readonly userChoice: Promise<{
-    outcome: "accepted" | "dismissed";
-    platform: string;
-  }>;
-  prompt(): Promise<void>;
-}
-
-export type PlatformType = "chromium" | "firefox" | "ios" | "other";
-
-interface PWAContextValue {
-  readonly isOnline: boolean;
-  readonly isInstalled: boolean;
-  readonly canInstall: boolean;
-  readonly platform: PlatformType;
-  readonly promptInstall: () => Promise<boolean>;
-}
+import type { BeforeInstallPromptEvent, PlatformType, PWAContextValue } from "@/types/pwa";
 
 const PWAContext = createContext<PWAContextValue>({
   isOnline: true,

@@ -3,10 +3,7 @@
 import type { ReactNode } from "react";
 
 import { ErrorActions } from "@/components/errors/error-actions";
-
-export interface GlobalErrorActionsSectionProps {
-  readonly reset?: () => void;
-}
+import type { GlobalErrorActionsSectionProps } from "@/types/errors";
 
 export function GlobalErrorActionsSection({ reset }: GlobalErrorActionsSectionProps): ReactNode {
   return (

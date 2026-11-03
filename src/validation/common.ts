@@ -15,7 +15,3 @@ export const idParamSchema = z.object({
 export const slugParamSchema = z.object({
   slug: z.string().min(1, "Slug cannot be empty"),
 });
-
-export type PaginationParamsInput = z.infer<typeof paginationParamsSchema>;
-export type IdParamInput = z.infer<typeof idParamSchema>;
-export type SlugParamInput = z.infer<typeof slugParamSchema>;

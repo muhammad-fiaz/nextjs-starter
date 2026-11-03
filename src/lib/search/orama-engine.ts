@@ -19,14 +19,15 @@ import {
 import { DocumentValidationError, IndexNotFoundError } from "@/lib/search/errors";
 import { normalizeSearchDocument } from "@/lib/search/normalize";
 import { defaultSearchSchema } from "@/lib/search/schema";
-import type { SearchDocument, SearchHit, SearchQueryRequest, SearchResponse } from "@/types/search";
+import { siteConfig } from "@/site.config";
+import type {
+  CreateIndexOptions,
+  SearchDocument,
+  SearchHit,
+  SearchQueryRequest,
+  SearchResponse,
+} from "@/types/search";
 import { searchDocumentSchema } from "@/validation/search";
-
-export interface CreateIndexOptions {
-  readonly name: string;
-  readonly schema?: AnySchema;
-  readonly language?: string;
-}
 
 export class OramaEngine {
   private readonly indexes: Map<string, AnyOrama> = new Map();
@@ -35,7 +36,8 @@ export class OramaEngine {
     const {
       name,
       schema = defaultSearchSchema as unknown as AnySchema,
-      language = "english",
+      language = siteConfig.i18n.localeToLanguage?.[siteConfig.i18n.defaultLocale] ??
+        siteConfig.i18n.defaultLocale,
     } = options;
 
     const db = await create({

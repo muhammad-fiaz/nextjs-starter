@@ -1,7 +1,7 @@
+import { deleteCookie, getCookie, setCookie } from "@/lib/cookies/client-cookie";
 import { siteConfig } from "@/site.config";
 import type {
   ConsentDecision,
-  CookieAttributes,
   CookieCategoriesConsent,
   StoredConsentRecord,
 } from "@/types/cookies";
@@ -22,50 +22,6 @@ export const ACCEPTED_COOKIE_CATEGORIES: CookieCategoriesConsent = {
   advertising: true,
   preferences: true,
 };
-
-export function getCookie(name: string): string | null {
-  if (typeof document === "undefined") return null;
-  const match = document.cookie.match(new RegExp(`(^|;\\s*)(${name})=([^;]*)`));
-  return match ? decodeURIComponent(match[3]) : null;
-}
-
-export function setCookie(name: string, value: string, attributes: CookieAttributes = {}): void {
-  if (typeof document === "undefined") return;
-
-  let cookieString = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
-
-  if (attributes.maxAge !== undefined) {
-    cookieString += `; max-age=${attributes.maxAge}`;
-  } else if (attributes.expires) {
-    cookieString += `; expires=${attributes.expires.toUTCString()}`;
-  }
-
-  cookieString += `; path=${attributes.path || "/"}`;
-
-  if (attributes.domain) {
-    cookieString += `; domain=${attributes.domain}`;
-  }
-
-  if (
-    attributes.secure ??
-    (typeof window !== "undefined" && window.location.protocol === "https:")
-  ) {
-    cookieString += "; secure";
-  }
-
-  cookieString += `; samesite=${attributes.sameSite || "lax"}`;
-
-  document.cookie = cookieString;
-}
-
-export function deleteCookie(name: string, path: string = "/", domain?: string): void {
-  if (typeof document === "undefined") return;
-  let cookieString = `${encodeURIComponent(name)}=; max-age=0; path=${path}`;
-  if (domain) {
-    cookieString += `; domain=${domain}`;
-  }
-  document.cookie = cookieString;
-}
 
 export function validateConsentRecord(
   rawRecord: unknown,
@@ -110,16 +66,28 @@ export function validateConsentRecord(
 export function getStoredConsent(): StoredConsentRecord | null {
   if (typeof window === "undefined") return null;
 
-  try {
-    const raw = window.localStorage.getItem(COOKIE_CONSENT_KEY) || getCookie(COOKIE_CONSENT_KEY);
-    if (!raw) return null;
+  const candidates: string[] = [];
 
-    const parsed = JSON.parse(raw);
-    const expectedVersion = COOKIE_CONSENT_VERSION;
-    return validateConsentRecord(parsed, expectedVersion);
+  try {
+    const stored = window.localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (stored) candidates.push(stored);
   } catch {
-    return null;
+    // Storage can be unavailable (private mode); fall back to the cookie.
   }
+
+  const cookieValue = getCookie(COOKIE_CONSENT_KEY);
+  if (cookieValue) candidates.push(cookieValue);
+
+  for (const raw of candidates) {
+    try {
+      const record = validateConsentRecord(JSON.parse(raw), COOKIE_CONSENT_VERSION);
+      if (record) return record;
+    } catch {
+      // Ignore malformed records and try the next source.
+    }
+  }
+
+  return null;
 }
 
 export function setStoredConsent(
@@ -155,15 +123,20 @@ export function setStoredConsent(
   };
 
   if (typeof window !== "undefined") {
+    const serialized = JSON.stringify(record);
+
     try {
-      const serialized = JSON.stringify(record);
       window.localStorage.setItem(COOKIE_CONSENT_KEY, serialized);
-      setCookie(COOKIE_CONSENT_KEY, serialized, {
-        maxAge: maxAgeSeconds,
-        sameSite: "lax",
-      });
-      window.dispatchEvent(new CustomEvent("consentDecisionChanged", { detail: record }));
-    } catch {}
+    } catch {
+      // The cookie still persists the decision.
+    }
+
+    setCookie(COOKIE_CONSENT_KEY, serialized, {
+      maxAge: maxAgeSeconds,
+      sameSite: "lax",
+    });
+
+    window.dispatchEvent(new CustomEvent("consentDecisionChanged", { detail: record }));
   }
 
   return record;
@@ -173,8 +146,11 @@ export function clearStoredConsent(): void {
   if (typeof window !== "undefined") {
     try {
       window.localStorage.removeItem(COOKIE_CONSENT_KEY);
-      deleteCookie(COOKIE_CONSENT_KEY);
-      window.dispatchEvent(new CustomEvent("consentDecisionChanged", { detail: null }));
-    } catch {}
+    } catch {
+      // Continue with cookie removal.
+    }
+
+    deleteCookie(COOKIE_CONSENT_KEY);
+    window.dispatchEvent(new CustomEvent("consentDecisionChanged", { detail: null }));
   }
 }

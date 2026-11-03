@@ -5,7 +5,10 @@ import webpush from "web-push";
 import { env } from "@/env";
 import { siteConfig } from "@/site.config";
 
-let globalSubscription: webpush.PushSubscription | null = null;
+// Demo-only in-memory subscription store.
+// Serverless instances do not share module state, so replace this with a
+// database or KV store keyed by the push endpoint before production use.
+let activeSubscription: webpush.PushSubscription | null = null;
 
 function ensureVapidConfigured(): boolean {
   const publicKey = env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
@@ -28,12 +31,12 @@ export async function subscribeUser(sub: webpush.PushSubscription): Promise<{
   readonly success: boolean;
   readonly error?: string;
 }> {
-  globalSubscription = sub;
+  activeSubscription = sub;
   return { success: true };
 }
 
 export async function unsubscribeUser(): Promise<{ readonly success: boolean }> {
-  globalSubscription = null;
+  activeSubscription = null;
   return { success: true };
 }
 
@@ -41,7 +44,7 @@ export async function sendNotification(message: string): Promise<{
   readonly success: boolean;
   readonly error?: string;
 }> {
-  if (!globalSubscription) {
+  if (!activeSubscription) {
     return { success: false, error: "No active push subscription available." };
   }
 
@@ -56,7 +59,7 @@ export async function sendNotification(message: string): Promise<{
 
   try {
     await webpush.sendNotification(
-      globalSubscription,
+      activeSubscription,
       JSON.stringify({
         title: siteConfig.name || "Notification",
         body: message,

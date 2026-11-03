@@ -1,24 +1,27 @@
 import { queryOptions } from "@tanstack/react-query";
 
+import { loadClientSearchIndex, searchClient } from "@/lib/search/index-loader";
 import type { SearchQueryRequest } from "@/types/search";
 
 export const searchKeys = {
   all: ["search"] as const,
-  index: (indexName: string) => ["search", indexName] as const,
-  query: (indexName: string, query: SearchQueryRequest) => ["search", indexName, query] as const,
-  global: (indexes: readonly string[], query: SearchQueryRequest) =>
-    ["search", "global", indexes, query] as const,
+  index: () => ["search", "index"] as const,
+  query: (request: SearchQueryRequest) => ["search", request] as const,
 };
 
-export function createSearchQueryOptions(
-  indexName: string,
-  query: SearchQueryRequest,
-  fetcher: (indexName: string, query: SearchQueryRequest) => Promise<any>,
-) {
+export function searchIndexQueryOptions() {
   return queryOptions({
-    queryKey: searchKeys.query(indexName, query),
-    queryFn: () => fetcher(indexName, query),
-    enabled: Boolean(query.term && query.term.trim().length > 0),
+    queryKey: searchKeys.index(),
+    queryFn: () => loadClientSearchIndex(),
+    staleTime: Infinity,
+  });
+}
+
+export function searchQueryOptions(request: SearchQueryRequest) {
+  return queryOptions({
+    queryKey: searchKeys.query(request),
+    queryFn: () => searchClient(request),
+    enabled: request.term.trim().length > 0,
     staleTime: 30 * 1000,
   });
 }

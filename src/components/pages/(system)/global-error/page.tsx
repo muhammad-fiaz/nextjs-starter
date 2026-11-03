@@ -1,12 +1,9 @@
 "use client";
 
+import type { GlobalErrorPageProps } from "@/types/errors";
+
 import { GlobalErrorActionsSection } from "./sections/global-error-actions";
 import { GlobalErrorSectionContent } from "./sections/global-error-content";
-
-export interface GlobalErrorPageProps {
-  readonly error?: Error & { digest?: string };
-  readonly reset?: () => void;
-}
 
 export default function GlobalErrorPage({ reset }: GlobalErrorPageProps) {
   return (

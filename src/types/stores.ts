@@ -1,17 +1,4 @@
-import type { StateCreator } from "zustand";
-
-export type StoreSlice<TState, TActions, TComplete = TState & TActions> = StateCreator<
-  TComplete,
-  [],
-  [],
-  TState & TActions
->;
-
-export interface AsyncState<TData = unknown, TError = Error> {
-  readonly data: TData | null;
-  readonly isLoading: boolean;
-  readonly error: TError | null;
-}
+import type { CookieCategoriesConsent, StoredConsentRecord } from "@/types/cookies";
 
 export interface UIState {
   readonly isSidebarOpen: boolean;
@@ -26,3 +13,20 @@ export interface UIActions {
   readonly toggleSearch: () => void;
   readonly setThemeMode: (mode: "light" | "dark" | "system") => void;
 }
+
+export type UIStore = UIState & UIActions;
+
+export interface ConsentStoreState {
+  readonly record: StoredConsentRecord | null;
+  readonly isLoaded: boolean;
+}
+
+export interface ConsentStoreActions {
+  readonly initialize: () => void;
+  readonly accept: () => void;
+  readonly deny: () => void;
+  readonly setCategoryConsent: (categories: Partial<CookieCategoriesConsent>) => void;
+  readonly resetConsent: () => void;
+}
+
+export type ConsentStore = ConsentStoreState & ConsentStoreActions;

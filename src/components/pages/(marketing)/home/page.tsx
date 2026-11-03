@@ -11,7 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { GithubIcon } from "@/components/icons/social-icons";
 import { ContactSection } from "@/components/pages/(marketing)/home/contact-section";
@@ -28,36 +28,43 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
 
   const featureCards = [
     {
+      id: "nextjs",
       icon: Zap,
       title: features?.items.nextjs.title,
       description: features?.items.nextjs.description,
     },
     {
+      id: "i18n",
       icon: Globe,
       title: features?.items.i18n.title,
       description: features?.items.i18n.description,
     },
     {
+      id: "privacy",
       icon: Lock,
       title: features?.items.privacy.title,
       description: features?.items.privacy.description,
     },
     {
+      id: "seo",
       icon: Search,
       title: features?.items.seo.title,
       description: features?.items.seo.description,
     },
     {
+      id: "modular-types",
       icon: Layers,
       title: features?.items.modularTypes.title,
       description: features?.items.modularTypes.description,
     },
     {
+      id: "shadcn",
       icon: Code2,
       title: features?.items.shadcn.title,
       description: features?.items.shadcn.description,
     },
     {
+      id: "webmcp",
       icon: Bot,
       title: features?.items.webmcp?.title,
       description: features?.items.webmcp?.description,
@@ -68,7 +75,6 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
 
   return (
     <>
-      {}
       <section className="border-border/40 relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden border-b py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl space-y-6 text-center">
@@ -81,7 +87,7 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
 
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
               {hero?.titlePrimary} <br />
-              <span className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-transparent">
+              <span className="from-primary to-primary/60 bg-linear-to-r bg-clip-text text-transparent">
                 {hero?.titleHighlight}
               </span>
             </h1>
@@ -115,7 +121,6 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
         </div>
       </section>
 
-      {}
       <section id="features" className="py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-16 max-w-2xl text-center">
@@ -124,10 +129,10 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featureCards.map((feature, idx) => {
+            {featureCards.map((feature) => {
               const Icon = feature.icon;
               return (
-                <Card key={idx} className="hover:border-primary/50 transition-all">
+                <Card key={feature.id} className="hover:border-primary/50 transition-all">
                   <CardHeader>
                     <div className="bg-primary/10 text-primary mb-2 flex h-10 w-10 items-center justify-center rounded-lg">
                       <Icon className="h-5 w-5" />
@@ -144,7 +149,6 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
         </div>
       </section>
 
-      {}
       <section id="architecture" className="border-border/40 bg-muted/20 border-t py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
@@ -166,7 +170,6 @@ export default function HomePage({ currentLocale, dictionary }: HomePageProps): 
         </div>
       </section>
 
-      {}
       <ContactSection contactI18n={dictionary?.home.contact} />
     </>
   );

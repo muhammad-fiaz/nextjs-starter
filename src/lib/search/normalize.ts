@@ -13,11 +13,7 @@ export function resolveSearchLocale(locale?: string): string {
 }
 
 export function getOramaLanguage(locale: string): string {
-  const languageMap = siteConfig.i18n.localeToLanguage || {
-    en: "english",
-    es: "spanish",
-  };
-  return languageMap[locale] || "english";
+  return siteConfig.i18n.localeToLanguage?.[locale] ?? locale;
 }
 
 export function normalizeSearchQuery(query: string): string {

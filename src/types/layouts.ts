@@ -1,33 +1,10 @@
 import type { ReactNode } from "react";
 
-import type { DictionaryFooter, DictionaryNavigation, SearchI18n } from "@/validation/i18n";
+import type { DictionaryFooter, DictionaryNavigation, SearchI18n } from "@/types/i18n";
 
-export interface BaseLayoutProps {
+export interface LocaleLayoutProps {
   readonly children: ReactNode;
-}
-
-export interface HeaderLayoutProps extends BaseLayoutProps {
-  readonly header?: ReactNode;
-  readonly footer?: ReactNode;
-}
-
-export interface DashboardLayoutProps extends BaseLayoutProps {
-  readonly sidebar?: ReactNode;
-  readonly header?: ReactNode;
-  readonly footer?: ReactNode;
-}
-
-export interface AuthLayoutProps extends BaseLayoutProps {
-  readonly header?: ReactNode;
-  readonly footer?: ReactNode;
-  readonly banner?: ReactNode;
-}
-
-export interface DocumentationLayoutProps extends BaseLayoutProps {
-  readonly sidebar?: ReactNode;
-  readonly header?: ReactNode;
-  readonly toc?: ReactNode;
-  readonly footer?: ReactNode;
+  readonly params: Promise<{ lang: string }>;
 }
 
 export interface NavbarProps {

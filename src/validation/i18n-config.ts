@@ -26,7 +26,7 @@ export function validateI18nConfig(config: I18nConfig): void {
   }
 
   for (const locale of locales) {
-    if (!localeLabels || !localeLabels[locale]) {
+    if (!localeLabels?.[locale]) {
       throw new Error(`[i18n] Missing localeLabel for configured locale "${locale}".`);
     }
 
@@ -47,6 +47,6 @@ export function isLocale(value: unknown): value is string {
 export const isSupportedLocale = isLocale;
 
 export function getLocaleDirection(locale: string): "ltr" | "rtl" {
-  const rtlList = siteConfig.i18n.rtlLocales || ["ar", "he", "fa", "ur"];
+  const rtlList = siteConfig.i18n.rtlLocales ?? [];
   return rtlList.includes(locale.toLowerCase().split("-")[0] || "") ? "rtl" : "ltr";
 }

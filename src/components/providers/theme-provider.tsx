@@ -10,7 +10,12 @@ import {
   useState,
 } from "react";
 
-import type { ResolvedTheme, ThemeContextValue, ThemePreference } from "@/types/theme";
+import type {
+  ResolvedTheme,
+  ThemeContextValue,
+  ThemePreference,
+  ThemeProviderProps,
+} from "@/types/theme";
 
 const THEME_STORAGE_KEY = "app-theme";
 
@@ -42,11 +47,6 @@ function applyThemeToDocument(resolved: ResolvedTheme): void {
   } else {
     root.classList.remove("dark");
   }
-}
-
-export interface ThemeProviderProps {
-  readonly children: ReactNode;
-  readonly defaultTheme?: ThemePreference;
 }
 
 export function ThemeProvider({ children, defaultTheme = "system" }: ThemeProviderProps) {

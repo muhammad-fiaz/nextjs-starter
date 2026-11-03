@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { type ReactNode } from "react";
 
+import { CookiePreferencesButton } from "@/components/cookies/cookie-preferences-button";
 import { GithubIcon, TwitterIcon } from "@/components/icons/social-icons";
 import { getLocalizedPath } from "@/i18n/navigation";
 import { siteConfig } from "@/site.config";
@@ -123,6 +124,9 @@ export function Footer({ currentLocale, navigation, footer }: FooterProps): Reac
               >
                 {siteConfig.organization.email}
               </a>
+            )}
+            {footer?.cookiePreferences && (
+              <CookiePreferencesButton label={footer.cookiePreferences} />
             )}
           </div>
         </div>

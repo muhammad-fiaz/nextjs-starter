@@ -2,11 +2,7 @@ import { WifiOff } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { ErrorContent } from "@/components/errors/error-content";
-
-export interface OfflineContentProps {
-  readonly title?: string;
-  readonly description?: string;
-}
+import type { OfflineContentProps } from "@/types/errors";
 
 export function OfflineContent({
   title = "You are offline",

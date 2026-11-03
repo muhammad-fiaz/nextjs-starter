@@ -3,11 +3,7 @@
 import type { ReactNode } from "react";
 
 import { ErrorActions } from "@/components/errors/error-actions";
-
-export interface OfflineActionsProps {
-  readonly onRetry?: () => void;
-  readonly retryLabel?: string;
-}
+import type { OfflineActionsProps } from "@/types/errors";
 
 export function OfflineActions({ onRetry, retryLabel }: OfflineActionsProps): ReactNode {
   return (

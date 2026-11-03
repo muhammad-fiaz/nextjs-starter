@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, HelpCircle, Share2, Smartphone } from "lucide-react";
+import { Download, HelpCircle, MoreVertical, Plus, Share2, Smartphone } from "lucide-react";
 import { type ReactNode, useState } from "react";
 
 import { usePWA } from "@/components/pwa/pwa-provider";
@@ -12,15 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
-export interface PWAInstallButtonProps {
-  readonly className?: string;
-  readonly label?: string;
-  readonly variant?: "default" | "outline" | "secondary" | "ghost";
-  readonly size?: "default" | "sm" | "lg" | "icon";
-  readonly showIconOnlyOnMobile?: boolean;
-  readonly onInstalled?: () => void;
-}
+import type { PWAInstallButtonProps } from "@/types/pwa";
 
 export function PWAInstallButton({
   className,
@@ -96,7 +88,12 @@ export function PWAInstallButton({
                 </p>
                 <ol className="text-muted-foreground list-decimal space-y-1.5 pl-5">
                   <li>
-                    Tap or click the <strong>three dots menu (⋮)</strong> in Firefox.
+                    Tap or click the{" "}
+                    <strong>
+                      three dots menu{" "}
+                      <MoreVertical className="inline h-3.5 w-3.5" aria-hidden="true" />
+                    </strong>{" "}
+                    in Firefox.
                   </li>
                   <li>
                     Select <strong>&quot;Install&quot;</strong> or{" "}
@@ -121,7 +118,8 @@ export function PWAInstallButton({
                     Tap the <strong>Share button</strong> (square with arrow) in Safari’s toolbar.
                   </li>
                   <li>
-                    Scroll down and tap <strong>&quot;Add to Home Screen&quot;</strong> (+ icon).
+                    Scroll down and tap <strong>&quot;Add to Home Screen&quot;</strong>{" "}
+                    <Plus className="inline h-3.5 w-3.5" aria-hidden="true" />.
                   </li>
                   <li>
                     Tap <strong>&quot;Add&quot;</strong> in the top-right corner to complete.

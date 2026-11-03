@@ -1,10 +1,7 @@
 import type { ReactNode } from "react";
 
 import { ErrorActions } from "@/components/errors/error-actions";
-
-export interface MaintenanceActionsProps {
-  readonly onCheckStatus?: () => void;
-}
+import type { MaintenanceActionsProps } from "@/types/errors";
 
 export function MaintenanceActions({ onCheckStatus }: MaintenanceActionsProps): ReactNode {
   if (!onCheckStatus) return null;

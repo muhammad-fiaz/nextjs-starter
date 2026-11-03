@@ -108,10 +108,14 @@ export function TopLoader({
     setProgressState(Math.min(100, Math.max(0, val)));
   }, []);
 
-  // Automatically finish loading when pathname or searchParams change
+  // Automatically finish loading when the route or query changes
+  const routeKey = `${pathname}?${searchParams.toString()}`;
+
   useEffect(() => {
-    done();
-  }, [pathname, searchParams, done]);
+    if (routeKey) {
+      done();
+    }
+  }, [routeKey, done]);
 
   // Global click listener for internal navigation links
   useEffect(() => {

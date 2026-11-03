@@ -1,8 +1,6 @@
 import { create } from "zustand";
 
-import type { UIActions, UIState } from "@/types/stores";
-
-export type UIStore = UIState & UIActions;
+import type { UIStore } from "@/types/stores";
 
 export const useUIStore = create<UIStore>((set) => ({
   isSidebarOpen: false,

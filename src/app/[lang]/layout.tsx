@@ -5,17 +5,14 @@ import { Navbar } from "@/components/layout/navbar";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { siteConfig } from "@/site.config";
 import type { Locale } from "@/types/config";
+import type { LocaleLayoutProps } from "@/types/layouts";
 import { getLocaleDirection, isSupportedLocale } from "@/validation/i18n-config";
 
 export const instant = false;
+export const ensureStatic = "navigation";
 
 export function generateStaticParams(): { lang: Locale }[] {
   return siteConfig.i18n.locales.map((lang) => ({ lang }));
-}
-
-interface LocaleLayoutProps {
-  readonly children: ReactNode;
-  readonly params: Promise<{ lang: string }>;
 }
 
 export default async function LocaleLayout({

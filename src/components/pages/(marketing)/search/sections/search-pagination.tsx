@@ -2,15 +2,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
-
-export interface SearchPaginationProps {
-  readonly currentPage: number;
-  readonly totalPages: number;
-  readonly onPageChange: (page: number) => void;
-  readonly previousLabel?: string;
-  readonly nextLabel?: string;
-  readonly pageLabel?: string;
-}
+import type { SearchPaginationProps } from "@/types/search";
 
 export function SearchPagination({
   currentPage,

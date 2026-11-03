@@ -8,15 +8,6 @@ import type {
   LegalPageTableOfContentsProps,
 } from "@/types/layouts";
 
-export type {
-  LegalPageContentProps,
-  LegalPageHeaderProps,
-  LegalPageMetadataProps,
-  LegalPageRootProps,
-  LegalPageTableOfContentsItem,
-  LegalPageTableOfContentsProps,
-} from "@/types/layouts";
-
 export function LegalPageRoot({
   width = "default",
   className = "",

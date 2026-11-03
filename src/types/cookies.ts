@@ -36,6 +36,24 @@ export interface CookieConsentConfig {
   };
 }
 
+export interface CookieConsentBannerProps {
+  readonly onAccept: () => void;
+  readonly onDeny: () => void;
+  readonly onSavePreferences: (categories: Partial<CookieCategoriesConsent>) => void;
+  readonly cookiePolicyUrl?: string;
+}
+
+export interface CookiePreferencesButtonProps {
+  readonly label: string;
+}
+
+export interface CookiePreferencesDialogProps {
+  readonly open: boolean;
+  readonly onOpenChange: (open: boolean) => void;
+  readonly categories?: Partial<CookieCategoriesConsent>;
+  readonly onSave: (categories: Partial<CookieCategoriesConsent>) => void;
+}
+
 export type AnalyticsStrategy = "standalone" | "gtm";
 
 export interface GoogleTagManagerConfig {

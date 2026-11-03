@@ -2,11 +2,7 @@ import type { ReactNode } from "react";
 
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
-
-export interface LoadingStateProps {
-  readonly label?: string;
-  readonly className?: string;
-}
+import type { LoadingStateProps } from "@/types/errors";
 
 export function LoadingState({ label = "Loading...", className }: LoadingStateProps): ReactNode {
   return (

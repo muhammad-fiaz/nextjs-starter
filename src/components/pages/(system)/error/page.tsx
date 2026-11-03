@@ -1,12 +1,9 @@
 "use client";
 
+import type { ErrorPageProps } from "@/types/errors";
+
 import { ErrorActionsSection } from "./sections/error-actions";
 import { ErrorSectionContent } from "./sections/error-content";
-
-export interface ErrorPageProps {
-  readonly error?: Error & { digest?: string };
-  readonly reset?: () => void;
-}
 
 export default function ErrorPage({ reset }: ErrorPageProps) {
   return (

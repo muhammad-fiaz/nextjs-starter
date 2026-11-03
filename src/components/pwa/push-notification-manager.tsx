@@ -1,12 +1,13 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { Check, Plus, Share } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 
-import { sendNotification, subscribeUser, unsubscribeUser } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { env } from "@/env";
+import { sendNotification, subscribeUser, unsubscribeUser } from "@/lib/pwa/push-actions";
+import { siteConfig } from "@/site.config";
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -26,25 +27,37 @@ export function PushNotificationManager(): ReactNode {
   const [status, setStatus] = useState<string | null>(null);
 
   useEffect(() => {
-    if ("serviceWorker" in navigator && "PushManager" in window) {
-      setIsSupported(true);
-      registerServiceWorker();
+    if (!("serviceWorker" in navigator && "PushManager" in window)) {
+      return;
     }
-  }, []);
 
-  async function registerServiceWorker() {
-    try {
-      const registration = await navigator.serviceWorker.register(
-        new URL("../../lib/service-worker.js", import.meta.url),
-        {
-          scope: "/",
-          updateViaCache: "none",
-        },
-      );
-      const sub = await registration.pushManager.getSubscription();
-      setSubscription(sub);
-    } catch {}
-  }
+    setIsSupported(true);
+
+    let isCancelled = false;
+
+    const registerServiceWorker = async () => {
+      try {
+        const registration = await navigator.serviceWorker.register(
+          siteConfig.pwa?.swUrl ?? "/sw.js",
+          {
+            scope: siteConfig.pwa?.scope ?? "/",
+            updateViaCache: "none",
+          },
+        );
+        const sub = await registration.pushManager.getSubscription();
+
+        if (!isCancelled) {
+          setSubscription(sub);
+        }
+      } catch {}
+    };
+
+    void registerServiceWorker();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
   async function subscribeToPush() {
     try {
@@ -167,14 +180,9 @@ export function InstallPrompt(): ReactNode {
       {isIOS ? (
         <p className="text-muted-foreground text-xs leading-relaxed">
           To install this PWA on your iOS device, tap the share button{" "}
-          <span role="img" aria-label="share icon">
-            ⎋
-          </span>{" "}
-          in Safari and select <strong>&quot;Add to Home Screen&quot;</strong>{" "}
-          <span role="img" aria-label="plus icon">
-            ➕
-          </span>
-          .
+          <Share className="inline h-3.5 w-3.5" aria-hidden="true" /> in Safari and select{" "}
+          <strong>&quot;Add to Home Screen&quot;</strong>{" "}
+          <Plus className="inline h-3.5 w-3.5" aria-hidden="true" />.
         </p>
       ) : (
         <p className="text-muted-foreground text-xs leading-relaxed">

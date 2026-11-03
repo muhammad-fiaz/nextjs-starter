@@ -2,12 +2,7 @@ import { WifiOff } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { SystemPage } from "@/components/errors/system-page";
-import type { SystemPageAction } from "@/types/errors";
-
-export interface OfflineStateProps {
-  readonly onRetry?: () => void;
-  readonly className?: string;
-}
+import type { OfflineStateProps, SystemPageAction } from "@/types/errors";
 
 export function OfflineState({ onRetry, className }: OfflineStateProps): ReactNode {
   const retryAction: SystemPageAction | undefined = onRetry

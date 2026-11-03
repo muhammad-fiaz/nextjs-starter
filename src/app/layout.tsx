@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
+import { type ReactNode, Suspense } from "react";
 
-import { CookieConsentProvider } from "@/components/cookies/cookie-consent-provider";
+import { CookieConsentManager } from "@/components/cookies/cookie-consent-manager";
 import { IntegrationManager } from "@/components/integrations/integration-manager";
-import { VercelInsights } from "@/components/integrations/vercel/vercel-insights";
 import { TanStackProvider } from "@/components/providers/query-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { WebMCPProvider } from "@/components/providers/webmcp-provider";
 import { PWAProvider } from "@/components/pwa/pwa-provider";
 import { GlobalJsonLd } from "@/components/seo/json-ld";
+import { InlineScript } from "@/components/ui/inline-script";
 import { TopLoader } from "@/components/ui/top-loader";
 import { fontVariables } from "@/lib/fonts";
 import { constructMetadata } from "@/lib/metadata/construct-metadata";
@@ -30,12 +30,12 @@ const themeInitScript = `
 })();
 `;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${fontVariables} h-full antialiased`}>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link rel="ard" href="/.well-known/ard.json" />
+        <InlineScript html={themeInitScript} />
       </head>
       <body className="flex min-h-full flex-col">
         <GlobalJsonLd />
@@ -46,12 +46,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <TanStackProvider>
             <PWAProvider>
               <WebMCPProvider>
-                <CookieConsentProvider>
-                  <IntegrationManager />
-                  {children}
-                </CookieConsentProvider>
+                <IntegrationManager />
+                {children}
+                <CookieConsentManager />
               </WebMCPProvider>
-              <VercelInsights />
             </PWAProvider>
           </TanStackProvider>
         </ThemeProvider>

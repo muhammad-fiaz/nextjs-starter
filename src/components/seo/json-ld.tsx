@@ -2,21 +2,13 @@ import type { ReactNode } from "react";
 
 import { buildOrganizationSchema, buildWebSiteSchema } from "@/lib/schema/builders";
 import { siteConfig } from "@/site.config";
-import type { ThingSchema } from "@/types/schema";
-
-export interface JsonLdProps {
-  readonly data: ThingSchema | Record<string, unknown>;
-}
+import type { JsonLdProps } from "@/types/seo";
 
 export function JsonLd({ data }: JsonLdProps): ReactNode {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data),
-      }}
-    />
-  );
+  // Escape "<" so the payload cannot terminate the script element early.
+  const json = JSON.stringify(data).replace(/</g, "\\u003c");
+
+  return <script type="application/ld+json">{json}</script>;
 }
 
 export function GlobalJsonLd(): ReactNode {

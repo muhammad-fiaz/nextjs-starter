@@ -150,7 +150,8 @@
   "footer": {
     "navigationHeading": "Navegación",
     "legalHeading": "Legal y Cumplimiento",
-    "copyright": "Código abierto bajo Licencia MIT."
+    "copyright": "Código abierto bajo Licencia MIT.",
+    "cookiePreferences": "Preferencias de cookies"
   },
   "pages": {
     "legal": {

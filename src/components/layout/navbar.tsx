@@ -2,9 +2,9 @@ import Link from "next/link";
 import { type ReactNode } from "react";
 
 import { GithubIcon } from "@/components/icons/social-icons";
+import { GlobalSearchDialog } from "@/components/layout/global-search-dialog";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { PWAInstallButton } from "@/components/pwa/pwa-install-button";
-import { GlobalSearchDialog } from "@/components/search/global-search-dialog";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/ui/language-toggle";
 import { ThemeToggle } from "@/components/ui/theme-toggle";

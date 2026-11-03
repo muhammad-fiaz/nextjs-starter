@@ -8,10 +8,7 @@ import type { ReactNode } from "react";
 
 import { env } from "@/env";
 import { getQueryClient } from "@/query/query-client";
-
-export interface TanStackProviderProps {
-  readonly children: ReactNode;
-}
+import type { TanStackProviderProps } from "@/types/query";
 
 export function TanStackProvider({ children }: TanStackProviderProps): ReactNode {
   const queryClient = getQueryClient();

@@ -18,5 +18,3 @@ export const defaultSearchSchema = {
   imageUrl: "string",
   updatedAt: "number",
 } as const satisfies AnySchema;
-
-export type DefaultSearchSchema = typeof defaultSearchSchema;

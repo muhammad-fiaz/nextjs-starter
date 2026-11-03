@@ -19,5 +19,3 @@ export const searchDocumentSchema = z.object({
   imageUrl: z.string().optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
 });
-
-export type SearchDocumentInput = z.input<typeof searchDocumentSchema>;

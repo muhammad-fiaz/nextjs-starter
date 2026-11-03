@@ -1,17 +1,9 @@
-import { cn } from "cn";
 import { Search } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { Input } from "@/components/ui/input";
-
-export interface SearchInputProps {
-  readonly value: string;
-  readonly onChange: (value: string) => void;
-  readonly onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  readonly placeholder?: string;
-  readonly className?: string;
-  readonly autoFocus?: boolean;
-}
+import { cn } from "@/lib/utils";
+import type { SearchInputProps } from "@/types/search";
 
 export function SearchInput({
   value,

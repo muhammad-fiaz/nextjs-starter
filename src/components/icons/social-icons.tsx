@@ -1,6 +1,4 @@
-import type { SVGProps } from "react";
-
-export type IconProps = SVGProps<SVGSVGElement>;
+import type { IconProps } from "@/types/icons";
 
 export function GithubIcon({ className = "h-4 w-4", ...props }: IconProps) {
   return (

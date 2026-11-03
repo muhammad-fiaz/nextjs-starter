@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/navbar";
 import NotFoundPage from "@/components/pages/(system)/not-found/page";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { constructMetadata } from "@/lib/metadata/construct-metadata";
+import { siteConfig } from "@/site.config";
 
 export const metadata: Metadata = constructMetadata({
   title: "404 - Page Not Found",
@@ -13,15 +14,24 @@ export const metadata: Metadata = constructMetadata({
 });
 
 export default async function NotFound() {
-  const dictionary = await getDictionary("en");
+  const locale = siteConfig.i18n.defaultLocale;
+  const dictionary = await getDictionary(locale);
 
   return (
     <div className="bg-background text-foreground flex min-h-screen flex-col">
-      <Navbar currentLocale="en" navigation={dictionary.navigation} search={dictionary.search} />
+      <Navbar
+        currentLocale={locale}
+        navigation={dictionary.navigation}
+        search={dictionary.search}
+      />
       <main className="flex-1">
         <NotFoundPage />
       </main>
-      <Footer currentLocale="en" navigation={dictionary.navigation} footer={dictionary.footer} />
+      <Footer
+        currentLocale={locale}
+        navigation={dictionary.navigation}
+        footer={dictionary.footer}
+      />
     </div>
   );
 }

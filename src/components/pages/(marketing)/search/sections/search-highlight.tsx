@@ -1,12 +1,7 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import type { ReactNode } from "react";
 
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-
-export interface SearchHighlightProps extends HTMLAttributes<HTMLSpanElement> {
-  readonly text: string;
-  readonly query?: string;
-}
+import type { SearchHighlightProps } from "@/types/search";
 
 export function SearchHighlight({
   text,
@@ -14,7 +9,9 @@ export function SearchHighlight({
   className,
   ...props
 }: SearchHighlightProps): ReactNode {
-  if (!query || !query.trim()) {
+  const trimmedQuery = query?.trim().toLowerCase() ?? "";
+
+  if (!trimmedQuery) {
     return (
       <span className={className} {...props}>
         {text}
@@ -22,9 +19,7 @@ export function SearchHighlight({
     );
   }
 
-  const trimmedQuery = query.trim().toLowerCase();
-  const lowerText = text.toLowerCase();
-  const matchIndex = lowerText.indexOf(trimmedQuery);
+  const matchIndex = text.toLowerCase().indexOf(trimmedQuery);
 
   if (matchIndex === -1) {
     return (

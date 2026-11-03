@@ -1,10 +1,7 @@
 import type { ReactNode } from "react";
 
 import { ErrorActions } from "@/components/errors/error-actions";
-
-export interface ErrorActionsSectionProps {
-  readonly reset?: () => void;
-}
+import type { ErrorActionsSectionProps } from "@/types/errors";
 
 export function ErrorActionsSection({ reset }: ErrorActionsSectionProps): ReactNode {
   return (

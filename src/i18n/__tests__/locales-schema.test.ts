@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { siteConfig } from "@/site.config";
 import { dictionarySchema } from "@/validation/i18n";
 
 describe("JSON-Driven Localization Architecture", () => {
@@ -21,6 +22,29 @@ describe("JSON-Driven Localization Architecture", () => {
       }
       expect(parsed.success).toBe(true);
       expect(raw.metadata.locale).toBe(file.replace(".json", ""));
+    }
+  });
+
+  test("site config locales stay in sync with the locale files", () => {
+    const fileLocales = files.map((file) => file.replace(/\.json$/, "")).sort();
+
+    expect([...siteConfig.i18n.locales].sort()).toEqual(fileLocales);
+    expect(fileLocales).toContain(siteConfig.i18n.defaultLocale);
+
+    const rtlLocales = files
+      .map((file) => ({
+        locale: file.replace(/\.json$/, ""),
+        metadata: JSON.parse(readFileSync(join(localesDir, file), "utf-8")).metadata,
+      }))
+      .filter(({ metadata }) => metadata.direction === "rtl")
+      .map(({ locale }) => locale)
+      .sort();
+
+    expect([...(siteConfig.i18n.rtlLocales ?? [])].sort()).toEqual(rtlLocales);
+
+    for (const locale of fileLocales) {
+      expect(siteConfig.i18n.localeLabels[locale]).toBeTruthy();
+      expect(siteConfig.i18n.localeToLanguage?.[locale]).toBeTruthy();
     }
   });
 

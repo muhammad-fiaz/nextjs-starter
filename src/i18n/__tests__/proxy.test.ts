@@ -3,10 +3,13 @@ import { describe, expect, it } from "bun:test";
 import { NextRequest } from "next/server";
 
 import { proxy } from "@/proxy";
+import { siteConfig } from "@/site.config";
 
 describe("Next.js Proxy i18n Routing", () => {
+  const baseUrl = siteConfig.url.replace(/\/$/, "");
+
   const createRequest = (urlPath: string) => {
-    return new NextRequest(new URL(`http://localhost:3000${urlPath}`));
+    return new NextRequest(new URL(`${baseUrl}${urlPath}`));
   };
 
   describe("Strategy 'as-needed' (default)", () => {
@@ -34,21 +37,19 @@ describe("Next.js Proxy i18n Routing", () => {
     it("permanently redirects '/en' to '/' (308)", () => {
       const res = proxy(createRequest("/en"));
       expect(res.status).toBe(308);
-      expect(res.headers.get("location")).toBe("http://localhost:3000/");
+      expect(res.headers.get("location")).toBe(`${baseUrl}/`);
     });
 
     it("permanently redirects '/en/privacy' to '/privacy' (308)", () => {
       const res = proxy(createRequest("/en/privacy"));
       expect(res.status).toBe(308);
-      expect(res.headers.get("location")).toBe("http://localhost:3000/privacy");
+      expect(res.headers.get("location")).toBe(`${baseUrl}/privacy`);
     });
 
     it("preserves query parameters during normalization redirects", () => {
       const res = proxy(createRequest("/en/privacy?source=footer&campaign=test"));
       expect(res.status).toBe(308);
-      expect(res.headers.get("location")).toBe(
-        "http://localhost:3000/privacy?source=footer&campaign=test",
-      );
+      expect(res.headers.get("location")).toBe(`${baseUrl}/privacy?source=footer&campaign=test`);
     });
 
     it("bypasses system assets, API routes, and static files", () => {

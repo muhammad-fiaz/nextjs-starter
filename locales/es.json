@@ -6,7 +6,7 @@
   },
   "common": {
     "appName": "Next.js Starter",
-    "description": "Plantilla de inicio de Next.js de código abierto lista para producción",
+    "description": "Plantilla de inicio de Next.js de código abierto lista para producción con React 19, TypeScript, Tailwind CSS v4 y bases web modernas.",
     "theme": {
       "light": "Claro",
       "dark": "Oscuro",
@@ -19,7 +19,8 @@
       "close": "Cerrar",
       "accept": "Aceptar",
       "deny": "Rechazar"
-    }
+    },
+    "shortName": "NextStarter"
   },
   "navigation": {
     "home": "Inicio",
@@ -319,6 +320,36 @@
           }
         ]
       }
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Inicio",
+      "description": "Plantilla de inicio de Next.js de código abierto lista para producción con React 19, TypeScript, Tailwind CSS v4 y bases web modernas."
+    },
+    "search": {
+      "title": "Buscar",
+      "description": "Busque en características, arquitectura y documentación legal."
+    },
+    "privacy": {
+      "title": "Política de Privacidad",
+      "description": "Conozca cómo recopilamos, usamos y protegemos su información personal."
+    },
+    "terms": {
+      "title": "Términos de Servicio",
+      "description": "Lea los términos y condiciones que rigen el uso de nuestro sitio web y servicios."
+    },
+    "cookies": {
+      "title": "Política de Cookies",
+      "description": "Conozca cómo usamos cookies y tecnologías de rastreo en nuestro sitio web."
+    },
+    "offline": {
+      "title": "Sin Conexión",
+      "description": "Actualmente se encuentra sin conexión. Por favor revise su conexión a internet."
+    },
+    "notFound": {
+      "title": "404 - Página no encontrada",
+      "description": "La página que está buscando no existe o ha sido movida."
     }
   }
 }

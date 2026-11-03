@@ -123,11 +123,12 @@ export function constructMetadata(
 
   const socialImage = parsedOgImage;
 
+  const siteName = siteConfig.name;
   const resolvedTitle = title
-    ? siteConfig.name
-      ? `${title} | ${siteConfig.name}`
+    ? siteName && title !== siteName
+      ? `${title} | ${siteName}`
       : title
-    : siteConfig.name;
+    : siteName;
 
   return {
     metadataBase: new URL(siteUrl),

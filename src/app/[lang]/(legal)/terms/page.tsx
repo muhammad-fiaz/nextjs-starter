@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 
 import TermsOfServicePage from "@/components/pages/(legal)/terms/page";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { constructMetadata } from "@/lib/metadata/construct-metadata";
-import { siteConfig } from "@/site.config";
+import { getLocalizedPath } from "@/i18n/navigation";
+import { constructMetadata, resolveOrigin } from "@/lib/metadata/construct-metadata";
 import type { Locale } from "@/types/config";
 import { getActiveLocales } from "@/validation/i18n-config";
 
@@ -13,10 +14,17 @@ export function generateStaticParams(): { lang: Locale }[] {
   return getActiveLocales().map((lang) => ({ lang }));
 }
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const dictionary = await getDictionary(lang);
   return constructMetadata({
-    title: "Terms of Service",
-    description: "Read the terms and conditions governing the use of our website and services.",
+    title: dictionary.seo.terms.title,
+    description: dictionary.seo.terms.description,
+    locale: lang,
     path: "/terms",
   });
 }
@@ -24,5 +32,17 @@ export function generateMetadata(): Metadata {
 export default async function Page({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
-  return <TermsOfServicePage content={dictionary.pages.legal.terms} />;
+  const siteUrl = resolveOrigin();
+
+  const breadcrumbs = [
+    { name: dictionary.navigation.home, url: `${siteUrl}${getLocalizedPath("/", lang)}` },
+    { name: dictionary.seo.terms.title, url: `${siteUrl}${getLocalizedPath("/terms", lang)}` },
+  ];
+
+  return (
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      <TermsOfServicePage content={dictionary.pages.legal.terms} />
+    </>
+  );
 }

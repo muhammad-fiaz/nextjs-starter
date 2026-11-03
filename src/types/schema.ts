@@ -10,18 +10,28 @@ export interface ThingSchema {
   readonly image?: string | readonly string[];
 }
 
+export interface PostalAddressSchema {
+  readonly "@type": "PostalAddress";
+  readonly streetAddress?: string;
+  readonly addressLocality?: string;
+  readonly addressRegion?: string;
+  readonly postalCode?: string;
+  readonly addressCountry?: string;
+}
+
 export interface OrganizationSchema extends ThingSchema {
   readonly "@type": "Organization";
   readonly legalName?: string;
   readonly logo?: string;
   readonly email?: string;
   readonly telephone?: string;
+  readonly address?: PostalAddressSchema;
   readonly sameAs?: readonly string[];
 }
 
 export interface WebSiteSchema extends ThingSchema {
   readonly "@type": "WebSite";
-  readonly publisher?: OrganizationSchema | ThingSchema;
+  readonly publisher?: OrganizationSchema | ThingSchema | { readonly "@id": string };
   readonly inLanguage?: string;
 }
 

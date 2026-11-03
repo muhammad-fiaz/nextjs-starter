@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import SearchPage from "@/components/pages/(marketing)/search/page";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { Spinner } from "@/components/ui/spinner";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { constructMetadata } from "@/lib/metadata/construct-metadata";
-import { siteConfig } from "@/site.config";
+import { getLocalizedPath } from "@/i18n/navigation";
+import { constructMetadata, resolveOrigin } from "@/lib/metadata/construct-metadata";
 import type { Locale } from "@/types/config";
 import { getActiveLocales } from "@/validation/i18n-config";
 
@@ -13,10 +14,17 @@ export function generateStaticParams(): { lang: Locale }[] {
   return getActiveLocales().map((lang) => ({ lang }));
 }
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const dictionary = await getDictionary(lang);
   return constructMetadata({
-    title: "Search",
-    description: "Search across features, architecture, and legal documentation.",
+    title: dictionary.seo.search.title,
+    description: dictionary.seo.search.description,
+    locale: lang,
     path: "/search",
   });
 }
@@ -50,6 +58,17 @@ export default function Page({ params }: { params: Promise<{ lang: string }> }) 
 async function SearchPageContent({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
+  const siteUrl = resolveOrigin();
 
-  return <SearchPage locale={lang} searchI18n={dictionary.search} />;
+  const breadcrumbs = [
+    { name: dictionary.navigation.home, url: `${siteUrl}${getLocalizedPath("/", lang)}` },
+    { name: dictionary.seo.search.title, url: `${siteUrl}${getLocalizedPath("/search", lang)}` },
+  ];
+
+  return (
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      <SearchPage locale={lang} searchI18n={dictionary.search} />
+    </>
+  );
 }

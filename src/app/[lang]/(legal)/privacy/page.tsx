@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 
 import PrivacyPolicyPage from "@/components/pages/(legal)/privacy/page";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { constructMetadata } from "@/lib/metadata/construct-metadata";
-import { siteConfig } from "@/site.config";
+import { getLocalizedPath } from "@/i18n/navigation";
+import { constructMetadata, resolveOrigin } from "@/lib/metadata/construct-metadata";
 import type { Locale } from "@/types/config";
 import { getActiveLocales } from "@/validation/i18n-config";
 
@@ -13,10 +14,17 @@ export function generateStaticParams(): { lang: Locale }[] {
   return getActiveLocales().map((lang) => ({ lang }));
 }
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const dictionary = await getDictionary(lang);
   return constructMetadata({
-    title: "Privacy Policy",
-    description: "Learn how we collect, use, and protect your personal information.",
+    title: dictionary.seo.privacy.title,
+    description: dictionary.seo.privacy.description,
+    locale: lang,
     path: "/privacy",
   });
 }
@@ -24,5 +32,17 @@ export function generateMetadata(): Metadata {
 export default async function Page({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
-  return <PrivacyPolicyPage content={dictionary.pages.legal.privacy} />;
+  const siteUrl = resolveOrigin();
+
+  const breadcrumbs = [
+    { name: dictionary.navigation.home, url: `${siteUrl}${getLocalizedPath("/", lang)}` },
+    { name: dictionary.seo.privacy.title, url: `${siteUrl}${getLocalizedPath("/privacy", lang)}` },
+  ];
+
+  return (
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      <PrivacyPolicyPage content={dictionary.pages.legal.privacy} />
+    </>
+  );
 }

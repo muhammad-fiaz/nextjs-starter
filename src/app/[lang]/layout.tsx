@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { GlobalJsonLd } from "@/components/seo/json-ld";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { siteConfig } from "@/site.config";
 import type { Locale } from "@/types/config";
@@ -30,6 +31,7 @@ export default async function LocaleLayout({
       dir={dir}
       className="bg-background text-foreground flex min-h-screen flex-col"
     >
+      <GlobalJsonLd locale={currentLang} description={dictionary.common.description} />
       <Navbar
         currentLocale={currentLang}
         navigation={dictionary.navigation}
@@ -40,6 +42,7 @@ export default async function LocaleLayout({
         currentLocale={currentLang}
         navigation={dictionary.navigation}
         footer={dictionary.footer}
+        common={dictionary.common}
       />
     </div>
   );

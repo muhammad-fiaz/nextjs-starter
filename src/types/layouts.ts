@@ -1,6 +1,11 @@
 import type { ReactNode } from "react";
 
-import type { DictionaryFooter, DictionaryNavigation, SearchI18n } from "@/types/i18n";
+import type {
+  DictionaryCommon,
+  DictionaryFooter,
+  DictionaryNavigation,
+  SearchI18n,
+} from "@/types/i18n";
 
 export interface LocaleLayoutProps {
   readonly children: ReactNode;
@@ -17,6 +22,7 @@ export interface FooterProps {
   readonly currentLocale?: string;
   readonly navigation?: DictionaryNavigation;
   readonly footer?: DictionaryFooter;
+  readonly common?: DictionaryCommon;
 }
 
 export interface MobileNavProps {

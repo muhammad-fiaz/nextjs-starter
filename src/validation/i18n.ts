@@ -66,7 +66,23 @@ export const searchI18nSchema = z.object({
   loadingText: z.string(),
 });
 
+export const pageSeoSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+});
+
+export const seoDictionarySchema = z.object({
+  home: pageSeoSchema,
+  search: pageSeoSchema,
+  privacy: pageSeoSchema,
+  terms: pageSeoSchema,
+  cookies: pageSeoSchema,
+  offline: pageSeoSchema,
+  notFound: pageSeoSchema,
+});
+
 export const dictionarySchema = z.object({
+  seo: seoDictionarySchema,
   metadata: z.object({
     language: z.string(),
     locale: z.string(),
@@ -74,6 +90,7 @@ export const dictionarySchema = z.object({
   }),
   common: z.object({
     appName: z.string(),
+    shortName: z.string().optional(),
     description: z.string(),
     theme: z.object({
       light: z.string(),

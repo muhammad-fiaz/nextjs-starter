@@ -6,7 +6,7 @@
   },
   "common": {
     "appName": "Next.js Starter",
-    "description": "Production-Ready Open Source Next.js Starter Template",
+    "description": "Production-ready, infrastructure-first open source Next.js starter template featuring React 19, TypeScript, Tailwind CSS v4, and modern web foundations.",
     "theme": {
       "light": "Light",
       "dark": "Dark",
@@ -19,7 +19,8 @@
       "close": "Close",
       "accept": "Accept",
       "deny": "Deny"
-    }
+    },
+    "shortName": "NextStarter"
   },
   "navigation": {
     "home": "Home",
@@ -319,6 +320,36 @@
           }
         ]
       }
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Home",
+      "description": "Production-ready, infrastructure-first open source Next.js starter template featuring React 19, TypeScript, Tailwind CSS v4, and modern web foundations."
+    },
+    "search": {
+      "title": "Search",
+      "description": "Search across features, architecture, and legal documentation."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "Learn how we collect, use, and protect your personal information."
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "description": "Read the terms and conditions governing the use of our website and services."
+    },
+    "cookies": {
+      "title": "Cookie Policy",
+      "description": "Learn how we use cookies and tracking technologies on our website."
+    },
+    "offline": {
+      "title": "Offline",
+      "description": "You are currently offline. Please check your internet connection."
+    },
+    "notFound": {
+      "title": "404 - Page Not Found",
+      "description": "The page you are looking for does not exist or has been moved."
     }
   }
 }

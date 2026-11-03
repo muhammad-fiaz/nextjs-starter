@@ -7,7 +7,6 @@ import { TanStackProvider } from "@/components/providers/query-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { WebMCPProvider } from "@/components/providers/webmcp-provider";
 import { PWAProvider } from "@/components/pwa/pwa-provider";
-import { GlobalJsonLd } from "@/components/seo/json-ld";
 import { InlineScript } from "@/components/ui/inline-script";
 import { TopLoader } from "@/components/ui/top-loader";
 import { fontVariables } from "@/lib/fonts";
@@ -38,7 +37,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <InlineScript html={themeInitScript} />
       </head>
       <body className="flex min-h-full flex-col">
-        <GlobalJsonLd />
         <ThemeProvider>
           <Suspense fallback={null}>
             <TopLoader />
@@ -48,10 +46,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <WebMCPProvider>
                 <IntegrationManager />
                 {children}
-                <CookieConsentManager />
               </WebMCPProvider>
             </PWAProvider>
           </TanStackProvider>
+          <CookieConsentManager />
         </ThemeProvider>
       </body>
     </html>

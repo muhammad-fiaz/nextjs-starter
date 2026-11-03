@@ -55,7 +55,7 @@ describe("Production-Readiness SSR & Open Graph Verification", () => {
     const publicRoutes = [
       {
         path: "/",
-        expectedTitle: `Next.js Starter | ${siteConfig.name}`,
+        expectedTitle: `Home | ${siteConfig.name}`,
         noIndex: false,
       },
       {

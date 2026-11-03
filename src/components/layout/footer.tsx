@@ -7,9 +7,10 @@ import { getLocalizedPath } from "@/i18n/navigation";
 import { siteConfig } from "@/site.config";
 import type { FooterProps } from "@/types/layouts";
 
-export function Footer({ currentLocale, navigation, footer }: FooterProps): ReactNode {
+export function Footer({ currentLocale, navigation, footer, common }: FooterProps): ReactNode {
   const currentYear = 2026;
   const getHref = (path: string) => getLocalizedPath(path, currentLocale);
+  const appDescription = common?.description || siteConfig.description;
 
   return (
     <footer className="border-border/40 bg-muted/20 w-full border-t">
@@ -20,10 +21,10 @@ export function Footer({ currentLocale, navigation, footer }: FooterProps): Reac
               <div className="bg-primary text-primary-foreground flex h-7 w-7 items-center justify-center rounded-md text-xs font-black">
                 N
               </div>
-              <span>{siteConfig.name}</span>
+              <span>{common?.appName || siteConfig.name}</span>
             </div>
             <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
-              {siteConfig.description}
+              {appDescription}
             </p>
 
             <div className="flex items-center gap-3 pt-2">
@@ -32,10 +33,11 @@ export function Footer({ currentLocale, navigation, footer }: FooterProps): Reac
                   href={siteConfig.social.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-md p-1.5 transition-colors"
+                  className="text-muted-foreground hover:bg-accent hover:text-foreground inline-flex items-center gap-1.5 rounded-md p-1.5 transition-colors"
                   aria-label="GitHub"
                 >
                   <GithubIcon className="h-4 w-4" />
+                  <span className="sr-only">GitHub</span>
                 </a>
               )}
               {siteConfig.social?.twitter && (
@@ -43,10 +45,11 @@ export function Footer({ currentLocale, navigation, footer }: FooterProps): Reac
                   href={siteConfig.social.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-md p-1.5 transition-colors"
+                  className="text-muted-foreground hover:bg-accent hover:text-foreground inline-flex items-center gap-1.5 rounded-md p-1.5 transition-colors"
                   aria-label="Twitter / X"
                 >
                   <TwitterIcon className="h-4 w-4" />
+                  <span className="sr-only">Twitter</span>
                 </a>
               )}
             </div>

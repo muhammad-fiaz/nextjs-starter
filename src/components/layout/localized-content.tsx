@@ -66,19 +66,32 @@ function renderBlock(block: ContentBlock): ReactNode {
         </div>
       );
 
-    case "link":
+    case "link": {
+      const isExternal = block.href.startsWith("http://") || block.href.startsWith("https://");
+
+      if (isExternal) {
+        return (
+          <p key={key}>
+            <a
+              href={block.href}
+              className="text-primary hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {block.label}
+            </a>
+          </p>
+        );
+      }
+
       return (
         <p key={key}>
-          <a
-            href={block.href}
-            className="text-primary hover:underline"
-            target={block.href.startsWith("http") ? "_blank" : undefined}
-            rel={block.href.startsWith("http") ? "noopener noreferrer" : undefined}
-          >
+          <a href={block.href} className="text-primary hover:underline">
             {block.label}
           </a>
         </p>
       );
+    }
 
     default:
       return null;

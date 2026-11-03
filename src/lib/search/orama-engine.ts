@@ -17,7 +17,7 @@ import {
 } from "@orama/orama";
 
 import { DocumentValidationError, IndexNotFoundError } from "@/lib/search/errors";
-import { normalizeSearchDocument } from "@/lib/search/normalize";
+import { getOramaLanguage, normalizeSearchDocument } from "@/lib/search/normalize";
 import { defaultSearchSchema } from "@/lib/search/schema";
 import { siteConfig } from "@/site.config";
 import type {
@@ -36,8 +36,7 @@ export class OramaEngine {
     const {
       name,
       schema = defaultSearchSchema as unknown as AnySchema,
-      language = siteConfig.i18n.localeToLanguage?.[siteConfig.i18n.defaultLocale] ??
-        siteConfig.i18n.defaultLocale,
+      language = getOramaLanguage(siteConfig.i18n.defaultLocale),
     } = options;
 
     const db = await create({

@@ -5,11 +5,12 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { constructMetadata } from "@/lib/metadata/construct-metadata";
 import { siteConfig } from "@/site.config";
 import type { Locale } from "@/types/config";
+import { getActiveLocales } from "@/validation/i18n-config";
 
 export const instant = false;
 
 export function generateStaticParams(): { lang: Locale }[] {
-  return siteConfig.i18n.locales.map((lang) => ({ lang }));
+  return getActiveLocales().map((lang) => ({ lang }));
 }
 
 export function generateMetadata(): Metadata {

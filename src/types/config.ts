@@ -10,7 +10,6 @@ export interface I18nConfig {
   readonly locales: readonly string[];
   readonly localePrefix: LocalePrefix;
   readonly localeLabels: Record<string, string>;
-  readonly localeToLanguage?: Record<string, string>;
   readonly rtlLocales?: readonly string[];
 }
 

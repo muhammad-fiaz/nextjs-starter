@@ -12,8 +12,20 @@ export function resolveSearchLocale(locale?: string): string {
   return siteConfig.i18n.defaultLocale;
 }
 
+const LOCALE_TO_ORAMA_LANGUAGE: Record<string, string> = {
+  en: "english",
+  es: "spanish",
+  fr: "french",
+  de: "german",
+  it: "italian",
+  pt: "portuguese",
+  nl: "dutch",
+  ru: "russian",
+};
+
 export function getOramaLanguage(locale: string): string {
-  return siteConfig.i18n.localeToLanguage?.[locale] ?? locale;
+  const code = locale.toLowerCase().split("-")[0] || "";
+  return LOCALE_TO_ORAMA_LANGUAGE[code] || "english";
 }
 
 export function normalizeSearchQuery(query: string): string {

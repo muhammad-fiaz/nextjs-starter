@@ -1,5 +1,5 @@
 import { siteConfig } from "@/site.config";
-import type { I18nConfig, LocalePrefix } from "@/types/config";
+import type { I18nConfig, Locale } from "@/types/config";
 
 export function validateI18nConfig(config: I18nConfig): void {
   const { locales, defaultLocale, localeLabels, localePrefix } = config;
@@ -38,13 +38,20 @@ export function validateI18nConfig(config: I18nConfig): void {
 
 validateI18nConfig(siteConfig.i18n);
 
-export function isLocale(value: unknown): value is string {
+export function getActiveLocales(): Locale[] {
+  if (!siteConfig.i18n.enabled) {
+    return [siteConfig.i18n.defaultLocale];
+  }
+  return [...siteConfig.i18n.locales];
+}
+
+export function isSupportedLocale(value: unknown): value is string {
   return (
     typeof value === "string" && (siteConfig.i18n.locales as readonly string[]).includes(value)
   );
 }
 
-export const isSupportedLocale = isLocale;
+export const isLocale = isSupportedLocale;
 
 export function getLocaleDirection(locale: string): "ltr" | "rtl" {
   const rtlList = siteConfig.i18n.rtlLocales ?? [];

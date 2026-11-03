@@ -6,13 +6,13 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { siteConfig } from "@/site.config";
 import type { Locale } from "@/types/config";
 import type { LocaleLayoutProps } from "@/types/layouts";
-import { getLocaleDirection, isSupportedLocale } from "@/validation/i18n-config";
+import { getActiveLocales, getLocaleDirection, isSupportedLocale } from "@/validation/i18n-config";
 
 export const instant = false;
 export const ensureStatic = "navigation";
 
 export function generateStaticParams(): { lang: Locale }[] {
-  return siteConfig.i18n.locales.map((lang) => ({ lang }));
+  return getActiveLocales().map((lang) => ({ lang }));
 }
 
 export default async function LocaleLayout({

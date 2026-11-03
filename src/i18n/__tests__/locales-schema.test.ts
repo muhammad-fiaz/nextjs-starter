@@ -44,7 +44,6 @@ describe("JSON-Driven Localization Architecture", () => {
 
     for (const locale of fileLocales) {
       expect(siteConfig.i18n.localeLabels[locale]).toBeTruthy();
-      expect(siteConfig.i18n.localeToLanguage?.[locale]).toBeTruthy();
     }
   });
 

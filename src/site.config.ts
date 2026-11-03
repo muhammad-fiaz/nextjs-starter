@@ -9,17 +9,13 @@ export const siteConfig: SiteConfig = {
   url: env.NEXT_PUBLIC_APP_URL,
 
   i18n: {
-    enabled: true,
+    enabled: false,
     defaultLocale: "en",
     locales: ["en", "es"],
     localePrefix: "as-needed",
     localeLabels: {
       en: "English",
       es: "Español",
-    },
-    localeToLanguage: {
-      en: "english",
-      es: "spanish",
     },
     rtlLocales: [],
   },

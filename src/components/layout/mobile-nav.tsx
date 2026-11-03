@@ -5,7 +5,6 @@ import Link from "next/link";
 import { type ReactNode, useState } from "react";
 
 import { GithubIcon } from "@/components/icons/social-icons";
-import { PWAInstallButton } from "@/components/pwa/pwa-install-button";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { getLocalizedPath } from "@/i18n/navigation";
@@ -56,12 +55,6 @@ export function MobileNav({ currentLocale, navigation }: MobileNavProps): ReactN
           </nav>
 
           <div className="border-border/60 dark:border-border/40 flex flex-col gap-2.5 border-t pt-3">
-            <PWAInstallButton
-              showIconOnlyOnMobile={false}
-              className="w-full justify-center text-xs font-semibold shadow-xs"
-              onInstalled={() => setOpen(false)}
-            />
-
             {siteConfig.social?.github && (
               <a
                 href={siteConfig.social.github}

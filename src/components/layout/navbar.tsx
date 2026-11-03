@@ -4,7 +4,6 @@ import { type ReactNode } from "react";
 import { GithubIcon } from "@/components/icons/social-icons";
 import { GlobalSearchDialog } from "@/components/layout/global-search-dialog";
 import { MobileNav } from "@/components/layout/mobile-nav";
-import { PWAInstallButton } from "@/components/pwa/pwa-install-button";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/ui/language-toggle";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -76,8 +75,6 @@ export function Navbar({ currentLocale, navigation, search }: NavbarProps): Reac
               </Button>
             </a>
           )}
-
-          <PWAInstallButton className="hidden h-9 px-3 text-xs font-medium md:inline-flex" />
 
           <MobileNav currentLocale={currentLocale} navigation={navigation} />
         </div>

@@ -99,8 +99,8 @@ export function IntegrationManager(): ReactNode {
   const showAdSense = allowAdvertising && Boolean(adsense?.enabled && adsensePublisherId);
   const showClarity = allowAnalytics && Boolean(clarity?.enabled && clarityProjectId);
 
-  const showVercelAnalytics = isProduction && allowAnalytics && vercel?.analytics !== false;
-  const showVercelSpeedInsights = isProduction && allowAnalytics && vercel?.speedInsights !== false;
+  const showVercelAnalytics = isProduction && allowAnalytics && Boolean(vercel?.analytics);
+  const showVercelSpeedInsights = isProduction && allowAnalytics && Boolean(vercel?.speedInsights);
 
   return (
     <>

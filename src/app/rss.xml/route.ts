@@ -1,7 +1,7 @@
 import { siteConfig } from "@/site.config";
 
 export async function GET() {
-  const siteUrl = siteConfig.url?.replace(/\/$/, "") || "http://localhost:3000";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
   const currentDate = new Date().toUTCString();
 
   const rssFeed = `<?xml version="1.0" encoding="UTF-8"?>

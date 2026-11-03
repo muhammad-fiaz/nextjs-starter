@@ -20,7 +20,7 @@ export function GlobalJsonLd({
   locale?: string;
   description?: string;
 }): ReactNode {
-  const siteUrl = siteConfig.url?.replace(/\/$/, "") || "http://localhost:3000";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
   const activeLocale = locale || siteConfig.i18n.defaultLocale;
   const activeDescription = description || siteConfig.description;
 

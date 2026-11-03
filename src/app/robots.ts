@@ -1,11 +1,9 @@
 import type { MetadataRoute } from "next";
 
-import { env } from "@/env";
 import { siteConfig } from "@/site.config";
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = env.NEXT_PUBLIC_APP_URL || siteConfig.url || "http://localhost:3000";
-  const normalized = siteUrl.replace(/\/$/, "");
+  const normalized = siteConfig.url.replace(/\/$/, "");
 
   return {
     rules: [

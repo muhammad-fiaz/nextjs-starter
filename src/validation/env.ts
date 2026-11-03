@@ -10,6 +10,6 @@ export const serverEnvSchema = {
 
 export const clientEnvSchema = {
   NEXT_PUBLIC_NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-  NEXT_PUBLIC_APP_URL: z.url().optional(),
+  NEXT_PUBLIC_APP_URL: z.url().default("http://localhost:3000"),
   NEXT_PUBLIC_VAPID_PUBLIC_KEY: z.string().optional(),
 };

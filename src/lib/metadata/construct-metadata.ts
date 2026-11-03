@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 
-import { env } from "@/env";
 import { getLocalizedPath } from "@/i18n/navigation";
 import { getAvailableLocalesForRoute, isRouteAvailable } from "@/i18n/routes";
 import { siteConfig } from "@/site.config";
 import type { PageMetadataInput } from "@/types/seo";
 
 /**
- * Resolves the active origin or fallback URL.
- * Never accesses process.env directly; leverages env from @/env.
+ * Resolves the active origin or fallback URL directly from siteConfig.url (backed by env.NEXT_PUBLIC_APP_URL).
  */
 export function resolveOrigin(customOrigin?: string): string {
   if (customOrigin) {
@@ -20,27 +18,11 @@ export function resolveOrigin(customOrigin?: string): string {
     }
   }
 
-  const configured = env.NEXT_PUBLIC_APP_URL || siteConfig.url;
-  if (configured) {
-    const trimmed = configured.trim().replace(/\/+$/, "");
-    if (trimmed) {
-      return trimmed.startsWith("http://") || trimmed.startsWith("https://")
-        ? trimmed
-        : `https://${trimmed}`;
-    }
-  }
-
-  if (env.VERCEL_PROJECT_PRODUCTION_URL) {
-    const vUrl = env.VERCEL_PROJECT_PRODUCTION_URL.trim().replace(/\/+$/, "");
-    return vUrl.startsWith("http") ? vUrl : `https://${vUrl}`;
-  }
-
-  if (env.VERCEL_URL) {
-    const vUrl = env.VERCEL_URL.trim().replace(/\/+$/, "");
-    return vUrl.startsWith("http") ? vUrl : `https://${vUrl}`;
-  }
-
-  return "http://localhost:3000";
+  const configured = siteConfig.url;
+  const trimmed = configured.trim().replace(/\/+$/, "");
+  return trimmed.startsWith("http://") || trimmed.startsWith("https://")
+    ? trimmed
+    : `https://${trimmed}`;
 }
 
 /**

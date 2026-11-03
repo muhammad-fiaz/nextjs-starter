@@ -63,7 +63,7 @@ export interface SiteConfig {
   readonly name?: string;
   readonly shortName?: string;
   readonly description?: string;
-  readonly url?: string;
+  readonly url: string;
   readonly defaultLocale?: string;
   readonly supportedLocales?: readonly string[];
   readonly i18n: I18nConfig;

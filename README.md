@@ -1,12 +1,18 @@
-# Next.js Starter
+<h1 align="center">Next.js Starter</h1>
+
+<p align="center">
+  <a href="https://github.com/muhammad-fiaz/nextjs-starter/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-16.4.4-black?logo=next.js" alt="Next.js" /></a>
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19.3.1-blue?logo=react" alt="React" /></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-7.0.2-blue?logo=typescript" alt="TypeScript" /></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_CSS-v4.3.4-38bdf8?logo=tailwindcss" alt="Tailwind CSS" /></a>
+  <a href="https://bun.sh/"><img src="https://img.shields.io/badge/Bun-1.4.4-fbf0df?logo=bun" alt="Bun" /></a>
+  <a href="https://github.com/muhammad-fiaz/nextjs-starter/issues"><img src="https://img.shields.io/github/issues/muhammad-fiaz/nextjs-starter?color=green" alt="Issues" /></a>
+  <a href="https://github.com/muhammad-fiaz/nextjs-starter/pulls"><img src="https://img.shields.io/github/issues-pr/muhammad-fiaz/nextjs-starter?color=blue" alt="Pull Requests" /></a>
+  <a href="https://github.com/muhammad-fiaz/nextjs-starter"><img src="https://img.shields.io/github/last-commit/muhammad-fiaz/nextjs-starter" alt="Last Commit" /></a>
+</p>
 
 Production-ready, infrastructure-first open-source Next.js 16 starter template featuring React 19, TypeScript, Tailwind CSS v4, Base UI / Shadcn UI components, centralized modular types, privacy & cookie consent infrastructure, and toggleable zero-overhead internationalization (i18n).
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-16.4.3-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.3.1-blue)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8)](https://tailwindcss.com/)
 
 ---
 
